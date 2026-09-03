@@ -1,10 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function JaagoHero() {
   const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Auto carousel rotation every 6 seconds like Splide
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev === 0 ? 1 : 0));
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev === 0 ? 1 : 0));
@@ -24,8 +32,13 @@ export default function JaagoHero() {
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center w-full">
-              {/* Left Column: Headline & CTA (7 cols) */}
-              <div className="lg:col-span-7 p-4 text-center lg:text-left space-y-6">
+              {/* Left Column: Headline & CTA with data-aos="fade-up" */}
+              <div
+                data-aos="fade-up"
+                data-aos-duration="500"
+                data-aos-delay="300"
+                className="lg:col-span-7 p-4 text-center lg:text-left space-y-6"
+              >
                 <h1 className="font-bold font-sans text-4xl md:text-5xl xl:text-6xl text-white leading-tight">
                   Transform the Lives{" "}
                   <span className="block">
@@ -45,10 +58,15 @@ export default function JaagoHero() {
                 </div>
               </div>
 
-              {/* Right Column: Student Portrait + Speech Quote Bubble (5 cols) */}
+              {/* Right Column: Student Portrait + Speech Quote Bubble */}
               <div className="lg:col-span-5 relative flex justify-center lg:justify-end">
-                {/* Floating Yellow Speech Bubble (Exact JAAGO element) */}
-                <div className="hidden lg:inline-block absolute top-[10px] -left-[110px] xl:top-[30px] xl:-left-[120px] bg-[#ffcd05] p-2 rounded-3xl shadow-xl z-20 transform -rotate-1 hover:rotate-0 transition-transform">
+                {/* Floating Yellow Speech Bubble with data-aos="fade-down" and CSS float */}
+                <div
+                  data-aos="fade-down"
+                  data-aos-duration="500"
+                  data-aos-delay="300"
+                  className="hidden lg:inline-block absolute top-[10px] -left-[110px] xl:top-[30px] xl:-left-[120px] bg-[#ffcd05] p-2 rounded-3xl shadow-2xl z-20 animate-float"
+                >
                   <div className="flex flex-col max-w-[240px] xl:max-w-[270px] justify-center items-center border-2 border-dashed border-gray-900 rounded-2xl p-4">
                     <p className="font-sans text-xs xl:text-sm text-center mb-0 font-extrabold text-gray-950 leading-snug">
                       &quot;My resources are limited,
@@ -60,12 +78,26 @@ export default function JaagoHero() {
                   </div>
                 </div>
 
-                {/* Decorative Yellow Shapes */}
-                <div className="hidden lg:inline-block absolute top-[135px] left-[35px] bg-[#ffcd05] w-[40px] h-3.5 rounded-full z-10" />
-                <div className="hidden lg:inline-block absolute top-[155px] left-[65px] bg-[#ffcd05] w-[25px] h-3.5 rounded-full z-10" />
+                {/* Decorative Yellow Shapes with data-aos="fade-down" */}
+                <div
+                  data-aos="fade-down"
+                  data-aos-duration="500"
+                  data-aos-delay="300"
+                  className="hidden lg:inline-block absolute top-[135px] left-[35px] bg-[#ffcd05] w-[40px] h-3.5 rounded-full z-10"
+                />
+                <div
+                  data-aos="fade-down"
+                  data-aos-duration="500"
+                  data-aos-delay="300"
+                  className="hidden lg:inline-block absolute top-[155px] left-[65px] bg-[#ffcd05] w-[25px] h-3.5 rounded-full z-10"
+                />
 
-                {/* Child Image */}
-                <div className="relative z-10 max-w-[340px] sm:max-w-[420px] xl:max-w-[480px]">
+                {/* Child Image with data-aos="fade-left" */}
+                <div
+                  data-aos="fade-left"
+                  data-aos-duration="500"
+                  className="relative z-10 max-w-[340px] sm:max-w-[420px] xl:max-w-[480px]"
+                >
                   <img
                     src="https://jaago.com.bd/images/2024/06/sponsor-a-child-in-bangladesh-with-jaago-foundation_1719739929_8pyv6_gzk.png?tr=f-auto,fo-auto,w-639,h-692,pr-true"
                     alt="Sponsor a child in Bangladesh with JAAGO Foundation"
@@ -83,7 +115,11 @@ export default function JaagoHero() {
         <div className="hero-section lg:h-[550px] xl:h-[640px] 2xl:h-[720px] bg-[#f0ede8] overflow-hidden relative max-lg:pt-[120px] max-lg:pb-16 pt-[100px] transition-all duration-700 animate-in fade-in">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center w-full">
-              <div className="lg:col-span-7 p-4 text-center lg:text-left space-y-4">
+              <div
+                data-aos="fade-up"
+                data-aos-duration="500"
+                className="lg:col-span-7 p-4 text-center lg:text-left space-y-4"
+              >
                 <span className="text-sm font-bold uppercase tracking-wider text-gray-600 block">
                   JAAGO Women
                 </span>
@@ -95,7 +131,7 @@ export default function JaagoHero() {
                 </p>
                 <div>
                   <a
-                    className="btn btn-secondary px-8 py-3.5 text-base font-sans shadow-xl capitalize font-bold text-white inline-flex"
+                    className="btn btn-secondary px-8 py-3.5 text-base font-sans shadow-xl capitalize font-bold text-white inline-flex hover:scale-105 transition-transform"
                     href="https://jaago.com.bd/women"
                   >
                     Learn More
@@ -103,7 +139,7 @@ export default function JaagoHero() {
                 </div>
               </div>
 
-              <div className="lg:col-span-5 flex justify-center">
+              <div data-aos="fade-left" className="lg:col-span-5 flex justify-center">
                 <img
                   src="https://jaago.com.bd/images/2024/04/sponsor-a-child_1714365666_yl5a0ydht.jpg?tr=f-auto,w-576,h-550,fo-auto,pr-true,c-maintain_ratio"
                   alt="JAAGO Scholar"
@@ -135,15 +171,15 @@ export default function JaagoHero() {
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex space-x-2">
         <button
           onClick={() => setCurrentSlide(0)}
-          className={`w-3 h-3 rounded-full transition-all ${
-            currentSlide === 0 ? "bg-[#ffcd05] w-8" : "bg-white/60"
+          className={`h-3 rounded-full transition-all duration-300 ${
+            currentSlide === 0 ? "bg-[#ffcd05] w-8" : "bg-white/60 w-3"
           }`}
           aria-label="Slide 1"
         />
         <button
           onClick={() => setCurrentSlide(1)}
-          className={`w-3 h-3 rounded-full transition-all ${
-            currentSlide === 1 ? "bg-[#ffcd05] w-8" : "bg-white/60"
+          className={`h-3 rounded-full transition-all duration-300 ${
+            currentSlide === 1 ? "bg-[#ffcd05] w-8" : "bg-white/60 w-3"
           }`}
           aria-label="Slide 2"
         />

@@ -129,3 +129,29 @@ Chronological registry of all file additions, edits, component implementations, 
     6. **Exact News & Articles**: 3 cards with dashed inner borders, category badges, dates, and yellow Read More buttons.
     7. **Exact Footer**: 3 columns (About JAAGO Foundation, Useful Links, Get in touch with USA/Bangladesh addresses) and copyright bar.
 - **Verification**: `npm run build` compiled in 620ms with 0 errors. Dev server verified live on `http://localhost:3000`. Visual screenshots confirmed with Puppeteer.
+
+---
+
+### [ENTRY-009] 2026-09-04 — Full JAAGO Animation Suite Implementation (AOS, Hover Sweeps, Count-Up, Float, Splide Auto-Carousel)
+- **Type**: Animation & Interactive Elevation (Feature Branch: `feature/frontend-client-demo`)
+- **Reference**: `https://jaago.com.bd/` animation audit
+- **Animations Integrated**:
+  - **AOS (Animate On Scroll)**: Installed `aos` & `@types/aos`, imported `aos/dist/aos.css` in `globals.css`, and scaffolded `AosInit.tsx` with easing and duration.
+  - **Hero Section Animations**:
+    - `data-aos="fade-up"` on hero headline & sponsor CTA.
+    - `data-aos="fade-down"` & keyframe `@keyframes floatBubble` on speech quote bubble (*"My resources are limited..."*).
+    - `data-aos="fade-left"` on the student portrait.
+    - Auto-rotation carousel (cycles every 6 seconds with fade transitions).
+  - **Sponsor a Child Animations**:
+    - `data-aos="fade-up"` on 50/50 split card.
+    - Scroll-triggered dynamic count-up animation for the **1100 Unsponsored Children** counter via `IntersectionObserver`.
+  - **Focus Areas Signature Hover Sweep**:
+    - `data-aos="fade-up"` with staggered delays (`100ms`, `200ms`, `300ms`, `400ms`, `500ms`).
+    - Yellow sweep overlay (`w-0 group-hover:w-full duration-500`) sweeping across each card on hover.
+  - **Volunteerism Section Animations**:
+    - `data-aos="zoom-out-up"` on the floating 3-metric white card.
+    - Real-time count-up animation from 0 to **60,000 Volunteers**, **64 Districts**, and **495 Upazilas**.
+    - `data-aos="fade-up"` on the overlapping yellow CTA banner.
+  - **News & Articles Animations**:
+    - Staggered `data-aos="fade-up"` on article cards with subtle hover lift (`hover:-translate-y-1.5`) and image zoom.
+- **Verification**: `npm run build` compiled in 636ms with zero errors. All 22 AOS elements verified and firing smoothly in Puppeteer browser session on `http://localhost:3000`.
