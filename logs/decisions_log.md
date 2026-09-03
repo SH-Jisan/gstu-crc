@@ -84,3 +84,15 @@ Record of key decisions, trade-offs evaluated, and consensus reached between use
   - **Zero Throwaway Code**: All demo components (Navbar, Hero, Programs, Council cards, Donation modal, Concern form) will become the production frontend once approved.
   - **Hosting**: Deployable to a free Vercel/Netlify staging URL (e.g. `crc-preview.vercel.app`) for client instant review.
 - **Status**: Formally Adopted.
+
+---
+
+### [ADL-009] Git Branching Strategy & Branch Protection (Git Flow)
+- **Date**: 2026-09-04
+- **Context**: Prevent unstable or work-in-progress code from contaminating the production-ready `main` branch. Establish standard agency Git Flow.
+- **Decision**:
+  - **`main`**: Strictly protected production branch. Only receives code via reviewed Pull Requests (PR) or approved milestone merges. Connected to production domain (`gstu-crc.org`).
+  - **`develop`**: Primary staging integration branch for fully verified features.
+  - **`feature/*`**: Short-lived feature branches for specific tasks (e.g. `feature/frontend-client-demo`).
+  - **Workflow**: Create `feature/frontend-client-demo` for the upcoming prototype. Once client approves, merge cleanly into `main` with milestone tag.
+- **Status**: Formally Adopted.

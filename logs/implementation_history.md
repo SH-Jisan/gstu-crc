@@ -61,3 +61,36 @@ Chronological registry of all file additions, edits, component implementations, 
   - `[NEW]` [`.env.example`](../.env.example): Root environment variable specifications and secrets template.
   - `[NEW]` [`README.md`](../README.md): Root repository onboarding guide and directory layout.
 - **Verification**: Formatter and environment templates validated.
+
+---
+
+### [ENTRY-005] 2026-09-04 — Git Baseline & Remote Synchronization with GitHub
+- **Type**: Version Control Initialization & Cloud Sync
+- **Affected Repository**: `https://github.com/SH-Jisan/gstu-crc.git`
+- **Actions Completed**:
+  - `git init -b main`: Initialized repository with primary `main` branch.
+  - `git remote add origin`: Linked to user's remote repository.
+  - `git commit`: Committed 76 files (3,565 insertions) covering all 17 SDLC stages, logs, and configs.
+  - `git push -u origin main`: Successfully pushed initial baseline commit to GitHub.
+- **Verification**: Verified branch tracking (`main -> origin/main`) with exit code 0.
+
+---
+
+### [ENTRY-006] 2026-09-04 — Interactive Frontend Client Prototype Implementation
+- **Type**: Next.js 15 Frontend Prototype (Feature Branch: `feature/frontend-client-demo`)
+- **Affected Paths**:
+  - `[NEW]` [`frontend/src/data/crcMockData.ts`](../frontend/src/data/crcMockData.ts): Authentic CRC dataset (Founders 2016, 3 Councils, Hatekhori School, Campaigns, Branches, Notices).
+  - `[NEW]` [`frontend/src/components/Navbar.tsx`](../frontend/src/components/Navbar.tsx): 9-Module megamenu, mobile menu, emergency hotline, and action CTAs.
+  - `[NEW]` [`frontend/src/components/HeroSection.tsx`](../frontend/src/components/HeroSection.tsx): Official slogan, 10-year anniversary badge, and live statistical counter bar.
+  - `[NEW]` [`frontend/src/components/HappeningNow.tsx`](../frontend/src/components/HappeningNow.tsx): Active campaigns with donation progress bars & official notice board.
+  - `[NEW]` [`frontend/src/components/HatekhoriSchool.tsx`](../frontend/src/components/HatekhoriSchool.tsx): Flagship free school showcase with interactive curriculum/nutrition tabs.
+  - `[NEW]` [`frontend/src/components/GovernanceSection.tsx`](../frontend/src/components/GovernanceSection.tsx): Three-Tier council filter tabs & simulated real-time `.xlsx` roster export.
+  - `[NEW]` [`frontend/src/components/TransparencySection.tsx`](../frontend/src/components/TransparencySection.tsx): Expenditure policy & simulated PDF audit downloads.
+  - `[NEW]` [`frontend/src/components/BranchesMap.tsx`](../frontend/src/components/BranchesMap.tsx): Interactive university branch explorer (GSTU, Khulna, IU, BU, MBSTU).
+  - `[NEW]` [`frontend/src/components/DonationModal.tsx`](../frontend/src/components/DonationModal.tsx): Multi-step bKash/Nagad/Bank donation modal with voucher generation.
+  - `[NEW]` [`frontend/src/components/ReportConcernModal.tsx`](../frontend/src/components/ReportConcernModal.tsx): Child safeguarding whistleblower form with tracking code.
+  - `[NEW]` [`frontend/src/components/Footer.tsx`](../frontend/src/components/Footer.tsx): Comprehensive 9-module footer with legal notice.
+  - `[NEW]` [`frontend/src/app/page.tsx`](../frontend/src/app/page.tsx): Main interactive landing assembly.
+  - `[NEW]` [`frontend/src/app/layout.tsx`](../frontend/src/app/layout.tsx): SEO metadata, OpenGraph tags, and typography.
+  - `[NEW]` [`frontend/src/app/globals.css`](../frontend/src/app/globals.css): Tailwind v4 inline theme tokens & glassmorphism utilities.
+- **Verification**: `npm run build` compiled in 3.9s with 0 errors. Local dev server running on `http://localhost:3000`. Visual and interactive verification verified via Puppeteer browser automation screenshots.
