@@ -1,12 +1,14 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Search, ChevronDown, Menu, X } from "lucide-react";
 
 export default function JaagoNavbar() {
   const [isSticky, setIsSticky] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,17 +20,32 @@ export default function JaagoNavbar() {
       setIsSticky(scrollPos >= 50);
     };
 
+    const handleClickOutside = (event: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setActiveDropdown(null);
+      }
+    };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
     document.addEventListener("scroll", handleScroll, { passive: true });
+    document.addEventListener("click", handleClickOutside);
     handleScroll();
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
       document.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, []);
 
+  const handleDropdownToggle = (name: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    setActiveDropdown((prev) => (prev === name ? null : name));
+  };
+
   return (
     <header
+      ref={navRef}
       id="jaagonavbar"
       className={`fixed top-0 left-0 z-[1000] w-full transition-all duration-500 ease-in-out ${
         isSticky
@@ -38,13 +55,13 @@ export default function JaagoNavbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-3 font-sans font-semibold">
-          {/* 1. Official Logo with Smooth Size Transition on Scroll */}
+          {/* 1. Official Logo with Smooth Size Transition on Scroll & Hover Scale */}
           <div className="w-auto shrink-0">
-            <a href="https://jaago.com.bd" className="inline-block">
+            <a href="https://jaago.com.bd" className="inline-block group">
               <img
                 width="110"
                 height="73"
-                className={`transition-all duration-500 ease-in-out ${
+                className={`transition-all duration-500 ease-in-out group-hover:scale-105 ${
                   isSticky ? "w-[85px] sm:w-[95px] scale-95" : "w-[100px] sm:w-[110px] scale-100"
                 }`}
                 src="https://jaago.com.bd/images/2024/09/jaago-logo_1727084165_w2fULrshk.png?tr=f-auto,w-165,h-100"
@@ -60,30 +77,43 @@ export default function JaagoNavbar() {
               <li>
                 <a
                   href="https://jaago.com.bd"
-                  className="flex items-center font-bold py-1 px-2.5 lg:px-3 rounded-full hover:bg-gray-100 transition-colors"
+                  className="jaago-nav-link flex items-center font-bold py-1 px-3 rounded-full hover:bg-gray-100 hover:border-gray-200 transition-colors"
                 >
                   Home
                 </a>
               </li>
 
               {/* Focus Dropdown */}
-              <li className="relative group">
-                <a
-                  href="#"
-                  className="flex items-center font-bold py-1 px-2.5 lg:px-3 rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
-                >
-                  <span>Focus</span>
-                  <ChevronDown className="w-3.5 h-3.5 ml-1 opacity-70 transition-transform duration-300 group-hover:rotate-180" />
-                </a>
-
-                {/* Dropdown Menu with smooth slide-down and fade */}
-                <div
-                  className={`absolute min-w-[270px] left-0 mt-2 p-5 bg-white rounded-2xl shadow-2xl z-50 transition-all duration-300 ease-out border border-gray-100 invisible opacity-0 -translate-y-2 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 pointer-events-none group-hover:pointer-events-auto ${
-                    isSticky ? "top-8" : "top-10"
+              <li
+                className="relative group"
+                onMouseEnter={() => setActiveDropdown("focus")}
+                onMouseLeave={() => setActiveDropdown(null)}
+              >
+                <button
+                  type="button"
+                  onClick={(e) => handleDropdownToggle("focus", e)}
+                  className={`jaago-nav-link flex items-center font-bold py-1 px-3 rounded-full transition-colors cursor-pointer border-none bg-transparent ${
+                    activeDropdown === "focus"
+                      ? "bg-gray-100 border-gray-200 text-gray-900"
+                      : "hover:bg-gray-100 hover:border-gray-200"
                   }`}
                 >
+                  <span>Focus</span>
+                  <ChevronDown
+                    className={`jaago-chevron w-3.5 h-3.5 ml-1 opacity-70 transition-transform duration-300 ${
+                      activeDropdown === "focus" ? "rotate-180" : "group-hover:rotate-180"
+                    }`}
+                  />
+                </button>
+
+                {/* Dropdown Menu */}
+                <div
+                  className={`jaago-dropdown absolute min-w-[270px] left-0 mt-2 p-5 bg-white rounded-2xl shadow-2xl z-50 border border-gray-100 ${
+                    isSticky ? "top-7" : "top-9"
+                  } ${activeDropdown === "focus" ? "active-dropdown" : ""}`}
+                >
                   <ul className="divide-y divide-dashed divide-gray-200 text-xs font-semibold text-gray-700">
-                    <li className="py-2.5 relative overflow-hidden before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-full before:origin-right before:scale-x-0 before:bg-[#ffcd05] before:transition-transform before:duration-300 before:content-[''] hover:before:origin-left hover:before:scale-x-100">
+                    <li className="jaago-dropdown-item pt-2">
                       <a
                         href="https://jaago.com.bd/education-program"
                         className="block hover:text-amber-600 transition-colors"
@@ -91,7 +121,7 @@ export default function JaagoNavbar() {
                         Education and Digital Learning
                       </a>
                     </li>
-                    <li className="py-2.5 relative overflow-hidden before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-full before:origin-right before:scale-x-0 before:bg-[#ffcd05] before:transition-transform before:duration-300 before:content-[''] hover:before:origin-left hover:before:scale-x-100">
+                    <li className="jaago-dropdown-item pt-2">
                       <a
                         href="https://jaago.com.bd/youth-development-program"
                         className="block hover:text-amber-600 transition-colors"
@@ -99,7 +129,7 @@ export default function JaagoNavbar() {
                         Youth and Skill Development
                       </a>
                     </li>
-                    <li className="py-2.5 relative overflow-hidden before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-full before:origin-right before:scale-x-0 before:bg-[#ffcd05] before:transition-transform before:duration-300 before:content-[''] hover:before:origin-left hover:before:scale-x-100">
+                    <li className="jaago-dropdown-item pt-2">
                       <a
                         href="https://jaago.com.bd/women"
                         className="block hover:text-amber-600 transition-colors"
@@ -107,7 +137,7 @@ export default function JaagoNavbar() {
                         Women
                       </a>
                     </li>
-                    <li className="py-2.5 relative overflow-hidden before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-full before:origin-right before:scale-x-0 before:bg-[#ffcd05] before:transition-transform before:duration-300 before:content-[''] hover:before:origin-left hover:before:scale-x-100">
+                    <li className="jaago-dropdown-item pt-2">
                       <a
                         href="https://jaago.com.bd/environment"
                         className="block hover:text-amber-600 transition-colors"
@@ -115,7 +145,7 @@ export default function JaagoNavbar() {
                         Environment
                       </a>
                     </li>
-                    <li className="py-2.5 relative overflow-hidden before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-full before:origin-right before:scale-x-0 before:bg-[#ffcd05] before:transition-transform before:duration-300 before:content-[''] hover:before:origin-left hover:before:scale-x-100">
+                    <li className="jaago-dropdown-item pt-2">
                       <a
                         href="https://jaago.com.bd/governance"
                         className="block hover:text-amber-600 transition-colors"
@@ -128,22 +158,35 @@ export default function JaagoNavbar() {
               </li>
 
               {/* Projects Dropdown */}
-              <li className="relative group">
-                <a
-                  href="#"
-                  className="flex items-center font-bold py-1 px-2.5 lg:px-3 rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
-                >
-                  <span>Projects</span>
-                  <ChevronDown className="w-3.5 h-3.5 ml-1 opacity-70 transition-transform duration-300 group-hover:rotate-180" />
-                </a>
-
-                <div
-                  className={`absolute min-w-[250px] left-0 mt-2 p-5 bg-white rounded-2xl shadow-2xl z-50 transition-all duration-300 ease-out border border-gray-100 invisible opacity-0 -translate-y-2 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 pointer-events-none group-hover:pointer-events-auto ${
-                    isSticky ? "top-8" : "top-10"
+              <li
+                className="relative group"
+                onMouseEnter={() => setActiveDropdown("projects")}
+                onMouseLeave={() => setActiveDropdown(null)}
+              >
+                <button
+                  type="button"
+                  onClick={(e) => handleDropdownToggle("projects", e)}
+                  className={`jaago-nav-link flex items-center font-bold py-1 px-3 rounded-full transition-colors cursor-pointer border-none bg-transparent ${
+                    activeDropdown === "projects"
+                      ? "bg-gray-100 border-gray-200 text-gray-900"
+                      : "hover:bg-gray-100 hover:border-gray-200"
                   }`}
                 >
+                  <span>Projects</span>
+                  <ChevronDown
+                    className={`jaago-chevron w-3.5 h-3.5 ml-1 opacity-70 transition-transform duration-300 ${
+                      activeDropdown === "projects" ? "rotate-180" : "group-hover:rotate-180"
+                    }`}
+                  />
+                </button>
+
+                <div
+                  className={`jaago-dropdown absolute min-w-[250px] left-0 mt-2 p-5 bg-white rounded-2xl shadow-2xl z-50 border border-gray-100 ${
+                    isSticky ? "top-7" : "top-9"
+                  } ${activeDropdown === "projects" ? "active-dropdown" : ""}`}
+                >
                   <ul className="divide-y divide-dashed divide-gray-200 text-xs font-semibold text-gray-700">
-                    <li className="py-2.5 relative overflow-hidden before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-full before:origin-right before:scale-x-0 before:bg-[#ffcd05] before:transition-transform before:duration-300 before:content-[''] hover:before:origin-left hover:before:scale-x-100">
+                    <li className="jaago-dropdown-item pt-2">
                       <a
                         href="https://jaago.com.bd/current-project"
                         className="block hover:text-amber-600 transition-colors"
@@ -151,7 +194,7 @@ export default function JaagoNavbar() {
                         Current Projects
                       </a>
                     </li>
-                    <li className="py-2.5 relative overflow-hidden before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-full before:origin-right before:scale-x-0 before:bg-[#ffcd05] before:transition-transform before:duration-300 before:content-[''] hover:before:origin-left hover:before:scale-x-100">
+                    <li className="jaago-dropdown-item pt-2">
                       <a
                         href="https://jaago.com.bd/completed-project"
                         className="block hover:text-amber-600 transition-colors"
@@ -159,7 +202,7 @@ export default function JaagoNavbar() {
                         Completed Projects
                       </a>
                     </li>
-                    <li className="py-2.5 relative overflow-hidden before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-full before:origin-right before:scale-x-0 before:bg-[#ffcd05] before:transition-transform before:duration-300 before:content-[''] hover:before:origin-left hover:before:scale-x-100">
+                    <li className="jaago-dropdown-item pt-2">
                       <a
                         href="https://jaago.com.bd/global-giving"
                         className="block hover:text-amber-600 transition-colors"
@@ -172,38 +215,51 @@ export default function JaagoNavbar() {
               </li>
 
               {/* Updates Dropdown */}
-              <li className="relative group">
-                <a
-                  href="#"
-                  className="flex items-center font-bold py-1 px-2.5 lg:px-3 rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
-                >
-                  <span>Updates</span>
-                  <ChevronDown className="w-3.5 h-3.5 ml-1 opacity-70 transition-transform duration-300 group-hover:rotate-180" />
-                </a>
-
-                <div
-                  className={`absolute min-w-[220px] left-0 mt-2 p-5 bg-white rounded-2xl shadow-2xl z-50 transition-all duration-300 ease-out border border-gray-100 invisible opacity-0 -translate-y-2 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 pointer-events-none group-hover:pointer-events-auto ${
-                    isSticky ? "top-8" : "top-10"
+              <li
+                className="relative group"
+                onMouseEnter={() => setActiveDropdown("updates")}
+                onMouseLeave={() => setActiveDropdown(null)}
+              >
+                <button
+                  type="button"
+                  onClick={(e) => handleDropdownToggle("updates", e)}
+                  className={`jaago-nav-link flex items-center font-bold py-1 px-3 rounded-full transition-colors cursor-pointer border-none bg-transparent ${
+                    activeDropdown === "updates"
+                      ? "bg-gray-100 border-gray-200 text-gray-900"
+                      : "hover:bg-gray-100 hover:border-gray-200"
                   }`}
                 >
+                  <span>Updates</span>
+                  <ChevronDown
+                    className={`jaago-chevron w-3.5 h-3.5 ml-1 opacity-70 transition-transform duration-300 ${
+                      activeDropdown === "updates" ? "rotate-180" : "group-hover:rotate-180"
+                    }`}
+                  />
+                </button>
+
+                <div
+                  className={`jaago-dropdown absolute min-w-[220px] left-0 mt-2 p-5 bg-white rounded-2xl shadow-2xl z-50 border border-gray-100 ${
+                    isSticky ? "top-7" : "top-9"
+                  } ${activeDropdown === "updates" ? "active-dropdown" : ""}`}
+                >
                   <ul className="divide-y divide-dashed divide-gray-200 text-xs font-semibold text-gray-700">
-                    <li className="py-2.5 relative overflow-hidden before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-full before:origin-right before:scale-x-0 before:bg-[#ffcd05] before:transition-transform before:duration-300 before:content-[''] hover:before:origin-left hover:before:scale-x-100">
-                      <a href="https://jaago.com.bd/blog" className="block hover:text-amber-600">
+                    <li className="jaago-dropdown-item pt-2">
+                      <a href="https://jaago.com.bd/blog" className="block hover:text-amber-600 transition-colors">
                         Blog
                       </a>
                     </li>
-                    <li className="py-2.5 relative overflow-hidden before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-full before:origin-right before:scale-x-0 before:bg-[#ffcd05] before:transition-transform before:duration-300 before:content-[''] hover:before:origin-left hover:before:scale-x-100">
-                      <a href="https://jaago.com.bd/jaago-in-news" className="block hover:text-amber-600">
+                    <li className="jaago-dropdown-item pt-2">
+                      <a href="https://jaago.com.bd/jaago-in-news" className="block hover:text-amber-600 transition-colors">
                         JAAGO in News
                       </a>
                     </li>
-                    <li className="py-2.5 relative overflow-hidden before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-full before:origin-right before:scale-x-0 before:bg-[#ffcd05] before:transition-transform before:duration-300 before:content-[''] hover:before:origin-left hover:before:scale-x-100">
-                      <a href="https://jaago.com.bd/report" className="block hover:text-amber-600">
+                    <li className="jaago-dropdown-item pt-2">
+                      <a href="https://jaago.com.bd/report" className="block hover:text-amber-600 transition-colors">
                         Reports
                       </a>
                     </li>
-                    <li className="py-2.5 relative overflow-hidden before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-full before:origin-right before:scale-x-0 before:bg-[#ffcd05] before:transition-transform before:duration-300 before:content-[''] hover:before:origin-left hover:before:scale-x-100">
-                      <a href="https://jaago.com.bd/yearbook" className="block hover:text-amber-600">
+                    <li className="jaago-dropdown-item pt-2">
+                      <a href="https://jaago.com.bd/yearbook" className="block hover:text-amber-600 transition-colors">
                         Yearbook
                       </a>
                     </li>
@@ -212,68 +268,81 @@ export default function JaagoNavbar() {
               </li>
 
               {/* About Us (Exact JAAGO MegaMenu with 2 columns) */}
-              <li className="relative group">
-                <a
-                  href="#"
-                  className="flex items-center font-bold py-1 px-2.5 lg:px-3 rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
+              <li
+                className="relative group"
+                onMouseEnter={() => setActiveDropdown("about")}
+                onMouseLeave={() => setActiveDropdown(null)}
+              >
+                <button
+                  type="button"
+                  onClick={(e) => handleDropdownToggle("about", e)}
+                  className={`jaago-nav-link flex items-center font-bold py-1 px-3 rounded-full transition-colors cursor-pointer border-none bg-transparent ${
+                    activeDropdown === "about"
+                      ? "bg-gray-100 border-gray-200 text-gray-900"
+                      : "hover:bg-gray-100 hover:border-gray-200"
+                  }`}
                 >
                   <span>About Us</span>
-                  <ChevronDown className="w-3.5 h-3.5 ml-1 opacity-70 transition-transform duration-300 group-hover:rotate-180" />
-                </a>
+                  <ChevronDown
+                    className={`jaago-chevron w-3.5 h-3.5 ml-1 opacity-70 transition-transform duration-300 ${
+                      activeDropdown === "about" ? "rotate-180" : "group-hover:rotate-180"
+                    }`}
+                  />
+                </button>
 
                 {/* MegaMenu container */}
                 <div
                   id="megaMenu"
-                  className={`absolute min-w-[460px] -left-28 mt-2 p-6 bg-white rounded-2xl shadow-2xl z-50 transition-all duration-300 ease-out border border-gray-100 invisible opacity-0 -translate-y-2 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 pointer-events-none group-hover:pointer-events-auto ${
-                    isSticky ? "top-8" : "top-10"
-                  }`}
+                  className={`jaago-dropdown absolute min-w-[460px] -left-28 mt-2 p-6 bg-white rounded-2xl shadow-2xl z-50 border border-gray-100 ${
+                    isSticky ? "top-7" : "top-9"
+                  } ${activeDropdown === "about" ? "active-dropdown" : ""}`}
                 >
                   <div className="grid grid-cols-2 gap-x-8 gap-y-3 text-xs font-semibold text-gray-700">
                     <a
                       href="https://jaago.com.bd/vision-mission-values"
-                      className="py-1 relative overflow-hidden before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-full before:origin-right before:scale-x-0 before:bg-[#ffcd05] before:transition-transform before:duration-300 before:content-[''] hover:before:origin-left hover:before:scale-x-100 hover:text-amber-600 block"
+                      className="jaago-dropdown-item hover:text-amber-600 block"
                     >
                       Vision, Mission, Values
                     </a>
                     <a
                       href="https://jaago.com.bd/team"
-                      className="py-1 relative overflow-hidden before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-full before:origin-right before:scale-x-0 before:bg-[#ffcd05] before:transition-transform before:duration-300 before:content-[''] hover:before:origin-left hover:before:scale-x-100 hover:text-amber-600 block"
+                      className="jaago-dropdown-item hover:text-amber-600 block"
                     >
                       JAAGO Team
                     </a>
                     <a
                       href="https://jaago.com.bd/awards-recognitions"
-                      className="py-1 relative overflow-hidden before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-full before:origin-right before:scale-x-0 before:bg-[#ffcd05] before:transition-transform before:duration-300 before:content-[''] hover:before:origin-left hover:before:scale-x-100 hover:text-amber-600 block"
+                      className="jaago-dropdown-item hover:text-amber-600 block"
                     >
                       Awards & Recognitions
                     </a>
                     <a
                       href="https://jaago.com.bd/faqs"
-                      className="py-1 relative overflow-hidden before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-full before:origin-right before:scale-x-0 before:bg-[#ffcd05] before:transition-transform before:duration-300 before:content-[''] hover:before:origin-left hover:before:scale-x-100 hover:text-amber-600 block"
+                      className="jaago-dropdown-item hover:text-amber-600 block"
                     >
                       FAQ
                     </a>
                     <a
                       href="https://jaago.com.bd/contact"
-                      className="py-1 relative overflow-hidden before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-full before:origin-right before:scale-x-0 before:bg-[#ffcd05] before:transition-transform before:duration-300 before:content-[''] hover:before:origin-left hover:before:scale-x-100 hover:text-amber-600 block"
+                      className="jaago-dropdown-item hover:text-amber-600 block"
                     >
                       Contact
                     </a>
                     <a
                       href="https://jaago.com.bd/career"
-                      className="py-1 relative overflow-hidden before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-full before:origin-right before:scale-x-0 before:bg-[#ffcd05] before:transition-transform before:duration-300 before:content-[''] hover:before:origin-left hover:before:scale-x-100 hover:text-amber-600 block"
+                      className="jaago-dropdown-item hover:text-amber-600 block"
                     >
                       Career
                     </a>
                     <a
                       href="https://jaago.com.bd/internship"
-                      className="py-1 relative overflow-hidden before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-full before:origin-right before:scale-x-0 before:bg-[#ffcd05] before:transition-transform before:duration-300 before:content-[''] hover:before:origin-left hover:before:scale-x-100 hover:text-amber-600 block"
+                      className="jaago-dropdown-item hover:text-amber-600 block"
                     >
                       Internship
                     </a>
                     <a
                       href="https://jaago.com.bd/become-a-teacher"
-                      className="py-1 relative overflow-hidden before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-full before:origin-right before:scale-x-0 before:bg-[#ffcd05] before:transition-transform before:duration-300 before:content-[''] hover:before:origin-left hover:before:scale-x-100 hover:text-amber-600 block"
+                      className="jaago-dropdown-item hover:text-amber-600 block"
                     >
                       Become a Teacher
                     </a>
@@ -285,7 +354,7 @@ export default function JaagoNavbar() {
               <li>
                 <a
                   href="https://sponsorachild.jaagofoundation.org/donation"
-                  className="flex items-center font-bold py-1 px-3 lg:px-4 rounded-full hover:bg-gray-100 transition-colors"
+                  className="jaago-nav-link flex items-center font-bold py-1 px-3 lg:px-4 rounded-full hover:bg-gray-100 hover:border-gray-200 transition-colors"
                 >
                   Donate
                 </a>
@@ -300,7 +369,7 @@ export default function JaagoNavbar() {
               <button
                 onClick={() => setSearchOpen(!searchOpen)}
                 aria-label="Search"
-                className="btn btn-primary btn-circle w-9 h-9 sm:w-11 sm:h-11 bg-[#ffcd05] text-[#1f2937] shadow-lg flex items-center justify-center hover:bg-[#e6b800] hover:scale-105 transition-all duration-300"
+                className="btn btn-primary btn-circle w-9 h-9 sm:w-11 sm:h-11 bg-[#ffcd05] text-[#1f2937] shadow-lg flex items-center justify-center hover:bg-[#e6b800] hover:scale-110 transition-all duration-300 cursor-pointer"
               >
                 <Search className="h-4 w-4 sm:h-5 sm:w-5" />
               </button>

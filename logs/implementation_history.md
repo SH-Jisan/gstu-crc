@@ -168,5 +168,21 @@ Chronological registry of all file additions, edits, component implementations, 
     2. **Dropdown Slide & Fade Animation**: Hovering over Focus, Projects, Updates, or About Us triggers a smooth slide-down (`invisible opacity-0 -translate-y-2` -> `visible opacity-100 translate-y-0 duration-300`).
     3. **Chevron Rotate Animation**: Dropdown arrow smoothly flips 180 degrees (`group-hover:rotate-180 duration-300`).
     4. **Hover Link Underline Sweep**: Links animate a yellow underline from right-to-left on hover.
-    5. **Responsive Floating Pill Menu**: Active across both desktop and medium viewports (`md:flex`).
+    - Responsive Floating Pill Menu: Active across both desktop and medium viewports (`md:flex`).
 - **Verification**: `npm run build` compiled cleanly in 529ms with 0 errors. Verified in live Puppeteer session on `http://localhost:3000`. Both initial and sticky scrolled states captured via screenshot.
+
+---
+
+### [ENTRY-011] 2026-09-04 — Full Dual-Layer Hover & Click Navbar Interaction Engine
+- **Type**: Interaction & Motion Architecture (Feature Branch: `feature/frontend-client-demo`)
+- **Reference**: `https://jaago.com.bd/` navigation behavior
+- **Root Cause & Solution**:
+  - Found that vanilla CSS `transform: scaleY(0)` was overriding Tailwind transform utility classes, locking the dropdown height at 0 even on hover.
+  - Resolved by creating dedicated CSS rules with `.jaago-dropdown.active-dropdown` and `.group:hover > .jaago-dropdown` utilizing `transform: scaleY(1) !important` and `opacity: 1 !important`.
+  - Added dual-layer interaction:
+    1. **Hover interaction**: `onMouseEnter`, `onMouseLeave`, plus pure CSS `.group:hover > .jaago-dropdown`.
+    2. **Click-to-toggle interaction**: Clicking **Focus**, **Projects**, **Updates**, or **About Us** smoothly toggles the dropdown, with animated chevron rotation (`rotate-180`).
+    3. **Click-outside-to-close**: Handled via `document.addEventListener('click')` with `useRef`.
+    4. **Hover bridge**: Added an invisible pseudo-element bridge (`.jaago-dropdown::before`) so moving the cursor from the pill button to the dropdown menu never loses hover contact.
+    5. **Link hover animations**: Added `jaago-nav-link` pill highlight (`hover:bg-gray-100 hover:border-gray-200`) and `jaago-dropdown-item` right-to-left underline sweep.
+- **Verification**: `npm run build` compiled in 527ms with 0 errors. Verified with live Puppeteer screenshot captures for both Focus dropdown and About Us 2-column MegaMenu.
