@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import Navbar from "../components/Navbar";
-import HeroSection from "../components/HeroSection";
-import HappeningNow from "../components/HappeningNow";
-import HatekhoriSchool from "../components/HatekhoriSchool";
-import GovernanceSection from "../components/GovernanceSection";
-import TransparencySection from "../components/TransparencySection";
-import BranchesMap from "../components/BranchesMap";
-import Footer from "../components/Footer";
+import JaagoNavbar from "../components/JaagoNavbar";
+import JaagoHero from "../components/JaagoHero";
+import JaagoSponsorChild from "../components/JaagoSponsorChild";
+import JaagoFocusAreas from "../components/JaagoFocusAreas";
+import JaagoVolunteerism from "../components/JaagoVolunteerism";
+import JaagoGovernanceTransparency from "../components/JaagoGovernanceTransparency";
+import JaagoNewsArticles from "../components/JaagoNewsArticles";
+import JaagoFooter from "../components/JaagoFooter";
 import DonationModal from "../components/DonationModal";
 import ReportConcernModal from "../components/ReportConcernModal";
 import { Campaign } from "../data/crcMockData";
@@ -28,37 +28,37 @@ export default function HomePage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* 1. Header & Navigation */}
-      <Navbar
+    <div className="flex flex-col min-h-screen bg-gray-50 text-gray-900 font-sans">
+      {/* 1. JAAGO-Style Navigation Bar with Floating Capsule */}
+      <JaagoNavbar
         onOpenDonate={() => handleOpenDonate()}
         onOpenReport={handleOpenReport}
       />
 
-      {/* 2. Hero Showcase */}
       <main className="flex-grow">
-        <HeroSection onOpenDonate={() => handleOpenDonate()} />
+        {/* 2. Hero Section (Uppercase Headline, Student Portrait, Yellow CTA) */}
+        <JaagoHero onOpenDonate={() => handleOpenDonate()} />
 
-        {/* 3. Happening Now (Module 1) */}
-        <HappeningNow onOpenDonate={handleOpenDonate} />
+        {/* 3. Signature 50/50 Split Card: Sponsor a Child Program */}
+        <JaagoSponsorChild onOpenDonate={() => handleOpenDonate()} />
 
-        {/* 4. Hatekhori School (Module 3) */}
-        <HatekhoriSchool onOpenDonate={() => handleOpenDonate()} />
+        {/* 4. Our Focus Areas Grid */}
+        <JaagoFocusAreas />
 
-        {/* 5. Three-Tier Governance (Module 4) */}
-        <GovernanceSection />
+        {/* 5. Signature Volunteerism Section (Dark Header, Floating Metrics Card, Overlapping Yellow CTA) */}
+        <JaagoVolunteerism onOpenVolunteer={() => handleOpenDonate()} />
 
-        {/* 6. Financial Transparency & Audits (Module 6) */}
-        <TransparencySection />
+        {/* 6. Three-Tier Governance & Public Audit Center */}
+        <JaagoGovernanceTransparency />
 
-        {/* 7. Branch Network Explorer (Module 3) */}
-        <BranchesMap />
+        {/* 7. News & Articles (Dashed Inner Borders, Category Badges) */}
+        <JaagoNewsArticles onOpenDonate={() => handleOpenDonate()} />
       </main>
 
-      {/* 8. Comprehensive Footer */}
-      <Footer />
+      {/* 8. JAAGO-Style 3-Column Footer */}
+      <JaagoFooter />
 
-      {/* 9. Interactive Modals (Client Experience) */}
+      {/* 9. Interactive Modals */}
       <DonationModal
         isOpen={donateModalOpen}
         onClose={() => setDonateModalOpen(false)}
