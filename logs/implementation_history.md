@@ -155,3 +155,18 @@ Chronological registry of all file additions, edits, component implementations, 
   - **News & Articles Animations**:
     - Staggered `data-aos="fade-up"` on article cards with subtle hover lift (`hover:-translate-y-1.5`) and image zoom.
 - **Verification**: `npm run build` compiled in 636ms with zero errors. All 22 AOS elements verified and firing smoothly in Puppeteer browser session on `http://localhost:3000`.
+
+---
+
+### [ENTRY-010] 2026-09-04 — Complete JAAGO Navbar Interactive & Scroll Animation Suite
+- **Type**: Navbar Interaction & Motion Fix (Feature Branch: `feature/frontend-client-demo`)
+- **Reference**: `https://jaago.com.bd/` navbar scripts audit (`.nav-sticky`, `scroll` listeners)
+- **Root Cause & Solution**:
+  - Identified `overflow-x-hidden` on inner page container and `scroll-smooth` on `html` in `layout.tsx` which prevented standard window scroll events from firing synchronously. Removed them to restore fluid window scroll events.
+  - Implemented JAAGO's signature scroll animation:
+    1. **Dynamic Sticky Navbar Transition**: When scrolling past 50px, navbar smoothly compresses (`py-3` -> `py-1.5`), background deepens into frosted glass (`bg-gray-900/95 backdrop-blur-xl shadow-2xl border-b border-gray-700/50`), and the JAAGO logo scales down from 110px to 90px (`scale-95`).
+    2. **Dropdown Slide & Fade Animation**: Hovering over Focus, Projects, Updates, or About Us triggers a smooth slide-down (`invisible opacity-0 -translate-y-2` -> `visible opacity-100 translate-y-0 duration-300`).
+    3. **Chevron Rotate Animation**: Dropdown arrow smoothly flips 180 degrees (`group-hover:rotate-180 duration-300`).
+    4. **Hover Link Underline Sweep**: Links animate a yellow underline from right-to-left on hover.
+    5. **Responsive Floating Pill Menu**: Active across both desktop and medium viewports (`md:flex`).
+- **Verification**: `npm run build` compiled cleanly in 529ms with 0 errors. Verified in live Puppeteer session on `http://localhost:3000`. Both initial and sticky scrolled states captured via screenshot.

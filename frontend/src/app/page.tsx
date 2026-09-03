@@ -12,11 +12,11 @@ import JaagoFooter from "../components/JaagoFooter";
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50 text-gray-900 font-sans antialiased overflow-x-hidden">
+    <div className="flex flex-col min-h-screen bg-gray-50 text-gray-900 font-sans antialiased">
       {/* 0. AOS (Animate On Scroll) Initializer */}
       <AosInit />
 
-      {/* 1. Exact JAAGO Navbar */}
+      {/* 1. Exact JAAGO Navbar with Sticky Scroll & Hover Animations */}
       <JaagoNavbar />
 
       {/* Main Content Sections */}
