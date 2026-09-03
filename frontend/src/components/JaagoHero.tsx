@@ -1,121 +1,152 @@
 "use client";
 
-import React from "react";
-import { Heart, ArrowRight, Sparkles, BookOpen, ShieldCheck } from "lucide-react";
+import React, { useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
-interface JaagoHeroProps {
-  onOpenDonate: () => void;
-}
+export default function JaagoHero() {
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-export default function JaagoHero({ onOpenDonate }: JaagoHeroProps) {
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev === 0 ? 1 : 0));
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev === 1 ? 0 : 1));
+  };
+
   return (
-    <section className="relative bg-gray-900 text-white pt-32 sm:pt-36 pb-20 lg:pb-28 overflow-hidden">
-      {/* Background Decorative Geometric Subtle Overlay */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#FFCD05_1px,transparent_1px)] [background-size:24px_24px]" />
-      
-      {/* Ambient glowing orbs */}
-      <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#FFCD05]/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/2 right-0 w-96 h-96 bg-blue-600/15 rounded-full blur-3xl pointer-events-none" />
+    <section className="w-full mt-14 sm:mt-16 bg-gray-50 relative overflow-hidden" id="splide01">
+      {/* Slide 1: Transform the Lives of Children in Need with Education */}
+      {currentSlide === 0 && (
+        <div className="hero-section lg:h-[550px] xl:h-[640px] 2xl:h-[720px] bg-gray-800 overflow-hidden relative max-lg:pt-[120px] max-lg:pb-16 pt-[100px] transition-all duration-700 animate-in fade-in">
+          {/* Subtle background overlay */}
+          <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#ffcd05_1px,transparent_1px)] [background-size:24px_24px]" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Column: Hero Text (7 cols) */}
-          <div className="lg:col-span-7 space-y-6">
-            {/* Pill Tag */}
-            <div className="inline-flex items-center space-x-2 bg-gray-800/90 border border-gray-700 px-4 py-1.5 rounded-full text-xs font-bold text-[#FFCD05] shadow-sm">
-              <Sparkles className="w-3.5 h-3.5 text-[#FFCD05]" />
-              <span>Founded 5 June 2016 at GSTU Campus • 10 Years of Impact</span>
-            </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center w-full">
+              {/* Left Column: Headline & CTA (7 cols) */}
+              <div className="lg:col-span-7 p-4 text-center lg:text-left space-y-6">
+                <h1 className="font-bold font-sans text-4xl md:text-5xl xl:text-6xl text-white leading-tight">
+                  Transform the Lives{" "}
+                  <span className="block">
+                    of <span className="font-sans text-white">Children in Need</span>
+                    <br />
+                    with Education
+                  </span>
+                </h1>
 
-            {/* Main Headline */}
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight uppercase leading-[1.08] text-white">
-              Transform the Lives of{" "}
-              <span className="text-[#FFCD05]">Street Children</span> With Free
-              Education
-            </h1>
-
-            {/* Subtitle / Quote */}
-            <blockquote className="border-l-4 border-[#FFCD05] pl-4 text-base sm:text-lg text-gray-300 italic">
-              &quot;The World Will Be Free from Street Children by Connected Together.&quot;
-            </blockquote>
-
-            <p className="text-sm sm:text-base text-gray-300 leading-relaxed font-normal max-w-2xl">
-              <strong>Come for Road Child (CRC)</strong> breaks generational poverty 
-              through our flagship <strong className="text-white">Hatekhori Free School (হাতিখড়ি স্কুল)</strong>, 
-              mobilizing university student volunteer teachers, nutritious midday meals, and radical financial transparency.
-            </p>
-
-            {/* CTAs */}
-            <div className="pt-2 flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
-              <button
-                id="btn-jaago-hero-sponsor"
-                onClick={onOpenDonate}
-                className="flex items-center justify-center font-black text-sm sm:text-base bg-[#FFCD05] hover:bg-[#e6b800] text-gray-950 px-8 py-4 rounded-full shadow-xl hover:shadow-[#FFCD05]/30 transition-all duration-150 transform hover:-translate-y-0.5"
-              >
-                <Heart className="w-5 h-5 mr-2 fill-gray-950" />
-                Sponsor a Child Now
-              </button>
-
-              <a
-                href="#sponsor-child"
-                className="flex items-center justify-center font-bold text-sm bg-gray-800 hover:bg-gray-700 text-white border border-gray-700 px-6 py-4 rounded-full transition-colors"
-              >
-                <BookOpen className="w-4 h-4 mr-2 text-[#FFCD05]" />
-                Explore Hatekhori School
-                <ArrowRight className="w-4 h-4 ml-1.5" />
-              </a>
-            </div>
-
-            {/* Verified Badges */}
-            <div className="pt-3 flex flex-wrap gap-4 text-xs font-semibold text-gray-400">
-              <span className="flex items-center">
-                <ShieldCheck className="w-4 h-4 mr-1.5 text-emerald-400" />
-                Child Safeguarding Anti-Harm Policy
-              </span>
-              <span className="flex items-center">
-                <ShieldCheck className="w-4 h-4 mr-1.5 text-[#FFCD05]" />
-                100% Chartered Accountant Audited
-              </span>
-            </div>
-          </div>
-
-          {/* Right Column: Hero Visual Card (5 cols) */}
-          <div className="lg:col-span-5 relative">
-            <div className="relative mx-auto max-w-md rounded-3xl overflow-hidden shadow-2xl border-4 border-gray-800 group">
-              <img
-                src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=800&q=80"
-                alt="Smiling child student holding books at Hatekhori School"
-                className="w-full h-[450px] object-cover object-center group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/30 to-transparent" />
-
-              {/* Floating Top Badge */}
-              <div className="absolute top-4 left-4 bg-gray-900/90 border border-gray-700 text-[#FFCD05] text-xs font-black uppercase px-3 py-1.5 rounded-full shadow-lg backdrop-blur-md">
-                Hatekhori School • Since 2017
+                <div>
+                  <a
+                    className="btn btn-primary px-8 py-3.5 text-base lg:text-lg font-sans shadow-xl capitalize font-bold text-secondary inline-flex hover:scale-105 transition-transform"
+                    href="https://jaago.com.bd/sponsor-a-child"
+                  >
+                    Sponsor a Child
+                  </a>
+                </div>
               </div>
 
-              {/* Bottom Card Summary */}
-              <div className="absolute bottom-6 left-6 right-6 text-white">
-                <div className="text-xs font-bold text-[#FFCD05] uppercase tracking-wider">
-                  Full Monthly Sponsorship
+              {/* Right Column: Student Portrait + Speech Quote Bubble (5 cols) */}
+              <div className="lg:col-span-5 relative flex justify-center lg:justify-end">
+                {/* Floating Yellow Speech Bubble (Exact JAAGO element) */}
+                <div className="hidden lg:inline-block absolute top-[10px] -left-[110px] xl:top-[30px] xl:-left-[120px] bg-[#ffcd05] p-2 rounded-3xl shadow-xl z-20 transform -rotate-1 hover:rotate-0 transition-transform">
+                  <div className="flex flex-col max-w-[240px] xl:max-w-[270px] justify-center items-center border-2 border-dashed border-gray-900 rounded-2xl p-4">
+                    <p className="font-sans text-xs xl:text-sm text-center mb-0 font-extrabold text-gray-950 leading-snug">
+                      &quot;My resources are limited,
+                      <br />
+                      but my potential is not.
+                      <br />
+                      Help me fulfill my dreams.&quot;
+                    </p>
+                  </div>
                 </div>
-                <div className="text-2xl font-black text-white mt-0.5">
-                  ৳1,500 <span className="text-xs font-normal text-gray-300">/ child per month</span>
-                </div>
-                <p className="text-xs text-gray-300 mt-1">
-                  Covers free tuition, school bag, books, uniform & warm midday nourishment.
-                </p>
 
-                <button
-                  onClick={onOpenDonate}
-                  className="mt-3 w-full py-2.5 bg-[#FFCD05] hover:bg-[#e6b800] text-gray-950 text-xs font-black rounded-xl transition-colors"
-                >
-                  Sponsor This Classroom
-                </button>
+                {/* Decorative Yellow Shapes */}
+                <div className="hidden lg:inline-block absolute top-[135px] left-[35px] bg-[#ffcd05] w-[40px] h-3.5 rounded-full z-10" />
+                <div className="hidden lg:inline-block absolute top-[155px] left-[65px] bg-[#ffcd05] w-[25px] h-3.5 rounded-full z-10" />
+
+                {/* Child Image */}
+                <div className="relative z-10 max-w-[340px] sm:max-w-[420px] xl:max-w-[480px]">
+                  <img
+                    src="https://jaago.com.bd/images/2024/06/sponsor-a-child-in-bangladesh-with-jaago-foundation_1719739929_8pyv6_gzk.png?tr=f-auto,fo-auto,w-639,h-692,pr-true"
+                    alt="Sponsor a child in Bangladesh with JAAGO Foundation"
+                    className="w-full h-auto object-contain drop-shadow-2xl"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
+      )}
+
+      {/* Slide 2: JAAGO Women Scholarship Program */}
+      {currentSlide === 1 && (
+        <div className="hero-section lg:h-[550px] xl:h-[640px] 2xl:h-[720px] bg-[#f0ede8] overflow-hidden relative max-lg:pt-[120px] max-lg:pb-16 pt-[100px] transition-all duration-700 animate-in fade-in">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center w-full">
+              <div className="lg:col-span-7 p-4 text-center lg:text-left space-y-4">
+                <span className="text-sm font-bold uppercase tracking-wider text-gray-600 block">
+                  JAAGO Women
+                </span>
+                <h1 className="font-extrabold font-sans text-4xl md:text-5xl xl:text-6xl text-gray-900 leading-tight uppercase">
+                  Scholarship Program
+                </h1>
+                <p className="text-gray-700 text-base max-w-xl">
+                  Empowering resilient women and young female scholars across Bangladesh to pursue higher education and break societal barriers.
+                </p>
+                <div>
+                  <a
+                    className="btn btn-secondary px-8 py-3.5 text-base font-sans shadow-xl capitalize font-bold text-white inline-flex"
+                    href="https://jaago.com.bd/women"
+                  >
+                    Learn More
+                  </a>
+                </div>
+              </div>
+
+              <div className="lg:col-span-5 flex justify-center">
+                <img
+                  src="https://jaago.com.bd/images/2024/04/sponsor-a-child_1714365666_yl5a0ydht.jpg?tr=f-auto,w-576,h-550,fo-auto,pr-true,c-maintain_ratio"
+                  alt="JAAGO Scholar"
+                  className="rounded-3xl shadow-xl max-w-sm w-full object-cover"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Carousel Navigation Arrows */}
+      <button
+        onClick={prevSlide}
+        aria-label="Previous Slide"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-black/40 hover:bg-black/70 text-white transition-colors"
+      >
+        <ChevronLeft className="w-6 h-6" />
+      </button>
+      <button
+        onClick={nextSlide}
+        aria-label="Next Slide"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-black/40 hover:bg-black/70 text-white transition-colors"
+      >
+        <ChevronRight className="w-6 h-6" />
+      </button>
+
+      {/* Slide Indicators / Dots */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex space-x-2">
+        <button
+          onClick={() => setCurrentSlide(0)}
+          className={`w-3 h-3 rounded-full transition-all ${
+            currentSlide === 0 ? "bg-[#ffcd05] w-8" : "bg-white/60"
+          }`}
+          aria-label="Slide 1"
+        />
+        <button
+          onClick={() => setCurrentSlide(1)}
+          className={`w-3 h-3 rounded-full transition-all ${
+            currentSlide === 1 ? "bg-[#ffcd05] w-8" : "bg-white/60"
+          }`}
+          aria-label="Slide 2"
+        />
       </div>
     </section>
   );

@@ -1,28 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  ChevronDown,
-  Heart,
-  ShieldAlert,
-  Search,
-  Menu,
-  X,
-  Phone,
-  Mail,
-} from "lucide-react";
-import { CRC_META } from "../data/crcMockData";
+import { Search, ChevronDown, Menu, X } from "lucide-react";
 
-interface JaagoNavbarProps {
-  onOpenDonate: () => void;
-  onOpenReport: () => void;
-}
-
-export default function JaagoNavbar({
-  onOpenDonate,
-  onOpenReport,
-}: JaagoNavbarProps) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+export default function JaagoNavbar() {
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
   const toggleDropdown = (name: string) => {
@@ -30,53 +12,29 @@ export default function JaagoNavbar({
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-gray-900 shadow-md">
-      {/* Top Helpline Strip */}
-      <div className="hidden sm:flex bg-gray-950 text-gray-300 text-[11px] py-1 px-4 lg:px-8 justify-between items-center border-b border-gray-800">
-        <div className="flex items-center space-x-4">
-          <span className="flex items-center text-amber-400 font-semibold">
-            <Phone className="w-3 h-3 mr-1" />
-            24/7 Child Helpline: {CRC_META.hotline}
-          </span>
-          <span className="text-gray-500">•</span>
-          <span className="flex items-center text-gray-300">
-            <Mail className="w-3 h-3 mr-1 text-gray-400" />
-            {CRC_META.email}
-          </span>
-        </div>
-        <div className="flex items-center space-x-3 text-gray-400">
-          <span className="bg-blue-900/60 text-blue-300 px-2 py-0.5 rounded text-[10px] font-bold border border-blue-800">
-            GSTU Campus Flagship (Est. 2016)
-          </span>
-          <span>Chartered Audited NGO</span>
-        </div>
-      </div>
+    <header className="fixed top-0 left-0 py-3 z-[1000] duration-500 transition-all w-full bg-gray-800" id="jaagonavbar">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-4 font-sans font-semibold">
+          {/* Logo */}
+          <div className="w-1/3 lg:w-1/4">
+            <a href="https://jaago.com.bd">
+              <img
+                width="110"
+                height="73"
+                className="w-[110px]"
+                src="https://jaago.com.bd/images/2024/09/jaago-logo_1727084165_w2fULrshk.png?tr=f-auto,w-165,h-100"
+                alt="JAAGO Foundation"
+              />
+            </a>
+          </div>
 
-      {/* Main Navbar Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5">
-        <div className="flex items-center justify-between gap-4">
-          {/* Logo & Identity */}
-          <a href="#" className="flex items-center space-x-3 shrink-0 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#FFCD05] to-amber-500 flex items-center justify-center text-gray-950 font-black text-lg shadow-md group-hover:scale-105 transition-transform">
-              CRC
-            </div>
-            <div className="flex flex-col">
-              <span className="text-base sm:text-lg font-black tracking-tight text-white leading-none">
-                Come for Road Child
-              </span>
-              <span className="text-[10px] text-amber-400 font-semibold tracking-wide uppercase mt-0.5">
-                GSTU Branch & Central Secretariat
-              </span>
-            </div>
-          </a>
-
-          {/* Desktop Center Floating Capsule Navigation (JAAGO Signature Style) */}
-          <nav className="hidden lg:flex items-center bg-white px-5 py-1 rounded-full shadow-lg border border-gray-200">
-            <ul className="flex items-center space-x-1 text-sm font-bold text-gray-700">
+          {/* Desktop Center Floating Capsule Navigation */}
+          <div className="hidden lg:flex flex-1 justify-center">
+            <ul className="flex items-center bg-white px-6 py-1.5 shadow-xl rounded-full font-sans text-sm text-gray-800">
               <li>
                 <a
-                  href="#"
-                  className="px-3.5 py-1.5 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-colors inline-block"
+                  href="https://jaago.com.bd"
+                  className="flex items-center font-bold py-1.5 px-3 rounded-full hover:bg-gray-100 transition-colors"
                 >
                   Home
                 </a>
@@ -88,36 +46,41 @@ export default function JaagoNavbar({
                 onMouseEnter={() => setActiveDropdown("focus")}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
-                <button className="flex items-center px-3.5 py-1.5 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-colors">
-                  Focus <ChevronDown className="w-4 h-4 ml-1 opacity-70" />
-                </button>
+                <a
+                  href="#"
+                  className="flex items-center font-bold py-1.5 px-3 rounded-full hover:bg-gray-100 transition-colors"
+                >
+                  Focus
+                  <ChevronDown className="w-4 h-4 ml-1 opacity-70" />
+                </a>
                 {activeDropdown === "focus" && (
-                  <div className="absolute top-full left-0 mt-1 w-64 bg-white rounded-2xl shadow-2xl border border-gray-100 p-3 z-50 animate-in fade-in slide-in-from-top-2 duration-150 text-xs font-semibold text-gray-700 space-y-1">
-                    <a
-                      href="#focus-areas"
-                      className="block px-3 py-2 rounded-xl hover:bg-amber-50 hover:text-amber-800 transition-colors"
-                    >
-                      Education & Digital Learning (Hatekhori)
-                    </a>
-                    <a
-                      href="#volunteerism"
-                      className="block px-3 py-2 rounded-xl hover:bg-amber-50 hover:text-amber-800 transition-colors"
-                    >
-                      Youth & Skill Development
-                    </a>
-                    <a
-                      href="#focus-areas"
-                      className="block px-3 py-2 rounded-xl hover:bg-amber-50 hover:text-amber-800 transition-colors"
-                    >
-                      Healthcare & Midday Nutrition
-                    </a>
-                    <a
-                      href="#governance-transparency"
-                      className="block px-3 py-2 rounded-xl hover:bg-amber-50 hover:text-amber-800 transition-colors"
-                    >
-                      Governance & Child Safeguarding
-                    </a>
-                  </div>
+                  <ul className="absolute min-w-[260px] left-0 top-full mt-2 p-4 bg-white rounded-xl shadow-2xl z-50 divide-y divide-gray-100 text-xs font-semibold text-gray-700 animate-in fade-in">
+                    <li className="py-2 hover:text-amber-600 transition-colors">
+                      <a href="https://jaago.com.bd/education-program" className="block">
+                        Education and Digital Learning
+                      </a>
+                    </li>
+                    <li className="py-2 hover:text-amber-600 transition-colors">
+                      <a href="https://jaago.com.bd/youth-development-program" className="block">
+                        Youth and Skill Development
+                      </a>
+                    </li>
+                    <li className="py-2 hover:text-amber-600 transition-colors">
+                      <a href="https://jaago.com.bd/women" className="block">
+                        Women
+                      </a>
+                    </li>
+                    <li className="py-2 hover:text-amber-600 transition-colors">
+                      <a href="https://jaago.com.bd/environment" className="block">
+                        Environment
+                      </a>
+                    </li>
+                    <li className="py-2 hover:text-amber-600 transition-colors">
+                      <a href="https://jaago.com.bd/governance" className="block">
+                        Governance and Advocacy
+                      </a>
+                    </li>
+                  </ul>
                 )}
               </li>
 
@@ -127,30 +90,70 @@ export default function JaagoNavbar({
                 onMouseEnter={() => setActiveDropdown("projects")}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
-                <button className="flex items-center px-3.5 py-1.5 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-colors">
-                  Projects <ChevronDown className="w-4 h-4 ml-1 opacity-70" />
-                </button>
+                <a
+                  href="#"
+                  className="flex items-center font-bold py-1.5 px-3 rounded-full hover:bg-gray-100 transition-colors"
+                >
+                  Projects
+                  <ChevronDown className="w-4 h-4 ml-1 opacity-70" />
+                </a>
                 {activeDropdown === "projects" && (
-                  <div className="absolute top-full left-0 mt-1 w-60 bg-white rounded-2xl shadow-2xl border border-gray-100 p-3 z-50 animate-in fade-in slide-in-from-top-2 duration-150 text-xs font-semibold text-gray-700 space-y-1">
-                    <a
-                      href="#sponsor-child"
-                      className="block px-3 py-2 rounded-xl hover:bg-amber-50 hover:text-amber-800 transition-colors"
-                    >
-                      Hatekhori Free School
-                    </a>
-                    <a
-                      href="#news-articles"
-                      className="block px-3 py-2 rounded-xl hover:bg-amber-50 hover:text-amber-800 transition-colors"
-                    >
-                      Winter Warmth Drive 2026
-                    </a>
-                    <a
-                      href="#governance-transparency"
-                      className="block px-3 py-2 rounded-xl hover:bg-amber-50 hover:text-amber-800 transition-colors"
-                    >
-                      Emergency Relief Operations
-                    </a>
-                  </div>
+                  <ul className="absolute min-w-[240px] left-0 top-full mt-2 p-4 bg-white rounded-xl shadow-2xl z-50 divide-y divide-gray-100 text-xs font-semibold text-gray-700 animate-in fade-in">
+                    <li className="py-2 hover:text-amber-600 transition-colors">
+                      <a href="https://jaago.com.bd/current-project" className="block">
+                        Current Projects
+                      </a>
+                    </li>
+                    <li className="py-2 hover:text-amber-600 transition-colors">
+                      <a href="https://jaago.com.bd/completed-project" className="block">
+                        Completed Projects
+                      </a>
+                    </li>
+                    <li className="py-2 hover:text-amber-600 transition-colors">
+                      <a href="https://jaago.com.bd/global-giving" className="block">
+                        Global Giving Projects
+                      </a>
+                    </li>
+                  </ul>
+                )}
+              </li>
+
+              {/* Updates Dropdown */}
+              <li
+                className="relative"
+                onMouseEnter={() => setActiveDropdown("updates")}
+                onMouseLeave={() => setActiveDropdown(null)}
+              >
+                <a
+                  href="#"
+                  className="flex items-center font-bold py-1.5 px-3 rounded-full hover:bg-gray-100 transition-colors"
+                >
+                  Updates
+                  <ChevronDown className="w-4 h-4 ml-1 opacity-70" />
+                </a>
+                {activeDropdown === "updates" && (
+                  <ul className="absolute min-w-[220px] left-0 top-full mt-2 p-4 bg-white rounded-xl shadow-2xl z-50 divide-y divide-gray-100 text-xs font-semibold text-gray-700 animate-in fade-in">
+                    <li className="py-2 hover:text-amber-600 transition-colors">
+                      <a href="https://jaago.com.bd/blog" className="block">
+                        Blog
+                      </a>
+                    </li>
+                    <li className="py-2 hover:text-amber-600 transition-colors">
+                      <a href="https://jaago.com.bd/jaago-in-news" className="block">
+                        JAAGO in News
+                      </a>
+                    </li>
+                    <li className="py-2 hover:text-amber-600 transition-colors">
+                      <a href="https://jaago.com.bd/report" className="block">
+                        Reports
+                      </a>
+                    </li>
+                    <li className="py-2 hover:text-amber-600 transition-colors">
+                      <a href="https://jaago.com.bd/yearbook" className="block">
+                        Yearbook
+                      </a>
+                    </li>
+                  </ul>
                 )}
               </li>
 
@@ -160,157 +163,113 @@ export default function JaagoNavbar({
                 onMouseEnter={() => setActiveDropdown("about")}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
-                <button className="flex items-center px-3.5 py-1.5 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-colors">
-                  About Us <ChevronDown className="w-4 h-4 ml-1 opacity-70" />
-                </button>
+                <a
+                  href="#"
+                  className="flex items-center font-bold py-1.5 px-3 rounded-full hover:bg-gray-100 transition-colors"
+                >
+                  About Us
+                  <ChevronDown className="w-4 h-4 ml-1 opacity-70" />
+                </a>
                 {activeDropdown === "about" && (
-                  <div className="absolute top-full left-0 mt-1 w-64 bg-white rounded-2xl shadow-2xl border border-gray-100 p-3 z-50 animate-in fade-in slide-in-from-top-2 duration-150 text-xs font-semibold text-gray-700 space-y-1">
-                    <a
-                      href="#focus-areas"
-                      className="block px-3 py-2 rounded-xl hover:bg-amber-50 hover:text-amber-800 transition-colors"
-                    >
-                      Vision, Mission & Values
+                  <div className="absolute min-w-[340px] -left-16 top-full mt-2 p-5 bg-white rounded-2xl shadow-2xl z-50 text-xs font-semibold text-gray-700 grid grid-cols-2 gap-3 animate-in fade-in">
+                    <a href="https://jaago.com.bd/vision-mission-values" className="hover:text-amber-600">
+                      Vision, Mission, Values
                     </a>
-                    <a
-                      href="#governance-transparency"
-                      className="block px-3 py-2 rounded-xl hover:bg-amber-50 hover:text-amber-800 transition-colors"
-                    >
-                      Three-Tier Governance Structure
+                    <a href="https://jaago.com.bd/team" className="hover:text-amber-600">
+                      JAAGO Team
                     </a>
-                    <a
-                      href="#governance-transparency"
-                      className="block px-3 py-2 rounded-xl hover:bg-amber-50 hover:text-amber-800 transition-colors"
-                    >
-                      Audited Financial Statements
+                    <a href="https://jaago.com.bd/awards-recognitions" className="hover:text-amber-600">
+                      Awards & Recognitions
                     </a>
-                    <a
-                      href="#volunteerism"
-                      className="block px-3 py-2 rounded-xl hover:bg-amber-50 hover:text-amber-800 transition-colors"
-                    >
-                      University Branch Network
+                    <a href="https://jaago.com.bd/faqs" className="hover:text-amber-600">
+                      FAQ
+                    </a>
+                    <a href="https://jaago.com.bd/contact" className="hover:text-amber-600">
+                      Contact
+                    </a>
+                    <a href="https://jaago.com.bd/career" className="hover:text-amber-600">
+                      Career
+                    </a>
+                    <a href="https://jaago.com.bd/internship" className="hover:text-amber-600">
+                      Internship
+                    </a>
+                    <a href="https://jaago.com.bd/become-a-teacher" className="hover:text-amber-600">
+                      Become a Teacher
                     </a>
                   </div>
                 )}
               </li>
 
               <li>
-                <button
-                  onClick={onOpenDonate}
-                  className="px-3.5 py-1.5 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-colors"
+                <a
+                  href="https://sponsorachild.jaagofoundation.org/donation"
+                  className="flex items-center font-bold py-1.5 px-4 rounded-full hover:bg-gray-100 transition-colors"
                 >
                   Donate
-                </button>
+                </a>
               </li>
             </ul>
-          </nav>
-
-          {/* Right Action Buttons */}
-          <div className="hidden lg:flex items-center space-x-3">
-            {/* Child Safeguarding Whistleblower */}
-            <button
-              id="btn-jaago-report"
-              onClick={onOpenReport}
-              className="flex items-center text-xs font-bold text-rose-300 hover:text-white bg-rose-950/60 hover:bg-rose-900 border border-rose-700/50 px-3.5 py-2.5 rounded-full transition-all duration-150"
-            >
-              <ShieldAlert className="w-4 h-4 mr-1.5 text-rose-400" />
-              Report Concern
-            </button>
-
-            {/* Signature Yellow "Sponsor a Child" Button */}
-            <button
-              id="btn-jaago-sponsor-child"
-              onClick={onOpenDonate}
-              className="flex items-center text-sm font-black text-gray-950 bg-[#FFCD05] hover:bg-[#e6b800] px-5 py-2.5 rounded-full shadow-lg hover:shadow-[#FFCD05]/30 transition-all duration-150 transform hover:-translate-y-0.5"
-            >
-              <Heart className="w-4 h-4 mr-1.5 fill-gray-950" />
-              Sponsor a Child
-            </button>
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <div className="lg:hidden flex items-center space-x-2">
+          {/* Right End: Search + Sponsor a Child */}
+          <div className="hidden lg:flex items-center gap-3">
             <button
-              onClick={onOpenDonate}
-              className="text-xs font-bold text-gray-950 bg-[#FFCD05] px-3.5 py-2 rounded-full"
+              aria-label="Search"
+              className="btn btn-primary btn-circle w-11 h-11 bg-primary text-secondary shadow-lg flex items-center justify-center hover:bg-[#e6b800]"
             >
-              Sponsor
+              <Search className="h-5 w-5" />
             </button>
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-white hover:bg-gray-800 rounded-xl"
+
+            <a
+              className="btn btn-primary px-6 py-2.5 text-sm lg:text-base font-sans shadow-xl capitalize font-bold text-secondary"
+              href="https://sponsorachild.jaagofoundation.org/children"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              Sponsor a Child
+            </a>
+          </div>
+
+          {/* Mobile Drawer Trigger */}
+          <div className="lg:hidden flex items-center gap-2">
+            <a
+              href="https://sponsorachild.jaagofoundation.org/children"
+              className="btn btn-primary btn-sm text-xs capitalize"
+            >
+              Sponsor a Child
+            </a>
+            <button
+              onClick={() => setMobileDrawerOpen(!mobileDrawerOpen)}
+              className="p-2 text-white bg-gray-700 rounded-lg"
+            >
+              {mobileDrawerOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden bg-gray-900 border-t border-gray-800 px-6 py-5 space-y-4 animate-in slide-in-from-top-2 text-sm font-bold text-white">
-          <a
-            href="#"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block py-2 border-b border-gray-800"
-          >
+      {/* Mobile Drawer Menu */}
+      {mobileDrawerOpen && (
+        <div className="lg:hidden bg-gray-900 px-6 py-4 border-t border-gray-700 text-white text-sm font-semibold space-y-3 animate-in slide-in-from-top-2">
+          <a href="https://jaago.com.bd" className="block py-1 border-b border-gray-800">
             Home
           </a>
-          <a
-            href="#sponsor-child"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block py-2 border-b border-gray-800 text-amber-400"
-          >
-            Sponsor a Child (Hatekhori School)
+          <a href="https://jaago.com.bd/education-program" className="block py-1 border-b border-gray-800">
+            Focus: Education and Digital Learning
           </a>
-          <a
-            href="#focus-areas"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block py-2 border-b border-gray-800"
-          >
-            Our Focus Areas
+          <a href="https://jaago.com.bd/youth-development-program" className="block py-1 border-b border-gray-800">
+            Focus: Youth and Skill Development
           </a>
-          <a
-            href="#volunteerism"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block py-2 border-b border-gray-800"
-          >
-            Volunteerism & Chapters
+          <a href="https://jaago.com.bd/current-project" className="block py-1 border-b border-gray-800">
+            Projects: Current Projects
           </a>
-          <a
-            href="#governance-transparency"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block py-2 border-b border-gray-800"
-          >
-            Governance & Audits
+          <a href="https://jaago.com.bd/blog" className="block py-1 border-b border-gray-800">
+            Updates: Blog
           </a>
-          <a
-            href="#news-articles"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block py-2 border-b border-gray-800"
-          >
-            News & Articles
+          <a href="https://jaago.com.bd/vision-mission-values" className="block py-1 border-b border-gray-800">
+            About Us
           </a>
-
-          <div className="pt-2 flex flex-col gap-2">
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenDonate();
-              }}
-              className="w-full py-3 bg-[#FFCD05] text-gray-950 font-black rounded-xl text-center"
-            >
-              Sponsor a Child Now
-            </button>
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenReport();
-              }}
-              className="w-full py-2.5 bg-rose-900/60 border border-rose-700/50 text-rose-300 font-bold rounded-xl text-center"
-            >
-              Report a Child Concern
-            </button>
-          </div>
+          <a href="https://sponsorachild.jaagofoundation.org/donation" className="block py-1 text-primary">
+            Donate
+          </a>
         </div>
       )}
     </header>

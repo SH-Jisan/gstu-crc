@@ -1,118 +1,92 @@
 "use client";
 
 import React from "react";
-import {
-  BookOpen,
-  Users,
-  HeartPulse,
-  ShieldCheck,
-  ArrowRight,
-} from "lucide-react";
+import { BookOpen, Users, User, CloudLightning, Scale } from "lucide-react";
 
 export default function JaagoFocusAreas() {
-  const focusItems = [
+  const areas = [
     {
+      title: "Education and Digital Learning",
+      description:
+        "Education is the core focus area of JAAGO. For 17 years, JAAGO has been working to make education accessible to children from marginalized communities and hard-to-reach areas.",
+      link: "https://jaago.com.bd/education-program",
       icon: BookOpen,
-      tag: "Focus Area 01",
-      title: "Education & Digital Learning",
-      description:
-        "Free institutional schooling through Hatekhori School (হাতিখড়ি স্কুল). Delivering literacy, arithmetic, English, and ethical mentorship to street children.",
-      link: "#sponsor-child",
-      color: "from-amber-500 to-amber-600",
-      iconBg: "bg-amber-100 text-amber-800",
     },
     {
+      title: "Youth and Skill Development",
+      description:
+        "With a firm belief that youths are the future of our nation, JAAGO has launched initiatives focusing on youth empowerment and skills development.",
+      link: "https://jaago.com.bd/youth-development-program",
       icon: Users,
-      tag: "Focus Area 02",
-      title: "Youth & Volunteerism",
-      description:
-        "Mobilizing students across Gopalganj Science and Technology University (GSTU) and nationwide public universities as voluntary tutors and community builders.",
-      link: "#volunteerism",
-      color: "from-blue-600 to-blue-700",
-      iconBg: "bg-blue-100 text-blue-800",
     },
     {
-      icon: HeartPulse,
-      tag: "Focus Area 03",
-      title: "Healthcare & Nutrition",
+      title: "Women",
       description:
-        "Combating malnutrition with daily warm midday meals at schools, pediatric dental/eye screenings, and emergency winter blanket distribution drives.",
-      link: "#news-articles",
-      color: "from-rose-500 to-rose-600",
-      iconBg: "bg-rose-100 text-rose-800",
+        "To promote and protect women’s rights, JAAGO has been working to break women’s barriers to education, foster skills development, and raise mass awareness on issues like gender-based violence, mental and menstrual health management etc.",
+      link: "https://jaago.com.bd/women",
+      icon: User,
     },
     {
-      icon: ShieldCheck,
-      tag: "Focus Area 04",
-      title: "Governance & Safeguarding",
+      title: "Environment",
       description:
-        "Three-Tier constitutional governance, 100% chartered accountant public audits, and an encrypted whistleblower portal protecting vulnerable children.",
-      link: "#governance-transparency",
-      color: "from-emerald-500 to-emerald-600",
-      iconBg: "bg-emerald-100 text-emerald-800",
+        "From global warming and environmental pollution to climate change, we are creating opportunities for the youth to do their part to protect our planet.",
+      link: "https://jaago.com.bd/environment",
+      icon: CloudLightning,
+    },
+    {
+      title: "Governance and Advocacy",
+      description:
+        "By equipping youths with the knowledge of civic education and enhancing their knowledge of their civic responsibilities, JAAGO is empowering them to shape their dream Bangladesh.",
+      link: "https://jaago.com.bd/governance",
+      icon: Scale,
     },
   ];
 
   return (
-    <section id="focus-areas" className="py-20 bg-white scroll-mt-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <span className="text-xs font-black uppercase tracking-wider text-amber-600">
-            What We Do
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-gray-900 mt-1">
-            Our Focus Areas
+    <section className="relative focus-areas bg-white z-10 py-[80px]">
+      <div className="max-w-7xl 2xl:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Card 1: Title Card */}
+        <div className="bg-[#ffcd05] min-h-52 p-8 rounded-2xl flex flex-col justify-center shadow-lg">
+          <span className="font-sans text-2xl md:text-4xl text-[#1f2937]">Our</span>
+          <h2 className="font-bold text-3xl md:text-5xl font-heading capitalize text-[#1f2937] mt-1">
+            Focus areas
           </h2>
-          <p className="text-sm sm:text-base text-gray-600 mt-3 leading-relaxed">
-            By addressing root causes rather than temporary symptoms, CRC creates sustainable pathways 
-            from street vulnerability to educated, empowered citizenship.
-          </p>
         </div>
 
-        {/* 4 Focus Grid Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {focusItems.map((item, idx) => {
-            const Icon = item.icon;
-            return (
-              <div
-                key={idx}
-                className="bg-gray-50/70 rounded-3xl p-7 border border-gray-200/80 hover:bg-white hover:shadow-xl hover:border-gray-300 transition-all duration-300 flex flex-col justify-between group"
-              >
+        {/* Focus Cards 2 to 6 */}
+        {areas.map((area, idx) => {
+          const IconComponent = area.icon;
+          return (
+            <div
+              key={idx}
+              className="relative bg-white group flex-col justify-start text-left p-3 rounded-2xl shadow-lg z-10 transition-all duration-300 hover:-translate-y-1"
+            >
+              <div className="text-left p-8 border border-dashed rounded-xl border-gray-300 hover:border-gray-500 duration-200 h-full flex flex-col justify-between">
                 <div>
-                  {/* Category Pill & Icon */}
-                  <div className="flex items-center justify-between mb-5">
-                    <div
-                      className={`w-12 h-12 rounded-2xl flex items-center justify-center font-bold shadow-xs ${item.iconBg}`}
-                    >
-                      <Icon className="w-6 h-6" />
-                    </div>
-                    <span className="text-[10px] font-black uppercase tracking-wider text-gray-400">
-                      {item.tag}
-                    </span>
+                  <div className="w-14 h-14 rounded-xl bg-amber-50 text-gray-900 flex items-center justify-center mb-4">
+                    <IconComponent className="w-8 h-8 text-gray-800" />
                   </div>
 
-                  <h3 className="text-lg font-black uppercase text-gray-900 group-hover:text-amber-600 transition-colors leading-snug">
-                    {item.title}
+                  <h3 className="font-sans text-xl md:text-2xl uppercase mt-2 font-bold text-[#1f2937] leading-snug">
+                    {area.title}
                   </h3>
-
-                  <p className="text-xs text-gray-600 mt-3 leading-relaxed">
-                    {item.description}
+                  <p className="my-5 text-sm text-gray-600 leading-relaxed">
+                    {area.description}
                   </p>
                 </div>
 
-                <div className="pt-6 mt-4 border-t border-gray-200/70">
+                <div className="pt-2">
                   <a
-                    href={item.link}
-                    className="inline-flex items-center text-xs font-black uppercase text-gray-900 hover:text-amber-600 transition-colors"
+                    href={area.link}
+                    className="inline-block text-sm font-semibold capitalize px-5 py-2.5 border border-dashed rounded-full border-gray-300 text-gray-800 group-hover:bg-[#1f2937] group-hover:text-white transition-colors duration-200"
                   >
-                    Learn More <ArrowRight className="w-3.5 h-3.5 ml-1" />
+                    Learn more
                   </a>
                 </div>
               </div>
-            );
-          })}
-        </div>
+            </div>
+          );
+        })}
       </div>
     </section>
   );

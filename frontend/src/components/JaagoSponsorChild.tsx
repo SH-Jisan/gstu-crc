@@ -1,129 +1,67 @@
 "use client";
 
-import React, { useState } from "react";
-import { Heart, CheckCircle2, ShieldCheck, ArrowRight, HelpCircle } from "lucide-react";
+import React from "react";
 
-interface JaagoSponsorChildProps {
-  onOpenDonate: () => void;
-}
-
-export default function JaagoSponsorChild({
-  onOpenDonate,
-}: JaagoSponsorChildProps) {
-  const [selectedPlan, setSelectedPlan] = useState<"monthly" | "yearly">("monthly");
-
+export default function JaagoSponsorChild() {
   return (
-    <section id="sponsor-child" className="py-20 bg-gray-50 scroll-mt-24">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Signature 50/50 Split Card */}
-        <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 flex flex-col lg:flex-row">
-          {/* Left Column: Full-Bleed Child Photo (50%) */}
-          <div className="lg:w-1/2 relative min-h-[380px] lg:min-h-[500px]">
+    <section className="sac-section relative bg-cover bg-no-repeat centered min-h-96 pb-12 bg-gray-50">
+      {/* 1. Main 50/50 Split Card */}
+      <div className="max-w-6xl 2xl:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="flex flex-col lg:flex-row shadow-2xl md:rounded-l-2xl md:rounded-r-2xl overflow-hidden bg-white">
+          {/* Left Column: Picture */}
+          <div className="basis-1/2 flex-1 md:rounded-l-2xl overflow-hidden">
             <img
-              src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=1000&q=80"
-              alt="Sponsor a child in Bangladesh with CRC Hatekhori School"
-              className="w-full h-full object-cover object-center absolute inset-0"
+              loading="lazy"
+              width={576}
+              height={550}
+              className="w-full h-full min-h-[380px] lg:min-h-[500px] object-cover object-center md:rounded-l-2xl"
+              src="https://jaago.com.bd/images/2024/04/sponsor-a-child_1714365666_yl5a0ydht.jpg?tr=f-auto,fo-auto,pr-true,c-maintain_ratio"
+              alt="Sponsor a child in Bangladesh with JAAGO Foundation"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-gray-950/70 via-transparent to-transparent lg:hidden" />
-            
-            {/* Mobile overlay text */}
-            <div className="absolute bottom-4 left-4 right-4 text-white lg:hidden">
-              <span className="text-xs font-bold text-[#FFCD05] uppercase">
-                Hatekhori School (হাতিখড়ি স্কুল)
-              </span>
-              <h4 className="text-lg font-bold">
-                Give an underprivileged child a future today.
-              </h4>
-            </div>
           </div>
 
-          {/* Right Column: Narrative & Action (50%) */}
-          <div className="lg:w-1/2 p-8 sm:p-12 flex flex-col justify-center space-y-6">
-            <div>
-              <span className="text-xs font-black uppercase tracking-wider text-amber-600">
-                Flagship Initiative • Since 2017
-              </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black uppercase tracking-tight text-gray-900 mt-1">
-                Sponsor a Child Program
+          {/* Right Column: Narrative Content */}
+          <div className="basis-1/2 flex-1 bg-white flex items-center md:rounded-r-2xl">
+            <div className="p-8 sm:p-12">
+              <h2 className="uppercase text-2xl font-bold font-heading mb-4 text-[#1f2937]">
+                Sponsor a child program
               </h2>
-            </div>
-
-            <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-              We believe in the unbounded potential of every street child. Through{" "}
-              <strong>Hatekhori School</strong>, founded at GSTU, we provide 
-              completely free formal schooling, school uniforms, stationery, and 
-              nutritious midday meals to destitute children who otherwise collect scraps or beg.
-            </p>
-
-            {/* Plan Selector Pills */}
-            <div className="grid grid-cols-2 gap-3 pt-1">
-              <button
-                type="button"
-                onClick={() => setSelectedPlan("monthly")}
-                className={`p-3.5 rounded-2xl text-left border-2 transition-all ${
-                  selectedPlan === "monthly"
-                    ? "border-[#FFCD05] bg-amber-50/50 shadow-sm"
-                    : "border-gray-200 bg-white hover:border-gray-300"
-                }`}
+              <p className="mb-6 text-base text-[#1f2937] leading-relaxed">
+                We believe in the potential of every child and that education is the key to unlocking that potential. Yet, due to financial constraints, for countless children, education is an unattainable luxury. For the past 17 years, we have been working to change this reality!
+              </p>
+              <p className="mb-6 text-base text-[#1f2937] leading-relaxed">
+                Through our Sponsor A Child Program, we have ensured quality education for over 5000 children from underserved communities.
+              </p>
+              <p className="mb-6 text-base text-[#1f2937] leading-relaxed">
+                You can also join the initiative. With just{" "}
+                <strong className="text-gray-950 font-bold">BDT 2,500</strong> per month, you can give children in need access to educational opportunities and support their journey towards a brighter future. Help Change a life today!
+              </p>
+              <a
+                className="btn btn-primary px-8 py-3.5 text-base font-sans shadow-md capitalize font-bold text-[#1f2937] inline-block hover:scale-105 transition-transform"
+                href="https://jaago.com.bd/sponsor-a-child"
               >
-                <div className="text-[11px] uppercase font-bold text-gray-500">
-                  Monthly Support
-                </div>
-                <div className="text-xl font-black text-gray-900 mt-0.5">
-                  ৳1,500 <span className="text-xs font-normal text-gray-500">/mo</span>
-                </div>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setSelectedPlan("yearly")}
-                className={`p-3.5 rounded-2xl text-left border-2 transition-all ${
-                  selectedPlan === "yearly"
-                    ? "border-[#FFCD05] bg-amber-50/50 shadow-sm"
-                    : "border-gray-200 bg-white hover:border-gray-300"
-                }`}
-              >
-                <div className="text-[11px] uppercase font-bold text-gray-500">
-                  Annual Support
-                </div>
-                <div className="text-xl font-black text-gray-900 mt-0.5">
-                  ৳18,000 <span className="text-xs font-normal text-gray-500">/yr</span>
-                </div>
-              </button>
-            </div>
-
-            {/* Included in Sponsorship */}
-            <div className="space-y-2 text-xs font-semibold text-gray-700">
-              <div className="flex items-center space-x-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Tuition, textbooks, notebooks & school supplies</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Daily warm midday nutritious meals & health checkups</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Quarterly student academic progress report sent to donor</span>
-              </div>
-            </div>
-
-            {/* Action CTA Button */}
-            <div className="pt-2">
-              <button
-                onClick={onOpenDonate}
-                className="w-full sm:w-auto flex items-center justify-center font-black text-sm uppercase bg-[#FFCD05] hover:bg-[#e6b800] text-gray-950 px-8 py-4 rounded-full shadow-lg hover:shadow-[#FFCD05]/30 transition-all duration-150 transform hover:scale-[1.02]"
-              >
-                <Heart className="w-4 h-4 mr-2 fill-gray-950" />
-                Sponsor a Child Now
-              </button>
-            </div>
-
-            <div className="text-[11px] text-gray-500 flex items-center pt-1">
-              <ShieldCheck className="w-4 h-4 mr-1 text-emerald-600" />
-              100% of your child sponsorship goes directly to educational programs.
+                Sponsor a Child
+              </a>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* 2. Number of Unsponsored Children Counter Block */}
+      <div className="max-w-5xl mx-auto px-6 relative z-10 pb-10">
+        <h2 className="font-heading text-3xl sm:text-4xl text-[#1f2937] text-center font-extrabold uppercase tracking-tight">
+          Number of Unsponsored Children
+        </h2>
+        <p className="font-heading text-5xl sm:text-7xl text-center text-[#1f2937] font-black my-3">
+          1100
+        </p>
+        <div className="text-center mt-4">
+          <a
+            className="btn btn-primary px-8 py-3.5 text-base font-sans shadow-md capitalize font-bold text-[#1f2937] inline-block hover:scale-105 transition-transform"
+            href="https://jaago.com.bd/sponsor-a-child"
+          >
+            Sponsor a Child
+          </a>
         </div>
       </div>
     </section>

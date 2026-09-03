@@ -112,3 +112,20 @@ Chronological registry of all file additions, edits, component implementations, 
   - `[NEW]` [`frontend/src/components/JaagoFooter.tsx`](../frontend/src/components/JaagoFooter.tsx): 3-column footer matching JAAGO layout with GSTU Secretariat details.
   - `[MODIFY]` [`frontend/src/app/page.tsx`](../frontend/src/app/page.tsx): Assembled all JAAGO-styled components while preserving interactive Donation and Whistleblower modals.
 - **Verification**: `npm run build` compiled in 870ms (Turbopack) with zero TypeScript errors. Dev server verified on `http://localhost:3000`. Visual verification screenshot captured.
+
+---
+
+### [ENTRY-008] 2026-09-04 — 1:1 Exact Replica of JAAGO Foundation Landing Page
+- **Type**: Verbatim Visual & Structural Replication (Feature Branch: `feature/frontend-client-demo`)
+- **Reference**: `https://jaago.com.bd/`
+- **Actions Completed**:
+  - Scraped and extracted exact HTML, CSS tokens, image URLs, and text copy from `https://jaago.com.bd/`.
+  - Replaced all placeholder content with exact JAAGO assets, logos, and structure:
+    1. **Exact Header**: JAAGO official yellow logo, capsule menu (Home, Focus, Projects, Updates, About Us, Donate), search icon, and yellow *"Sponsor a Child"* button.
+    2. **Exact Hero Slider**: *"Transform the Lives of Children in Need with Education"*, yellow quote speech bubble (*"My resources are limited, but my potential is not. Help me fulfill my dreams."*), student portrait in school uniform, and slide 2 (*JAAGO Women Scholarship Program*).
+    3. **Exact Sponsor a Child Program**: 50/50 split card with official school children image, BDT 2,500/month tier, and the 1100 Unsponsored Children counter.
+    4. **Exact Focus Areas Grid**: 6 cards (Yellow "Our Focus areas" title card, Education & Digital Learning, Youth & Skill Development, Women, Environment, Governance & Advocacy) with dashed inner borders.
+    5. **Exact Volunteerism Section**: 60,000 Volunteers, 64 Districts, 495 Upazilas metrics card, and overlapping yellow callout banner (*"Do you want to work for the Underprivileged Communities and change their lives?"*).
+    6. **Exact News & Articles**: 3 cards with dashed inner borders, category badges, dates, and yellow Read More buttons.
+    7. **Exact Footer**: 3 columns (About JAAGO Foundation, Useful Links, Get in touch with USA/Bangladesh addresses) and copyright bar.
+- **Verification**: `npm run build` compiled in 620ms with 0 errors. Dev server verified live on `http://localhost:3000`. Visual screenshots confirmed with Puppeteer.
