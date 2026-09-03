@@ -55,18 +55,26 @@ export default function JaagoNavbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-3 font-sans font-semibold">
-          {/* 1. Official Logo with Smooth Size Transition on Scroll & Hover Scale */}
+          {/* 1. Official CRC Brand Identity & Logo with Size Transition on Scroll */}
           <div className="w-auto shrink-0">
-            <a href="https://jaago.com.bd" className="inline-block group">
-              <img
-                width="110"
-                height="73"
-                className={`transition-all duration-500 ease-in-out group-hover:scale-105 ${
-                  isSticky ? "w-[85px] sm:w-[95px] scale-95" : "w-[100px] sm:w-[110px] scale-100"
+            <a href="/" className="inline-block group">
+              <div
+                className={`flex items-center gap-2 transition-all duration-500 ease-in-out group-hover:scale-105 ${
+                  isSticky ? "scale-95" : "scale-100"
                 }`}
-                src="https://jaago.com.bd/images/2024/09/jaago-logo_1727084165_w2fULrshk.png?tr=f-auto,w-165,h-100"
-                alt="JAAGO Foundation"
-              />
+              >
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#ffcd05] flex items-center justify-center shadow-lg text-gray-900 font-black text-base sm:text-lg tracking-tighter border border-amber-300">
+                  CRC
+                </div>
+                <div className="flex flex-col text-left leading-none">
+                  <span className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-white drop-shadow">
+                    Come for Road Child
+                  </span>
+                  <span className="text-[8px] sm:text-[9px] font-bold text-[#ffcd05] tracking-tight mt-0.5">
+                    Est. 5 June 2016 · GSTU
+                  </span>
+                </div>
+              </div>
             </a>
           </div>
 
@@ -76,14 +84,14 @@ export default function JaagoNavbar() {
               {/* Home */}
               <li>
                 <a
-                  href="https://jaago.com.bd"
+                  href="/"
                   className="jaago-nav-link flex items-center font-bold py-1 px-3 rounded-full hover:bg-gray-100 hover:border-gray-200 transition-colors"
                 >
                   Home
                 </a>
               </li>
 
-              {/* Focus Dropdown */}
+              {/* Focus Dropdown (CRC Core Pillars) */}
               <li
                 className="relative group"
                 onMouseEnter={() => setActiveDropdown("focus")}
@@ -115,49 +123,49 @@ export default function JaagoNavbar() {
                   <ul className="divide-y divide-dashed divide-gray-200 text-xs font-semibold text-gray-700">
                     <li className="jaago-dropdown-item pt-2">
                       <a
-                        href="https://jaago.com.bd/education-program"
+                        href="#hatekhori"
                         className="block hover:text-amber-600 transition-colors"
                       >
-                        Education and Digital Learning
+                        Hatekhori Free School (হাতেখড়ি পাঠশালা)
                       </a>
                     </li>
                     <li className="jaago-dropdown-item pt-2">
                       <a
-                        href="https://jaago.com.bd/youth-development-program"
+                        href="#safeguarding"
                         className="block hover:text-amber-600 transition-colors"
                       >
-                        Youth and Skill Development
+                        Child Safeguarding & Protection
                       </a>
                     </li>
                     <li className="jaago-dropdown-item pt-2">
                       <a
-                        href="https://jaago.com.bd/women"
+                        href="#health"
                         className="block hover:text-amber-600 transition-colors"
                       >
-                        Women
+                        Health & Nutrition Camps
                       </a>
                     </li>
                     <li className="jaago-dropdown-item pt-2">
                       <a
-                        href="https://jaago.com.bd/environment"
+                        href="#winter-relief"
                         className="block hover:text-amber-600 transition-colors"
                       >
-                        Environment
+                        Winter Warmth & Disaster Relief
                       </a>
                     </li>
                     <li className="jaago-dropdown-item pt-2">
                       <a
-                        href="https://jaago.com.bd/governance"
+                        href="#youth"
                         className="block hover:text-amber-600 transition-colors"
                       >
-                        Governance and Advocacy
+                        Youth Leadership & Volunteerism
                       </a>
                     </li>
                   </ul>
                 </div>
               </li>
 
-              {/* Projects Dropdown */}
+              {/* Programs Dropdown */}
               <li
                 className="relative group"
                 onMouseEnter={() => setActiveDropdown("projects")}
@@ -172,7 +180,7 @@ export default function JaagoNavbar() {
                       : "hover:bg-gray-100 hover:border-gray-200"
                   }`}
                 >
-                  <span>Projects</span>
+                  <span>Programs</span>
                   <ChevronDown
                     className={`jaago-chevron w-3.5 h-3.5 ml-1 opacity-70 transition-transform duration-300 ${
                       activeDropdown === "projects" ? "rotate-180" : "group-hover:rotate-180"
@@ -188,26 +196,26 @@ export default function JaagoNavbar() {
                   <ul className="divide-y divide-dashed divide-gray-200 text-xs font-semibold text-gray-700">
                     <li className="jaago-dropdown-item pt-2">
                       <a
-                        href="https://jaago.com.bd/current-project"
+                        href="#current-programs"
                         className="block hover:text-amber-600 transition-colors"
                       >
-                        Current Projects
+                        Ongoing School Programs
                       </a>
                     </li>
                     <li className="jaago-dropdown-item pt-2">
                       <a
-                        href="https://jaago.com.bd/completed-project"
+                        href="#relief-drives"
                         className="block hover:text-amber-600 transition-colors"
                       >
-                        Completed Projects
+                        Annual Winter Relief Drives
                       </a>
                     </li>
                     <li className="jaago-dropdown-item pt-2">
                       <a
-                        href="https://jaago.com.bd/global-giving"
+                        href="#campus-wings"
                         className="block hover:text-amber-600 transition-colors"
                       >
-                        Global Giving Projects
+                        GSTU Campus Operations
                       </a>
                     </li>
                   </ul>
@@ -244,30 +252,30 @@ export default function JaagoNavbar() {
                 >
                   <ul className="divide-y divide-dashed divide-gray-200 text-xs font-semibold text-gray-700">
                     <li className="jaago-dropdown-item pt-2">
-                      <a href="https://jaago.com.bd/blog" className="block hover:text-amber-600 transition-colors">
-                        Blog
+                      <a href="#blog" className="block hover:text-amber-600 transition-colors">
+                        Field Stories & Blog
                       </a>
                     </li>
                     <li className="jaago-dropdown-item pt-2">
-                      <a href="https://jaago.com.bd/jaago-in-news" className="block hover:text-amber-600 transition-colors">
-                        JAAGO in News
+                      <a href="#news" className="block hover:text-amber-600 transition-colors">
+                        Media & Press Coverage
                       </a>
                     </li>
                     <li className="jaago-dropdown-item pt-2">
-                      <a href="https://jaago.com.bd/report" className="block hover:text-amber-600 transition-colors">
-                        Reports
+                      <a href="#audit" className="block hover:text-amber-600 transition-colors">
+                        Audited Financial Reports
                       </a>
                     </li>
                     <li className="jaago-dropdown-item pt-2">
-                      <a href="https://jaago.com.bd/yearbook" className="block hover:text-amber-600 transition-colors">
-                        Yearbook
+                      <a href="#yearbook" className="block hover:text-amber-600 transition-colors">
+                        Annual Activity Yearbook
                       </a>
                     </li>
                   </ul>
                 </div>
               </li>
 
-              {/* About Us (Exact JAAGO MegaMenu with 2 columns) */}
+              {/* About Us (Exact 2-Column MegaMenu) */}
               <li
                 className="relative group"
                 onMouseEnter={() => setActiveDropdown("about")}
@@ -299,52 +307,52 @@ export default function JaagoNavbar() {
                 >
                   <div className="grid grid-cols-2 gap-x-8 gap-y-3 text-xs font-semibold text-gray-700">
                     <a
-                      href="https://jaago.com.bd/vision-mission-values"
+                      href="#vision-mission"
                       className="jaago-dropdown-item hover:text-amber-600 block"
                     >
                       Vision, Mission, Values
                     </a>
                     <a
-                      href="https://jaago.com.bd/team"
+                      href="#gstu-history"
                       className="jaago-dropdown-item hover:text-amber-600 block"
                     >
-                      JAAGO Team
+                      Founding & GSTU Roots
                     </a>
                     <a
-                      href="https://jaago.com.bd/awards-recognitions"
+                      href="#committee"
                       className="jaago-dropdown-item hover:text-amber-600 block"
                     >
-                      Awards & Recognitions
+                      Executive Committee
                     </a>
                     <a
-                      href="https://jaago.com.bd/faqs"
+                      href="#advisors"
                       className="jaago-dropdown-item hover:text-amber-600 block"
                     >
-                      FAQ
+                      Faculty Advisors
                     </a>
                     <a
-                      href="https://jaago.com.bd/contact"
+                      href="#contact"
                       className="jaago-dropdown-item hover:text-amber-600 block"
                     >
-                      Contact
+                      Contact & Emergency Help
                     </a>
                     <a
-                      href="https://jaago.com.bd/career"
+                      href="#child-safeguarding"
                       className="jaago-dropdown-item hover:text-amber-600 block"
                     >
-                      Career
+                      Child Safeguarding Policy
                     </a>
                     <a
-                      href="https://jaago.com.bd/internship"
+                      href="#transparency"
                       className="jaago-dropdown-item hover:text-amber-600 block"
                     >
-                      Internship
+                      Transparency & Audits
                     </a>
                     <a
-                      href="https://jaago.com.bd/become-a-teacher"
+                      href="#volunteer"
                       className="jaago-dropdown-item hover:text-amber-600 block"
                     >
-                      Become a Teacher
+                      Become a Volunteer Teacher
                     </a>
                   </div>
                 </div>
@@ -353,7 +361,7 @@ export default function JaagoNavbar() {
               {/* Donate */}
               <li>
                 <a
-                  href="https://sponsorachild.jaagofoundation.org/donation"
+                  href="#sponsor"
                   className="jaago-nav-link flex items-center font-bold py-1 px-3 lg:px-4 rounded-full hover:bg-gray-100 hover:border-gray-200 transition-colors"
                 >
                   Donate
@@ -368,7 +376,7 @@ export default function JaagoNavbar() {
             <div className="relative">
               <button
                 onClick={() => setSearchOpen(!searchOpen)}
-                aria-label="Search"
+                aria-label="Search CRC Website"
                 className="btn btn-primary btn-circle w-9 h-9 sm:w-11 sm:h-11 bg-[#ffcd05] text-[#1f2937] shadow-lg flex items-center justify-center hover:bg-[#e6b800] hover:scale-110 transition-all duration-300 cursor-pointer"
               >
                 <Search className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -381,7 +389,7 @@ export default function JaagoNavbar() {
                     <Search className="w-4 h-4 text-gray-400" />
                     <input
                       type="text"
-                      placeholder="Search JAAGO..."
+                      placeholder="Search CRC programs, reports..."
                       className="bg-transparent border-none text-xs text-gray-800 focus:outline-none w-full"
                       autoFocus
                     />
@@ -399,12 +407,12 @@ export default function JaagoNavbar() {
             {/* Signature Sponsor a Child CTA with Hover Lift */}
             <a
               className="btn btn-primary px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm lg:text-base font-sans shadow-xl capitalize font-bold text-[#1f2937] hover:scale-105 hover:shadow-2xl transition-all duration-300 shrink-0"
-              href="https://sponsorachild.jaagofoundation.org/children"
+              href="#sponsor"
             >
               Sponsor a Child
             </a>
 
-            {/* Mobile Drawer Trigger (Only on xs/sm screens) */}
+            {/* Mobile Drawer Trigger */}
             <div className="md:hidden">
               <button
                 onClick={() => setMobileDrawerOpen(!mobileDrawerOpen)}
@@ -421,26 +429,26 @@ export default function JaagoNavbar() {
       {/* Mobile Drawer Menu */}
       {mobileDrawerOpen && (
         <div className="md:hidden bg-gray-900 px-6 py-5 border-t border-gray-700 text-white text-sm font-semibold space-y-3 animate-in slide-in-from-top duration-300">
-          <a href="https://jaago.com.bd" className="block py-1.5 border-b border-gray-800 hover:text-[#ffcd05]">
+          <a href="/" className="block py-1.5 border-b border-gray-800 hover:text-[#ffcd05]">
             Home
           </a>
-          <a href="https://jaago.com.bd/education-program" className="block py-1.5 border-b border-gray-800 hover:text-[#ffcd05]">
-            Focus: Education and Digital Learning
+          <a href="#hatekhori" className="block py-1.5 border-b border-gray-800 hover:text-[#ffcd05]">
+            Focus: Hatekhori Free School
           </a>
-          <a href="https://jaago.com.bd/youth-development-program" className="block py-1.5 border-b border-gray-800 hover:text-[#ffcd05]">
-            Focus: Youth and Skill Development
+          <a href="#safeguarding" className="block py-1.5 border-b border-gray-800 hover:text-[#ffcd05]">
+            Focus: Child Safeguarding & Health
           </a>
-          <a href="https://jaago.com.bd/current-project" className="block py-1.5 border-b border-gray-800 hover:text-[#ffcd05]">
-            Projects: Current Projects
+          <a href="#current-programs" className="block py-1.5 border-b border-gray-800 hover:text-[#ffcd05]">
+            Programs: Field Campaigns
           </a>
-          <a href="https://jaago.com.bd/blog" className="block py-1.5 border-b border-gray-800 hover:text-[#ffcd05]">
-            Updates: Blog
+          <a href="#blog" className="block py-1.5 border-b border-gray-800 hover:text-[#ffcd05]">
+            Updates: Field Stories & Audits
           </a>
-          <a href="https://jaago.com.bd/vision-mission-values" className="block py-1.5 border-b border-gray-800 hover:text-[#ffcd05]">
-            About Us
+          <a href="#about" className="block py-1.5 border-b border-gray-800 hover:text-[#ffcd05]">
+            About Us: GSTU Roots & Committee
           </a>
-          <a href="https://sponsorachild.jaagofoundation.org/donation" className="block py-2 text-[#ffcd05] font-bold">
-            Donate
+          <a href="#sponsor" className="block py-2 text-[#ffcd05] font-bold">
+            Sponsor a Child
           </a>
         </div>
       )}

@@ -184,5 +184,34 @@ Chronological registry of all file additions, edits, component implementations, 
     2. **Click-to-toggle interaction**: Clicking **Focus**, **Projects**, **Updates**, or **About Us** smoothly toggles the dropdown, with animated chevron rotation (`rotate-180`).
     3. **Click-outside-to-close**: Handled via `document.addEventListener('click')` with `useRef`.
     4. **Hover bridge**: Added an invisible pseudo-element bridge (`.jaago-dropdown::before`) so moving the cursor from the pill button to the dropdown menu never loses hover contact.
-    5. **Link hover animations**: Added `jaago-nav-link` pill highlight (`hover:bg-gray-100 hover:border-gray-200`) and `jaago-dropdown-item` right-to-left underline sweep.
+    - Link hover animations: Added `jaago-nav-link` pill highlight (`hover:bg-gray-100 hover:border-gray-200`) and `jaago-dropdown-item` right-to-left underline sweep.
 - **Verification**: `npm run build` compiled in 527ms with 0 errors. Verified with live Puppeteer screenshot captures for both Focus dropdown and About Us 2-column MegaMenu.
+
+---
+
+### [ENTRY-012] 2026-09-04 — CRC Domain Content Integration Preserving 100% UI & Animations
+- **Type**: Content & Branding Transition (Feature Branch: `feature/frontend-client-demo`)
+- **Directive**: User requested to populate Come for Road Child (CRC) content without altering the UI, layout, structure, or animations.
+- **Components Populated**:
+  1. **Navbar & Header**:
+     - Custom brand mark: `CRC | COME FOR ROAD CHILD · Est. 5 June 2016 - GSTU`.
+     - Navigation items: Focus (Hatekhori School, Safeguarding, Health, Winter Relief, Youth), Programs, Updates, 2-column About Us MegaMenu (GSTU Roots, Executive Committee, Safeguarding Policy, Transparency), Donate, and search.
+  2. **Hero Section & Carousel**:
+     - Headline: *"Transform the Lives of Street Children with Education"*.
+     - Slogan: *"The World Will Be Free from Street Children by Connected Together."*
+     - Quote bubble: *“My resources are limited, but my dreams are limitless. Help me build my tomorrow.” — Hatekhori Student, CRC*.
+     - Slide 2: Hatekhori Free School initiative highlighting campus learning, books, and nutrition.
+  3. **Sponsor a Child Section**:
+     - BDT 1,500/month sponsorship package for tuition, books, uniform, and daily meals.
+     - Animated counter tracking **120 Unsponsored Children** awaiting support.
+  4. **Focus Areas (5 Cards with Signature Yellow Hover Sweep)**:
+     - Hatekhori Free School, Child Safeguarding & Rescue, Health & Nutrition Camps, Winter Warmth & Relief, and Youth Leadership.
+  5. **Volunteerism Section**:
+     - Real-time animated count-up metrics: **1,500+** Student Volunteers, **10+** Years of Service (2016–2026), **10,000+** Lives Impacted.
+     - Overlapping yellow banner with volunteer callout.
+  6. **News & Field Updates**:
+     - Authentic CRC field stories: Hatekhori Session 2026 opening, Winter Warmth midnight drives, and 10-year organizational retrospective.
+  7. **Institutional Footer**:
+     - Central office: Gopalganj Science and Technology University (GSTU), Gopalganj-8100.
+     - Official contacts: `info@gstu-crc.org`, helpline numbers, copyright `© 2016–2026 Come for Road Child (CRC), GSTU`.
+- **Verification**: `npm run build` compiled in 682ms with 0 errors. Verified in live Puppeteer session on `http://localhost:3000`. Full visual integrity confirmed across all sections.

@@ -24,7 +24,7 @@ export default function JaagoHero() {
 
   return (
     <section className="w-full mt-14 sm:mt-16 bg-gray-50 relative overflow-hidden" id="splide01">
-      {/* Slide 1: Transform the Lives of Children in Need with Education */}
+      {/* Slide 1: Transform the Lives of Street Children with Education */}
       {currentSlide === 0 && (
         <div className="hero-section lg:h-[550px] xl:h-[640px] 2xl:h-[720px] bg-gray-800 overflow-hidden relative max-lg:pt-[120px] max-lg:pb-16 pt-[100px] transition-all duration-700 animate-in fade-in">
           {/* Subtle background overlay */}
@@ -39,21 +39,35 @@ export default function JaagoHero() {
                 data-aos-delay="300"
                 className="lg:col-span-7 p-4 text-center lg:text-left space-y-6"
               >
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ffcd05]/10 border border-[#ffcd05]/30 text-[#ffcd05] text-xs font-bold uppercase tracking-wider">
+                  <span>Founded 5 June 2016 at GSTU</span>
+                </div>
+
                 <h1 className="font-bold font-sans text-4xl md:text-5xl xl:text-6xl text-white leading-tight">
                   Transform the Lives{" "}
                   <span className="block">
-                    of <span className="font-sans text-white">Children in Need</span>
+                    of <span className="font-sans text-[#ffcd05]">Street Children</span>
                     <br />
                     with Education
                   </span>
                 </h1>
 
-                <div>
+                <p className="text-gray-300 text-sm md:text-base max-w-xl font-normal leading-relaxed">
+                  &ldquo;The World Will Be Free from Street Children by Connected Together.&rdquo; Providing foundational schooling, nutritious food, and dignified care through Hatekhori Free School.
+                </p>
+
+                <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
                   <a
                     className="btn btn-primary px-8 py-3.5 text-base lg:text-lg font-sans shadow-xl capitalize font-bold text-secondary inline-flex hover:scale-105 transition-transform"
-                    href="https://jaago.com.bd/sponsor-a-child"
+                    href="#sponsor"
                   >
                     Sponsor a Child
+                  </a>
+                  <a
+                    className="px-6 py-3.5 text-base font-sans font-bold text-white border border-gray-600 rounded-lg hover:border-[#ffcd05] hover:text-[#ffcd05] transition-colors inline-flex items-center"
+                    href="#hatekhori"
+                  >
+                    Hatekhori School
                   </a>
                 </div>
               </div>
@@ -71,10 +85,13 @@ export default function JaagoHero() {
                     <p className="font-sans text-xs xl:text-sm text-center mb-0 font-extrabold text-gray-950 leading-snug">
                       &quot;My resources are limited,
                       <br />
-                      but my potential is not.
+                      but my dreams are limitless.
                       <br />
-                      Help me fulfill my dreams.&quot;
+                      Help me build my tomorrow.&quot;
                     </p>
+                    <span className="text-[10px] font-bold text-gray-800 mt-1 uppercase tracking-tight">
+                      — Hatekhori School Student
+                    </span>
                   </div>
                 </div>
 
@@ -100,7 +117,7 @@ export default function JaagoHero() {
                 >
                   <img
                     src="https://jaago.com.bd/images/2024/06/sponsor-a-child-in-bangladesh-with-jaago-foundation_1719739929_8pyv6_gzk.png?tr=f-auto,fo-auto,w-639,h-692,pr-true"
-                    alt="Sponsor a child in Bangladesh with JAAGO Foundation"
+                    alt="Sponsor a street child with Come for Road Child CRC"
                     className="w-full h-auto object-contain drop-shadow-2xl"
                   />
                 </div>
@@ -110,7 +127,7 @@ export default function JaagoHero() {
         </div>
       )}
 
-      {/* Slide 2: JAAGO Women Scholarship Program */}
+      {/* Slide 2: Hatekhori Free School Initiative */}
       {currentSlide === 1 && (
         <div className="hero-section lg:h-[550px] xl:h-[640px] 2xl:h-[720px] bg-[#f0ede8] overflow-hidden relative max-lg:pt-[120px] max-lg:pb-16 pt-[100px] transition-all duration-700 animate-in fade-in">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
@@ -120,69 +137,80 @@ export default function JaagoHero() {
                 data-aos-duration="500"
                 className="lg:col-span-7 p-4 text-center lg:text-left space-y-4"
               >
-                <span className="text-sm font-bold uppercase tracking-wider text-gray-600 block">
-                  JAAGO Women
+                <span className="text-sm font-bold uppercase tracking-wider text-amber-700 block">
+                  FLAGSHIP INITIATIVE · GSTU CAMPUS
                 </span>
                 <h1 className="font-extrabold font-sans text-4xl md:text-5xl xl:text-6xl text-gray-900 leading-tight uppercase">
-                  Scholarship Program
+                  Hatekhori Free School
                 </h1>
-                <p className="text-gray-700 text-base max-w-xl">
-                  Empowering resilient women and young female scholars across Bangladesh to pursue higher education and break societal barriers.
+                <p className="text-gray-700 text-base max-w-xl leading-relaxed">
+                  Providing free foundational literacy, textbooks, notebooks, school bags, and wholesome meals to street and child-laborers in Gopalganj, mentored daily by university students.
                 </p>
-                <div>
+                <div className="flex flex-wrap gap-4 justify-center lg:justify-start pt-2">
                   <a
                     className="btn btn-secondary px-8 py-3.5 text-base font-sans shadow-xl capitalize font-bold text-white inline-flex hover:scale-105 transition-transform"
-                    href="https://jaago.com.bd/women"
+                    href="#volunteer"
                   >
-                    Learn More
+                    Join as Volunteer Teacher
+                  </a>
+                  <a
+                    className="btn btn-primary px-8 py-3.5 text-base font-sans shadow-xl capitalize font-bold text-[#1f2937] inline-flex hover:scale-105 transition-transform"
+                    href="#sponsor"
+                  >
+                    Sponsor Hatekhori
                   </a>
                 </div>
               </div>
 
-              <div data-aos="fade-left" className="lg:col-span-5 flex justify-center">
-                <img
-                  src="https://jaago.com.bd/images/2024/04/sponsor-a-child_1714365666_yl5a0ydht.jpg?tr=f-auto,w-576,h-550,fo-auto,pr-true,c-maintain_ratio"
-                  alt="JAAGO Scholar"
-                  className="rounded-3xl shadow-xl max-w-sm w-full object-cover"
-                />
+              {/* Slide 2 Graphic Card */}
+              <div className="lg:col-span-5 relative flex justify-center lg:justify-end">
+                <div
+                  data-aos="zoom-in"
+                  data-aos-duration="500"
+                  className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white max-w-[340px] sm:max-w-[420px]"
+                >
+                  <img
+                    src="https://jaago.com.bd/images/2024/04/sponsor-a-child_1714365666_yl5a0ydht.jpg?tr=f-auto,fo-auto,pr-true,c-maintain_ratio"
+                    alt="Hatekhori Free School Students"
+                    className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* Carousel Navigation Arrows */}
-      <button
-        onClick={prevSlide}
-        aria-label="Previous Slide"
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-black/40 hover:bg-black/70 text-white transition-colors"
-      >
-        <ChevronLeft className="w-6 h-6" />
-      </button>
-      <button
-        onClick={nextSlide}
-        aria-label="Next Slide"
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-black/40 hover:bg-black/70 text-white transition-colors"
-      >
-        <ChevronRight className="w-6 h-6" />
-      </button>
-
-      {/* Slide Indicators / Dots */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex space-x-2">
+      {/* Manual Slide Controls */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-3">
         <button
-          onClick={() => setCurrentSlide(0)}
-          className={`h-3 rounded-full transition-all duration-300 ${
-            currentSlide === 0 ? "bg-[#ffcd05] w-8" : "bg-white/60 w-3"
-          }`}
-          aria-label="Slide 1"
-        />
+          onClick={prevSlide}
+          aria-label="Previous slide"
+          className="w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition-colors shadow-lg"
+        >
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+        <div className="flex gap-2">
+          <span
+            onClick={() => setCurrentSlide(0)}
+            className={`w-3 h-3 rounded-full cursor-pointer transition-all ${
+              currentSlide === 0 ? "bg-[#ffcd05] w-8" : "bg-white/50"
+            }`}
+          />
+          <span
+            onClick={() => setCurrentSlide(1)}
+            className={`w-3 h-3 rounded-full cursor-pointer transition-all ${
+              currentSlide === 1 ? "bg-[#ffcd05] w-8" : "bg-white/50"
+            }`}
+          />
+        </div>
         <button
-          onClick={() => setCurrentSlide(1)}
-          className={`h-3 rounded-full transition-all duration-300 ${
-            currentSlide === 1 ? "bg-[#ffcd05] w-8" : "bg-white/60 w-3"
-          }`}
-          aria-label="Slide 2"
-        />
+          onClick={nextSlide}
+          aria-label="Next slide"
+          className="w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition-colors shadow-lg"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
       </div>
     </section>
   );
