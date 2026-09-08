@@ -59,18 +59,18 @@ export default function JaagoFocusAreas() {
         <div
           data-aos="fade-up"
           data-aos-duration="500"
-          className="bg-[#ffcd05] min-h-52 p-8 rounded-2xl flex flex-col justify-center shadow-lg"
+          className="bg-[#e6000a] text-white min-h-52 p-8 rounded-2xl flex flex-col justify-center shadow-lg"
         >
-          <span className="font-sans text-2xl md:text-3xl text-[#1f2937] font-medium">Our Core</span>
-          <h2 className="font-bold text-3xl md:text-5xl font-heading capitalize text-[#1f2937] mt-1">
+          <span className="font-sans text-2xl md:text-3xl text-red-100 font-medium">Our Core</span>
+          <h2 className="font-bold text-3xl md:text-5xl font-heading capitalize text-white mt-1">
             Focus Areas
           </h2>
-          <p className="mt-3 text-xs md:text-sm font-semibold text-gray-800 leading-relaxed">
+          <p className="mt-3 text-xs md:text-sm font-semibold text-red-100/90 leading-relaxed">
             Founded on 5 June 2016 at GSTU, Come for Road Child works across 5 foundational pillars to protect and educate street children.
           </p>
         </div>
 
-        {/* 5 Focus Cards with the Yellow Sweep Hover Animation & AOS */}
+        {/* 5 Focus Cards with the Crimson Sweep Hover Animation & AOS */}
         {areas.map((area, idx) => {
           const Icon = area.icon;
           return (
@@ -82,24 +82,24 @@ export default function JaagoFocusAreas() {
               className="hover-sweep-card group relative bg-white border border-gray-200 min-h-52 p-8 rounded-2xl flex flex-col justify-between shadow-sm hover:shadow-2xl transition-all duration-300"
             >
               <div className="relative z-10">
-                <div className="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center text-amber-700 mb-5 group-hover:bg-gray-900 group-hover:text-[#ffcd05] transition-colors">
+                <div className="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center text-[#e6000a] mb-5 group-hover:bg-[#0d0f14] group-hover:text-white transition-colors">
                   <Icon className="w-6 h-6" />
                 </div>
-                <span className="text-[11px] font-bold text-amber-600 block mb-1">
+                <span className="text-[11px] font-bold text-[#007938] group-hover:text-emerald-200 block mb-1">
                   {area.subtitle}
                 </span>
-                <h3 className="font-bold text-xl font-heading text-[#1f2937] mb-3 group-hover:text-gray-950 transition-colors">
+                <h3 className="font-bold text-xl font-heading text-[#0d0f14] mb-3 group-hover:text-white transition-colors">
                   {area.title}
                 </h3>
-                <p className="text-sm text-gray-600 leading-relaxed font-normal group-hover:text-gray-900 transition-colors">
+                <p className="text-sm text-gray-600 leading-relaxed font-normal group-hover:text-red-50 transition-colors">
                   {area.description}
                 </p>
               </div>
 
-              <div className="relative z-10 mt-6 pt-4 border-t border-gray-100">
+              <div className="relative z-10 mt-6 pt-4 border-t border-gray-100 group-hover:border-white/20">
                 <a
                   href={area.link}
-                  className="inline-flex items-center text-xs font-bold uppercase tracking-wider text-amber-700 hover:text-amber-900 transition-colors"
+                  className="inline-flex items-center text-xs font-bold uppercase tracking-wider text-[#e6000a] group-hover:text-white transition-colors"
                 >
                   Learn More &rarr;
                 </a>

@@ -47,10 +47,10 @@ export default function JaagoNavbar() {
     <header
       ref={navRef}
       id="jaagonavbar"
-      className={`fixed top-0 left-0 z-[1000] w-full transition-all duration-500 ease-in-out ${
+      className={`fixed top-0 left-0 z-[1000] w-full transition-all duration-300 ease-out will-change-[padding,background-color] ${
         isSticky
-          ? "py-1.5 bg-gray-900/95 backdrop-blur-xl shadow-2xl border-b border-gray-700/50"
-          : "py-3 bg-gray-800"
+          ? "py-1.5 bg-[#0d0f14]/95 backdrop-blur-xl shadow-2xl border-b border-gray-800/80"
+          : "py-3 bg-[#0d0f14]"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -59,18 +59,18 @@ export default function JaagoNavbar() {
           <div className="w-auto shrink-0">
             <a href="/" className="inline-block group">
               <div
-                className={`flex items-center gap-2 transition-all duration-500 ease-in-out group-hover:scale-105 ${
+                className={`flex items-center gap-2 transition-all duration-300 ease-out group-hover:scale-105 active:scale-95 ${
                   isSticky ? "scale-95" : "scale-100"
                 }`}
               >
-                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#ffcd05] flex items-center justify-center shadow-lg text-gray-900 font-black text-base sm:text-lg tracking-tighter border border-amber-300">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#e6000a] flex items-center justify-center shadow-lg text-white font-black text-base sm:text-lg tracking-tighter border border-red-500">
                   CRC
                 </div>
                 <div className="flex flex-col text-left leading-none">
                   <span className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-white drop-shadow">
                     Come for Road Child
                   </span>
-                  <span className="text-[8px] sm:text-[9px] font-bold text-[#ffcd05] tracking-tight mt-0.5">
+                  <span className="text-[8px] sm:text-[9px] font-bold text-[#e6000a] tracking-tight mt-0.5">
                     Est. 5 June 2016 · GSTU
                   </span>
                 </div>
@@ -377,7 +377,7 @@ export default function JaagoNavbar() {
               <button
                 onClick={() => setSearchOpen(!searchOpen)}
                 aria-label="Search CRC Website"
-                className="btn btn-primary btn-circle w-9 h-9 sm:w-11 sm:h-11 bg-[#ffcd05] text-[#1f2937] shadow-lg flex items-center justify-center hover:bg-[#e6b800] hover:scale-110 transition-all duration-300 cursor-pointer"
+                className="btn btn-primary btn-circle w-9 h-9 sm:w-11 sm:h-11 bg-[#e6000a] text-white shadow-lg flex items-center justify-center hover:bg-[#a20002] hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
               >
                 <Search className="h-4 w-4 sm:h-5 sm:w-5" />
               </button>
@@ -395,7 +395,7 @@ export default function JaagoNavbar() {
                     />
                     <button
                       onClick={() => setSearchOpen(false)}
-                      className="text-gray-400 hover:text-gray-600"
+                      className="text-gray-400 hover:text-gray-600 cursor-pointer"
                     >
                       <X className="w-3.5 h-3.5" />
                     </button>
@@ -404,9 +404,9 @@ export default function JaagoNavbar() {
               )}
             </div>
 
-            {/* Signature Sponsor a Child CTA with Hover Lift */}
+            {/* Signature Sponsor a Child CTA with Hover Lift & Active Feedback */}
             <a
-              className="btn btn-primary px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm lg:text-base font-sans shadow-xl capitalize font-bold text-[#1f2937] hover:scale-105 hover:shadow-2xl transition-all duration-300 shrink-0"
+              className="btn btn-primary px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm lg:text-base font-sans shadow-xl capitalize font-bold text-white bg-[#e6000a] hover:bg-[#a20002] hover:scale-105 active:scale-95 hover:shadow-2xl transition-all duration-200 shrink-0"
               href="#sponsor"
             >
               Sponsor a Child
@@ -416,7 +416,7 @@ export default function JaagoNavbar() {
             <div className="md:hidden">
               <button
                 onClick={() => setMobileDrawerOpen(!mobileDrawerOpen)}
-                className="p-2 text-white bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
+                className="p-2 text-white bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors"
                 aria-label="Toggle navigation menu"
               >
                 {mobileDrawerOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -428,26 +428,26 @@ export default function JaagoNavbar() {
 
       {/* Mobile Drawer Menu */}
       {mobileDrawerOpen && (
-        <div className="md:hidden bg-gray-900 px-6 py-5 border-t border-gray-700 text-white text-sm font-semibold space-y-3 animate-in slide-in-from-top duration-300">
-          <a href="/" className="block py-1.5 border-b border-gray-800 hover:text-[#ffcd05]">
+        <div className="md:hidden bg-[#0d0f14] px-6 py-5 border-t border-gray-800 text-white text-sm font-semibold space-y-3 animate-in slide-in-from-top duration-300">
+          <a href="/" className="block py-1.5 border-b border-gray-800 hover:text-[#e6000a]">
             Home
           </a>
-          <a href="#hatekhori" className="block py-1.5 border-b border-gray-800 hover:text-[#ffcd05]">
+          <a href="#hatekhori" className="block py-1.5 border-b border-gray-800 hover:text-[#e6000a]">
             Focus: Hatekhori Free School
           </a>
-          <a href="#safeguarding" className="block py-1.5 border-b border-gray-800 hover:text-[#ffcd05]">
+          <a href="#safeguarding" className="block py-1.5 border-b border-gray-800 hover:text-[#e6000a]">
             Focus: Child Safeguarding & Health
           </a>
-          <a href="#current-programs" className="block py-1.5 border-b border-gray-800 hover:text-[#ffcd05]">
+          <a href="#current-programs" className="block py-1.5 border-b border-gray-800 hover:text-[#e6000a]">
             Programs: Field Campaigns
           </a>
-          <a href="#blog" className="block py-1.5 border-b border-gray-800 hover:text-[#ffcd05]">
+          <a href="#blog" className="block py-1.5 border-b border-gray-800 hover:text-[#e6000a]">
             Updates: Field Stories & Audits
           </a>
-          <a href="#about" className="block py-1.5 border-b border-gray-800 hover:text-[#ffcd05]">
+          <a href="#about" className="block py-1.5 border-b border-gray-800 hover:text-[#e6000a]">
             About Us: GSTU Roots & Committee
           </a>
-          <a href="#sponsor" className="block py-2 text-[#ffcd05] font-bold">
+          <a href="#sponsor" className="block py-2 text-[#e6000a] font-bold">
             Sponsor a Child
           </a>
         </div>

@@ -12,7 +12,7 @@ import JaagoFooter from "../components/JaagoFooter";
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50 text-gray-900 font-sans antialiased">
+    <div className="flex flex-col min-h-screen bg-[#f6f4f1] text-[#0d0f14] font-sans antialiased">
       {/* 0. AOS (Animate On Scroll) Initializer */}
       <AosInit />
 

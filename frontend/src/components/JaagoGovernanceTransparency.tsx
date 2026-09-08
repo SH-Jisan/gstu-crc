@@ -56,12 +56,12 @@ export default function JaagoGovernanceTransparency() {
           <div className="shrink-0">
             <button
               onClick={handleExportExcel}
-              className="flex items-center text-xs font-bold text-gray-900 bg-[#FFCD05] hover:bg-[#e6b800] px-5 py-3 rounded-full shadow-md transition-all duration-150 transform hover:scale-105"
+              className="flex items-center text-xs font-bold text-white bg-[#e6000a] hover:bg-[#a20002] px-5 py-3 rounded-full shadow-md transition-all duration-150 transform hover:scale-105"
             >
               <FileSpreadsheet className="w-4 h-4 mr-2" />
               {exportSuccess ? (
-                <span className="flex items-center font-black text-gray-950">
-                  <Check className="w-4 h-4 mr-1 text-emerald-800" /> Exported CRC_Roster.xlsx
+                <span className="flex items-center font-black text-white">
+                  <Check className="w-4 h-4 mr-1 text-emerald-300" /> Exported CRC_Roster.xlsx
                 </span>
               ) : (
                 "Export Active Roster (.xlsx)"
@@ -115,7 +115,7 @@ export default function JaagoGovernanceTransparency() {
                           member.councilType === "Permanent"
                             ? "bg-blue-100 text-blue-900"
                             : member.councilType === "Executive"
-                            ? "bg-[#FFCD05]/30 text-amber-950"
+                            ? "bg-red-100 text-red-900"
                             : "bg-purple-100 text-purple-900"
                         }`}
                       >
@@ -150,10 +150,10 @@ export default function JaagoGovernanceTransparency() {
         </div>
 
         {/* Public Audit Reports Download Vault */}
-        <div className="bg-gray-900 text-white rounded-3xl p-8 sm:p-10 shadow-2xl relative overflow-hidden">
+        <div className="bg-[#0d0f14] text-white rounded-3xl p-8 sm:p-10 shadow-2xl relative overflow-hidden">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-gray-800">
             <div>
-              <span className="text-xs font-black uppercase tracking-wider text-[#FFCD05]">
+              <span className="text-xs font-black uppercase tracking-wider text-[#e6000a]">
                 Financial Vault
               </span>
               <h3 className="text-2xl font-black uppercase mt-1">
@@ -172,7 +172,7 @@ export default function JaagoGovernanceTransparency() {
                 className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-gray-800/40 px-3 rounded-2xl transition-colors"
               >
                 <div className="flex items-start space-x-3">
-                  <div className="w-10 h-10 rounded-xl bg-gray-800 text-[#FFCD05] flex items-center justify-center shrink-0 mt-0.5">
+                  <div className="w-10 h-10 rounded-xl bg-gray-800 text-[#e6000a] flex items-center justify-center shrink-0 mt-0.5">
                     <FileText className="w-5 h-5" />
                   </div>
                   <div>
@@ -193,11 +193,11 @@ export default function JaagoGovernanceTransparency() {
                   </span>
                   <button
                     onClick={() => handleDownload(doc.id)}
-                    className="flex items-center text-xs font-black uppercase text-gray-950 bg-[#FFCD05] hover:bg-[#e6b800] px-4 py-2 rounded-full transition-colors"
+                    className="flex items-center text-xs font-black uppercase text-white bg-[#e6000a] hover:bg-[#a20002] px-4 py-2 rounded-full transition-colors"
                   >
                     {downloadedId === doc.id ? (
                       <>
-                        <Check className="w-3.5 h-3.5 mr-1 text-emerald-950" />
+                        <Check className="w-3.5 h-3.5 mr-1 text-emerald-300" />
                         Downloading PDF...
                       </>
                     ) : (

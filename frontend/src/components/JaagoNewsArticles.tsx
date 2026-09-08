@@ -52,16 +52,16 @@ export default function JaagoNewsArticles() {
             className="flex flex-wrap justify-between items-center mt-6"
           >
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-amber-600 block text-left mb-1">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#e6000a] block text-left mb-1">
                 LATEST FIELD STORIES
               </span>
-              <h2 className="text-[#1f2937] text-3xl md:text-4xl font-bold font-heading text-left uppercase">
+              <h2 className="text-[#0d0f14] text-3xl md:text-4xl font-bold font-heading text-left uppercase">
                 News &amp; Field Updates
               </h2>
             </div>
             <a
               href="#blog"
-              className="hidden md:inline-flex btn btn-secondary px-6 py-2.5 text-sm font-sans shadow-lg capitalize text-white hover:scale-105 transition-transform"
+              className="hidden md:inline-flex btn btn-secondary px-6 py-2.5 text-sm font-sans shadow-lg capitalize text-white bg-[#0d0f14] hover:bg-[#1f2937] hover:scale-105 transition-transform"
             >
               View all field updates
             </a>
@@ -89,7 +89,7 @@ export default function JaagoNewsArticles() {
                     {item.categories.map((cat, ci) => (
                       <span
                         key={ci}
-                        className="bg-gray-900/80 backdrop-blur-sm text-[#ffcd05] text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider"
+                        className="bg-[#0d0f14]/85 backdrop-blur-sm text-[#e6000a] text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider border border-white/10"
                       >
                         {cat}
                       </span>
@@ -101,7 +101,7 @@ export default function JaagoNewsArticles() {
                   <span className="text-xs font-semibold text-gray-500 block mb-2">
                     {item.date}
                   </span>
-                  <h3 className="text-lg font-bold font-heading text-gray-900 group-hover:text-amber-700 transition-colors leading-snug line-clamp-2">
+                  <h3 className="text-lg font-bold font-heading text-[#0d0f14] group-hover:text-[#e6000a] transition-colors leading-snug line-clamp-2">
                     {item.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-gray-600 mt-2.5 leading-relaxed line-clamp-3">
@@ -113,7 +113,7 @@ export default function JaagoNewsArticles() {
               <div className="px-6 pb-6 pt-2 border-t border-dashed border-gray-200">
                 <a
                   href={item.link}
-                  className="text-xs font-bold uppercase tracking-wider text-amber-600 hover:text-amber-800 transition-colors inline-flex items-center gap-1"
+                  className="text-xs font-bold uppercase tracking-wider text-[#e6000a] hover:text-[#a20002] transition-colors inline-flex items-center gap-1"
                 >
                   Read Full Story &rarr;
                 </a>

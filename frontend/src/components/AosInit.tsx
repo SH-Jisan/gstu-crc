@@ -6,11 +6,20 @@ import AOS from "aos";
 export default function AosInit() {
   useEffect(() => {
     AOS.init({
-      duration: 600,
+      duration: 700,
       easing: "ease-out-cubic",
       once: false,
-      offset: 80,
+      mirror: true,
+      offset: 60,
+      delay: 50,
     });
+
+    const handleLoad = () => {
+      AOS.refresh();
+    };
+
+    window.addEventListener("load", handleLoad);
+    return () => window.removeEventListener("load", handleLoad);
   }, []);
 
   return null;

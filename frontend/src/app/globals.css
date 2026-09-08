@@ -1,25 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
 @import "tailwindcss";
 @import "aos/dist/aos.css";
 
 :root {
-  --primary: #ffcd05;
-  --primary-hover: #e6b800;
-  --secondary: #1f2937;
-  --secondary-hover: #111827;
+  --brand: #e6000a;
+  --brand-deep: #a20002;
+  --leaf: #007938;
+  --ink: #0d0f14;
+  --sand: #f6f4f1;
+  --primary: #e6000a;
+  --primary-hover: #a20002;
+  --secondary: #0d0f14;
+  --secondary-hover: #1f2937;
+  --accent: #007938;
   --paragraph: #4b5563;
   --base-100: #ffffff;
 }
 
 @theme inline {
-  --color-primary: #ffcd05;
-  --color-primary-hover: #e6b800;
-  --color-secondary: #1f2937;
-  --color-secondary-hover: #111827;
+  --color-brand: #e6000a;
+  --color-brand-deep: #a20002;
+  --color-leaf: #007938;
+  --color-ink: #0d0f14;
+  --color-sand: #f6f4f1;
+  --color-primary: #e6000a;
+  --color-primary-hover: #a20002;
+  --color-secondary: #0d0f14;
+  --color-secondary-hover: #1f2937;
+  --color-accent: #007938;
   --color-paragraph: #4b5563;
   --color-base-100: #ffffff;
 }
 
-/* JAAGO Design Classes */
+/* CRC & Lovable Design Classes */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -32,21 +45,21 @@
 }
 
 .btn-primary {
-  background-color: #ffcd05;
-  color: #1f2937;
+  background-color: #e6000a;
+  color: #ffffff;
   border: none;
 }
 .btn-primary:hover {
-  background-color: #e6b800;
+  background-color: #a20002;
 }
 
 .btn-secondary {
-  background-color: #1f2937;
+  background-color: #0d0f14;
   color: #ffffff;
   border: none;
 }
 .btn-secondary:hover {
-  background-color: #111827;
+  background-color: #1f2937;
 }
 
 .btn-sm {
@@ -68,29 +81,39 @@
   border-radius: 1rem;
 }
 
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .font-heading {
-  font-family: inherit;
+  font-family: 'Archivo Black', 'Arial Black', sans-serif;
   font-weight: 800;
 }
 
-/* Floating animation for Speech Bubble */
+.font-display {
+  font-family: 'Archivo Black', 'Arial Black', sans-serif;
+}
+
+/* Hardware-accelerated Floating animation for Speech Bubble */
 @keyframes floatBubble {
   0%, 100% {
-    transform: translateY(0px) rotate(-1deg);
+    transform: translate3d(0, 0, 0) rotate(-1deg);
   }
   50% {
-    transform: translateY(-8px) rotate(0deg);
+    transform: translate3d(0, -8px, 0) rotate(0.5deg);
   }
 }
 
 .animate-float {
-  animation: floatBubble 4s ease-in-out infinite;
+  animation: floatBubble 4.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  will-change: transform;
 }
 
-/* Card hover sweep */
-/* JAAGO Navbar Hover Animations */
+/* CRC Navbar Navigation & Dropdown Animations */
 .jaago-nav-link {
-  transition: all 0.3s ease-in-out;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   border: 1px solid transparent;
   border-radius: 9999px;
 }
@@ -101,17 +124,18 @@
 }
 
 .jaago-dropdown {
-  transform-origin: top;
-  transform: scaleY(0);
+  transform-origin: top center;
+  transform: translate3d(0, 10px, 0) scale(0.96);
   opacity: 0;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s ease-out;
   pointer-events: none;
+  will-change: transform, opacity;
 }
 
 .group:hover > .jaago-dropdown,
 .group:focus-within > .jaago-dropdown,
 .jaago-dropdown.active-dropdown {
-  transform: scaleY(1) !important;
+  transform: translate3d(0, 0, 0) scale(1) !important;
   opacity: 1 !important;
   pointer-events: auto !important;
 }
@@ -120,14 +144,14 @@
 .jaago-dropdown::before {
   content: "";
   position: absolute;
-  top: -12px;
+  top: -14px;
   left: 0;
   width: 100%;
-  height: 14px;
+  height: 16px;
 }
 
 .jaago-chevron {
-  transition: transform 0.4s ease-in-out;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .group:hover .jaago-chevron {
@@ -150,8 +174,8 @@
   width: 100%;
   transform-origin: right;
   transform: scaleX(0);
-  background-color: #1f2937;
-  transition: transform 0.4s ease-in-out;
+  background-color: #e6000a;
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .jaago-dropdown-item:hover::after {
@@ -159,10 +183,17 @@
   transform: scaleX(1);
 }
 
+/* Card hover sweep with lift and synchronized sweep */
 .hover-sweep-card {
   position: relative;
   overflow: hidden;
   z-index: 1;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, box-shadow;
+}
+
+.hover-sweep-card:hover {
+  transform: translate3d(0, -5px, 0);
 }
 
 .hover-sweep-card::before {
@@ -172,10 +203,11 @@
   left: 0;
   width: 0;
   height: 100%;
-  background-color: #ffcd05;
+  background-color: #e6000a;
   border-radius: 1rem;
-  transition: width 0.4s ease-in-out;
+  transition: width 0.45s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: -1;
+  will-change: width;
 }
 
 .hover-sweep-card:hover::before {
