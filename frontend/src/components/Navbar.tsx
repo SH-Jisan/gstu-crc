@@ -464,7 +464,8 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
           </div>
         );
       })()}
-      {/* Dimmed & Grayish Backdrop Overlay for the Page when Mega Menu is Open */}
+
+      {/* Soft Blurred Backdrop Overlay for the Page when Mega Menu is Open (No Grayscale, Pure Subtle Blur) */}
       <div
         className={`hidden xl:block fixed inset-0 top-0 w-screen h-screen -z-10 transition-all duration-300 ease-out ${
           isMegaOpen
@@ -472,9 +473,9 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
             : "opacity-0 pointer-events-none invisible"
         }`}
         style={{
-          backgroundColor: "rgba(15, 23, 42, 0.40)",
-          backdropFilter: "grayscale(65%) blur(1.5px)",
-          WebkitBackdropFilter: "grayscale(65%) blur(1.5px)",
+          backgroundColor: "rgba(0, 0, 0, 0.35)",
+          backdropFilter: "blur(1.5px)",
+          WebkitBackdropFilter: "blur(1.5px)",
         }}
         onClick={() => setActiveDropdown(null)}
         aria-hidden="true"
