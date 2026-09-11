@@ -655,4 +655,62 @@ Chronological registry of all file additions, edits, component implementations, 
   - `npm run lint`: **0 errors, 0 warnings**.
   - `npx tsc --noEmit`: **0 errors**.
 
+---
+
+### [ENTRY-037] 2026-09-12 · About CRC Mega-Menu Alignment Overhaul, Sub-Option Descriptions, Screen Overflow Resolution & Zero Horizontal Scroll
+- **Type**: UX Architecture, Layout Optimization & Visual Defect Resolution
+- **User Requests**:
+  1. "about crc serction er sub option gulai short detail add koro": Add short descriptive details to all sub-options under About CRC so users immediately grasp the content of each section.
+  2. "details gula ar ektu detailed koro... SHORT DETAILS GULA ARO EKTU MEANINGFUL KORO": Enrich descriptions with constitutional, factual substance (principles, guiding values, and operational methods).
+  3. "about, our history, how we run, symbol and flag ey option gula pasha pashi na rekhe upor niche kore rakho and eder sub option gula pasha pashi koro. orthat alignment gula change koro": Reorient alignment so the 4 categories are stacked vertically, and their sub-options are arranged horizontally side-by-side.
+  4. "ami tomake alignment change korte bolsilam. tumi ui o change kore felso. ui ta ager moto same hobe just alignment gula change hobe": Strictly preserve the signature clean UI styling (light-red hover background, vertical red bar, text glide, dots, chevrons) without adding artificial border cards.
+  5. "kono option e hover korar por je red effect ta ashe seta onno option er upor overlap korse": Fix the hover effect overlapping adjacent rows due to negative margin overhang.
+  6. "ebr dropdown menu ta screen er baire e chole jasse. fix the dropdown menu properly without change ui style": Fix menu extending off the bottom of the screen on laptop displays.
+  7. "dropdown menu te ekta horizontal scroll bar appear hoise. is that necessary?": Eliminate unwanted horizontal scrollbar inside the mega menu.
+- **Remediation & Technical Implementation**:
+  1. **Data Model & Content Enrichment (`frontend/src/data/navigation.ts`)**:
+     - Extended `MegaMenuSubLink` interface with `description?: string`.
+     - Authored 14 punchy, 1-2 line summaries (8-11 words each) preserving core constitutional metrics:
+       - *Principles*: "3 fundamental principles & 8 guiding values defining volunteer ethics."
+       - *Vision and mission*: "Our vision for a street-child-free society across 5 key pillars."
+       - *Objectives*: "5 core goals targeting child welfare, open schooling, and youth leadership."
+       - *Mode of Action*: "7 grassroots methods: direct aid, schooling, advocacy, and safeguarding."
+       - *Achievements*: "Best Branch award, 1,200+ street children empowered, and 350+ volunteers."
+       - *How we founded*: "Started 5 June 2016 from an Eid shopping railway station initiative."
+       - *Leadership over years*: "Student conveners, executive panels, and advisors across a decade."
+       - *Finance*: "Strict financial discipline with restricted child funds and open audits."
+       - *Governance Overview*: "3-tier constitutional system ensuring democratic leadership and accountability."
+       - *Executive Council*: "Elected student panel managing daily operations and Hatekhori School."
+       - *Permanent Council*: "Supreme constitutional trustee body of founding members and alumni."
+       - *Temporary Council*: "Independent ad-hoc committees for elections, audits, and special drives."
+       - *Official Emblem & Logo*: "Embracing hands protecting a child within a circle of unity."
+       - *Flag Colors & Motto*: "4 banner colors and our motto for a street-child-free society."
+  2. **Grid Reorientation & Vertical Alignment (`frontend/src/components/Navbar.tsx`)**:
+     - Stacked category rows vertically using `flex flex-col space-y-1`.
+     - Placed sub-options horizontally inside responsive CSS grids: `grid-cols-5` for 5-item rows (`About`, `How we run`) and `grid-cols-2` for 2-item rows (`Our history`, `Symbol & Flag`).
+  3. **UI Aesthetic Preservation & Overlap Fix (`frontend/src/components/Navbar.tsx`)**:
+     - Removed negative margin overhang (`-m-3.5`) that caused red hover cards to bleed into adjacent rows.
+     - Bound the signature vertical crimson line (`w-1 bg-[#e6000a] scale-y-100`) between `top-2 bottom-2` within `py-1.5 px-2.5 rounded-xl`.
+  4. **Vertical Compaction & Viewport Safety Guard (`frontend/src/components/Navbar.tsx`)**:
+     - Slashed top/bottom drawer padding from `py-8 lg:py-10` down to `py-3.5 lg:py-4.5`.
+     - Slashed total drawer height from 523px down to 427px (~100px reduction).
+     - Menu bottom now sits safely at 525px with ~240px margin above taskbar on 768px laptop viewports.
+     - Added `max-h-[calc(100vh-90px)] overflow-y-auto` as an infallible safeguard.
+  5. **Horizontal Scrollbar Elimination (`frontend/src/components/Navbar.tsx`)**:
+     - Added explicit `overflow-x-hidden` to `.mega-menu-drawer`.
+     - Purged `-mx-1` from sub-links and `-m-3.5` from category cards.
+     - Verified `scrollWidth: 1440px == clientWidth: 1440px` (diff: 0), completely eliminating horizontal scrollbars.
+- **Affected Paths**:
+  - `[MODIFY]` [`frontend/src/data/navigation.ts`](../frontend/src/data/navigation.ts)
+  - `[MODIFY]` [`frontend/src/components/Navbar.tsx`](../frontend/src/components/Navbar.tsx)
+  - `[MODIFY]` [`logs/session_logs.md`](./session_logs.md)
+  - `[MODIFY]` [`logs/decisions_log.md`](./decisions_log.md)
+  - `[MODIFY]` [`logs/implementation_history.md`](./implementation_history.md)
+- **Verification**:
+  - `npm run lint`: **0 errors, 0 warnings**.
+  - `npx tsc --noEmit`: **0 errors**.
+  - Puppeteer measurements: `scrollWidth = 1440px`, `clientWidth = 1440px`, `diff = 0`, `overflowX = "hidden"`, `overflowY = "auto"`.
+  - Visual verification: Automated screenshot confirmed flawless, unclipped rendering on 1440x768 laptop viewport with zero horizontal or vertical overflow.
+
+
 

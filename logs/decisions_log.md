@@ -329,5 +329,40 @@ Record of key decisions, trade-offs evaluated, and consensus reached between use
   - Restored raw HTML `<img>` with inline `style={{ maxHeight: "calc(100dvh - 136px)", aspectRatio: "1919 / 955" }}` and suppressed ESLint with an inline directive.
   - Removed the scroll cue indicator completely from the hero section to keep the banner clean and uncluttered.
 - **Status**: Accepted & Implemented.
+---
+
+### [ADL-029] Navbar Mega-Menu Alignment, Vertical Compaction & Authentic UI Invariant
+- **Date**: 2026-09-12
+- **Context**: 
+  - The user requested reorganizing the "About CRC" mega dropdown navigation: instead of 4 categories laid out horizontally across columns, stack the categories vertically (`flex-col`) and arrange their sub-options horizontally (`grid-cols-5` / `grid-cols-2`).
+  - The user explicitly mandated keeping the original signature UI design (light-red hover highlight `hover:bg-red-50/40`, vertical red indicator line `bg-[#e6000a]`, smooth text glide, bullet dot scaling, and chevrons) without introducing boxed card boundaries or artificial backgrounds.
+  - Due to adding informative descriptions, the initial stacked layout exceeded standard laptop viewport heights (523px height), extending off-screen.
+- **Decision**:
+  - **Reoriented Grid**: Maintained Spotlight column on left, with right area featuring 4 vertically stacked category rows (`flex-col space-y-1`). Within each row, sub-links are laid out horizontally in CSS grids matching option counts (`grid-cols-5` for `About` and `How we run`; `grid-cols-2` for `Our history` and `Symbol & Flag`).
+  - **Vertical Compaction Strategy**:
+    - Slashed drawer padding from `py-8 lg:py-10` down to `py-3.5 lg:py-4.5`.
+    - Compacted category row spacing to `space-y-1` and internal item padding to `py-0.5 px-1.5`.
+    - Compacted descriptions to concise 1-2 lines (8-11 words each), preserving core quantitative milestones (1,200+ street children, 350+ volunteers, 5 June 2016 founding, 3-tier constitutional governance).
+    - Reduced drawer height from 523px to 427px (~100px reduction), allowing the menu bottom to sit safely at 525px with ~240px margin above the taskbar on 768px laptop screens.
+  - **Viewport Safety Boundary**: Wrapped drawer container with `max-h-[calc(100vh-90px)] overflow-y-auto` as an infallible constraint against screen clipping on high display zooms.
+- **Status**: Accepted & Implemented.
+---
+
+### [ADL-030] Zero Horizontal Scroll Invariant & Negative Margin Overhang Elimination
+- **Date**: 2026-09-12
+- **Context**: 
+  - After introducing `overflow-y-auto` for screen safety, a 6px horizontal scrollbar unexpectedly appeared on the mega-menu drawer on Windows viewports.
+  - The user identified this anomaly and questioned its necessity ("dropdown menu te ekta horizontal scroll bar appear hoise. is that necessary?").
+- **Root Cause Analysis**:
+  - Under CSS specifications, specifying `overflow-y: auto` while leaving `overflow-x` unspecified causes the browser to compute `overflow-x: auto`.
+  - Non-active sibling mega-menu tabs residing simultaneously in the DOM grid container for cross-fade animations utilized `translate-x-6` (+24px).
+  - Legacy column and sub-link styling contained negative horizontal margins (`-m-3.5` and `-mx-1`), causing elements to stick out past container boundaries by 6px (`scrollWidth: 1446px` vs `clientWidth: 1440px`), thereby prompting the browser to render a horizontal scrollbar.
+- **Decision**:
+  - Explicitly declared `overflow-x-hidden` on `.mega-menu-drawer`.
+  - Purged all negative horizontal margins (`-m-3.5`, `-mx-1`) from sub-links and category cards, replacing them with bounded inner padding (`py-0.5 px-1.5` and `p-3 rounded-xl`).
+  - Verified programmatic metric equality: `scrollWidth == clientWidth` (1440px, diff: 0).
+  - Established an architectural invariant: **Navigation dropdowns must never render horizontal scrollbars under any circumstance.**
+- **Status**: Accepted & Implemented.
+
 
 
