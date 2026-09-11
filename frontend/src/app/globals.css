@@ -140,6 +140,93 @@ html {
   pointer-events: auto !important;
 }
 
+/* Smooth Minimalist Mega Dropdown & Navigation Animations */
+@keyframes megaDropdownSlideDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes megaContentFade {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes popoverScaleFade {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translate3d(0, -6px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+}
+
+@keyframes mobileDrawerSlide {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-mega-content {
+  animation: megaContentFade 0.24s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, opacity;
+}
+
+.animate-popover-in {
+  animation: popoverScaleFade 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, opacity;
+}
+
+.animate-mobile-drawer {
+  animation: mobileDrawerSlide 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, opacity;
+}
+
+/* Smooth Mega Dropdown Slide Down & Slide Up (Curtain Effect) */
+.mega-menu-wrapper {
+  clip-path: inset(0 -60px -120px -60px);
+  pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0.35s;
+}
+
+.mega-menu-wrapper.is-open {
+  pointer-events: auto;
+  visibility: visible;
+  transition: none;
+}
+
+.mega-menu-drawer {
+  transform: translate3d(0, -100%, 0);
+  opacity: 0;
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease-in;
+  will-change: transform, opacity;
+}
+
+.mega-menu-wrapper.is-open .mega-menu-drawer {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+  transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease-out;
+}
+
 /* Hover bridge so mouse never loses contact between pill and dropdown */
 .jaago-dropdown::before {
   content: "";

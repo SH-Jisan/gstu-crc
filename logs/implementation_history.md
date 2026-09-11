@@ -400,3 +400,88 @@ Chronological registry of all file additions, edits, component implementations, 
 - **Verification**:
   - `npm run build` compiled all 11 static routes in 743ms with Exit Code 0.
   - All other sections on the landing page remain strictly untouched, preserving their previous static state.
+---
+
+### [ENTRY-028] 2026-09-11 — Full-Width Mega Dropdown Menu Architecture (ICRC Reference Style)
+- **Type**: Major Navigation UI/UX Redesign & Mega Menu System
+- **User Request**: "nav ber e hover korle bortoman e je dropdown menu show hoi sei drop down menu ta change kore mega dropdown menu korte hobe. for example: about crc te hover korle uporer ss er moto ekta page slide korbe."
+- **Reference**: International Committee of the Red Cross (ICRC) full-width navigation drawer screenshot.
+- **Affected Paths**:
+  - `[MODIFY]` [`frontend/src/components/JaagoNavbar.tsx`](../frontend/src/components/JaagoNavbar.tsx):
+    - Implemented `megaMenus` data dictionary for 5 core categories (`about`, `programs`, `school`, `branches`, `media`), each structured with a dedicated Spotlight overview (title, mission summary, outlined pill button) and 3 to 4 category columns with chevrons and 2-line descriptions.
+    - Elevated desktop dropdown from localized `min-w-[240px]` popover into a full-width container (`absolute left-0 right-0 top-full w-full bg-white shadow-2xl border-b z-40`).
+    - Added 180ms hover debounce cushion (`timeoutRef`) to ensure smooth mouse transit from nav links into the mega drawer without flickering or premature closing.
+    - Added active text color styling (`text-[#e6000a]`) for nav items when their mega menu is actively displayed.
+    - Preserved mobile drawer (`xl:hidden`) accordion functionality for smartphone/tablet viewports.
+- **Verification**:
+  - `npm run build` compiled all 11 static routes in 1867ms with Exit Code 0.
+  - Puppeteer browser testing (1440x900) verified all 5 mega menus ("About CRC", "Programs & Activities", "CRC School", "Branches", "Media & Gallery") on homepage (`/`) and subpage (`/about`): verified full-width slide-down animation, spotlight card, vertical divider, column links, and seamless cursor tracking.
+---
+
+### [ENTRY-029] 2026-09-11 — Smooth Minimalist Hover Micro-Interactions (Navbar & Mega Menu)
+- **Type**: UI/UX Motion Design & Micro-Interactions
+- **User Request**: "add a smooth minimalist hover animation ."
+- **User Scope Clarification**: "Navbar & Mega Menu (ন্যাভবার আইটেমে স্মুথ আন্ডারলাইন/ইন্ডিকেটর ও মেগা ড্রপডাউন কার্ডে মার্জিত হোভার ট্রানজিশন)"
+- **Affected Paths**:
+  - `[MODIFY]` [`frontend/src/components/JaagoNavbar.tsx`](../frontend/src/components/JaagoNavbar.tsx):
+    - **Desktop Nav Link Underline Expansion**: Added an elegant, expanding red indicator bar (`h-[2.5px] bg-[#e6000a] rounded-full scale-x-0 group-hover/nav:scale-x-100 origin-left transition-all duration-300 ease-out`) that glides horizontally from left to right on hover and locks into place (`scale-x-100 opacity-100`) when its mega menu is active.
+    - **Mega Menu Category Card Micro-Interactions**:
+      - Added a sleek vertical red accent line on card hover (`w-1 bg-[#e6000a] rounded-full scale-y-0 group-hover/col:scale-y-100 origin-center transition-all duration-300 ease-out`).
+      - Applied a subtle rightward text glide (`group-hover/col:translate-x-1.5 duration-300 ease-out`) for both the category title and descriptive paragraph.
+      - Applied a soft background tint (`hover:bg-red-50/40`) and gentle card lift (`hover:-translate-y-0.5`).
+      - Added an independent chevron forward slide (`group-hover/col:translate-x-1`) that turns red synchronously with the title.
+    - **Spotlight CTA Pill Button Interaction**:
+      - Added smooth fill transition (`hover:bg-[#0d0f14] hover:text-white hover:border-[#0d0f14] hover:-translate-y-0.5`).
+      - Added forward chevron glide on the pill button arrow (`group-hover/pill:translate-x-1 duration-300 ease-out`).
+- **Verification**:
+  - `npm run build` compiled all 11 static routes in 1473ms with Exit Code 0.
+---
+
+### [ENTRY-030] 2026-09-11 — Curtain Slide-Down & Slide-Up Architecture for Mega Dropdown
+- **Type**: UI/UX Motion Design & Animation Performance
+- **User Request**: "mega dropdown menu ta smoothly upor theke niche nambe abr smothly niche theke upore uthe jabe erokom animation daw."
+- **Root Cause & Design Evolution**:
+  - A subtle 10px shift lacked the physical feeling of a drawer descending from above and retracting back up.
+  - Developed a specialized two-layer architecture:
+    - **Outer Curtain Container (`.mega-menu-wrapper`)**: Positioned at `top-full` with `clip-path: inset(0 -60px -120px -60px)`. The top clip boundary (`0`) strictly clips any content attempting to render above the navbar bottom red border line, while allowing horizontal and bottom shadows to spread freely. Visibility is delayed by 0.35s on exit so the full slide-up plays out.
+    - **Inner Sliding Drawer (`.mega-menu-drawer`)**: Translates from `-100%` (`translate3d(0, -100%, 0)`) down to `0` on entrance (`0.38s cubic-bezier(0.16, 1, 0.3, 1)`) with smooth opacity ease-in. On exit, translates smoothly from `0` back up to `-100%` (`0.32s cubic-bezier(0.4, 0, 0.2, 1)`), cleanly retracting into the navbar before hiding.
+- **Affected Paths**:
+  - `[MODIFY]` [`frontend/src/app/globals.css`](../frontend/src/app/globals.css):
+    - Added `.mega-menu-wrapper` with `clip-path` and delayed visibility.
+    - Added `.mega-menu-drawer` with `-100%` to `0%` translateY interpolation and spring ease-out curves.
+    - Retained `.animate-mega-content` for inner tab cross-fading and `.animate-popover-in` for search.
+  - `[MODIFY]` [`frontend/src/components/JaagoNavbar.tsx`](../frontend/src/components/JaagoNavbar.tsx):
+    - Wrapped the mega dropdown menu panel in `mega-menu-wrapper` and `mega-menu-drawer`.
+- **Verification**:
+  - `npm run build` compiled all 11 static routes in 1040ms with Exit Code 0.
+  - Puppeteer headless browser testing verified:
+    1. Hovering on "About CRC" slides the drawer down smoothly from `-100%` to `0%`.
+    2. Hovering away triggers smooth slide-up to `-100%` and clean transition to hidden.
+---
+
+### [ENTRY-031] 2026-09-11 — Seamless Directional Tab Cross-Fade Across Mega Menu Links
+- **Type**: UI/UX Motion Design & Layout Architecture
+- **User Request**: "navbar e jokhn ami ekta option theke onno option e hover korsi direct tokhn sathe sathe mega menu ta change hosse. eytai ekta smooth minimul transition animation add kora jai na?"
+- **Root Cause Isolated**:
+  - Previously, switching `activeDropdown` remounted single-child JSX using a dynamic React `key`, causing outgoing content to unmount in 0ms (instantly vanishing), which users perceived as a sudden/abrupt snap.
+- **Solution & Architecture**:
+  - Implemented a persistent **CSS Grid Stacking Pattern** (`grid grid-cols-1 grid-rows-1 items-start` where all 5 mega menu panes share `col-start-1 row-start-1 w-full`).
+  - Automatically sizes the container to the content while retaining all 5 tabs in the DOM simultaneously.
+  - Added **Direction-Aware Horizontal Gliding**:
+    - When navigating forward (left-to-right), the outgoing tab glides `-translate-x-6` (-24px) to the left as it fades out (`opacity-0`), and the incoming tab enters from `translate-x-6` (+24px) on the right into center (`translate-x-0`) as it fades in (`opacity-100`).
+    - When navigating backward (right-to-left), the directions invert naturally.
+    - Both panes transition simultaneously over `300ms ease-[cubic-bezier(0.16,1,0.3,1)]` without any DOM remounting, zero-second gaps, or visual snapping.
+- **Affected Paths**:
+  - `[MODIFY]` [`frontend/src/components/JaagoNavbar.tsx`](../frontend/src/components/JaagoNavbar.tsx):
+    - Added `megaMenuKeys` constant array.
+    - Replaced single dynamic tab rendering with the 5-child CSS Grid stack with directional translation calculations.
+- **Verification**:
+  - `npm run build` compiled all 11 static routes in 1034ms with Exit Code 0.
+  - Puppeteer automated testing verified:
+    1. Hovering "About CRC" mounts smoothly in center.
+    2. Hovering "Programs & Activities" glides "About" to the left while "Programs" glides in from the right.
+    3. Hovering back to "About CRC" reverses the direction smoothly.
+
+
+
+

@@ -210,3 +210,61 @@ Record of key decisions, trade-offs evaluated, and consensus reached between use
   - Implement interactive micro-animations on card hover: the icon gently scales and rotates slightly (`scale-110 rotate-3`), and Lucide's `ArrowRight` glides smoothly forward (`translate-x-1.5`) alongside the existing red background sweep.
   - Leave all other landing page sections strictly untouched.
 - **Status**: Accepted & Implemented.
+---
+
+### [ADL-020] Full-Width Mega Dropdown Menu Architecture (ICRC Reference Style)
+- **Date**: 2026-09-11
+- **Context**: Standard floating dropdowns (`min-w-[240px]`) were compact and lacked narrative context, making it harder for users to comprehend the breadth of CRC's mission pillars, school structure, and regional branches. The user requested transforming the navigation into a full-width Mega Dropdown Menu modeled directly after the International Committee of the Red Cross (ICRC) website.
+- **Decision**:
+  - Implement a full-width mega menu container (`absolute left-0 right-0 top-full w-full bg-white shadow-2xl border-b z-40`) attached to the Main Navigation Bar, spanning the entire screen width directly below the signature red border line.
+  - Adopt a 2-zone information architecture:
+    - **Spotlight Column (Left, ~300px)**: Large headline, mission description, and outlined rounded-pill call-to-action button (e.g. *"Discover who we are"*, *"Explore all programs"*).
+    - **Vertical Hairline Divider**: `w-px bg-gray-200/80` providing crisp visual separation.
+    - **Multi-Column Category Grid (Right)**: 3 to 4 columns displaying bold category titles with chevrons (`ChevronRight`) and 2-line informative descriptions guiding users to relevant subpages and hash anchors.
+  - Implement a 180ms hover debounce timer (`timeoutRef`) to eliminate premature menu closing or flickering as users transition their mouse across nav links and into the drawer.
+  - Set active text color highlighting (`text-[#e6000a]`) for nav items whose mega menu is active.
+  - Retain accordion-style navigation in the mobile drawer (`xl:hidden`) for optimal usability on touch screens.
+- **Status**: Accepted & Implemented.
+---
+
+### [ADL-021] Smooth Minimalist Hover Micro-Interactions (Navbar & Mega Menu)
+- **Date**: 2026-09-11
+- **Context**: Following the implementation of the full-width Mega Dropdown Menu, the navigation felt static upon hovering. The user requested adding a "smooth minimalist hover animation", specifically targeted at the Navbar links and Mega Dropdown cards.
+- **Decision**:
+  - **Left-to-Right Underline Indicator**: Implement an expanding red bar (`h-[2.5px] bg-[#e6000a] scale-x-0 group-hover/nav:scale-x-100 origin-left transition-all duration-300 ease-out`) positioned on the bottom edge of desktop nav links. It persists at `scale-x-100 opacity-100` when the item's mega menu is open, creating a strong anchor between the link and the opened drawer.
+  - **Minimalist Vertical Accent & Text Glide for Category Cards**: Avoid heavy card hover effects or stark color shifts. Instead, utilize a vertical red accent pill (`w-1 bg-[#e6000a] scale-y-0 group-hover/col:scale-y-100 origin-center transition-all duration-300 ease-out`) aligned to the left of each category column, accompanied by a subtle rightward text glide (`group-hover/col:translate-x-1.5 duration-300 ease-out`) and faint background tint (`hover:bg-red-50/40`).
+  - **Micro-Interactions on Interactive Controls**:
+    - Add forward chevron nudging (`translate-x-1`) on both the category link chevrons and the Spotlight pill CTA button.
+    - Provide subtle vertical elevation (`hover:-translate-y-0.5`) on cards and the pill CTA to communicate tactile responsiveness.
+- **Status**: Accepted & Implemented.
+---
+
+### [ADL-022] Curtain Slide-Down & Slide-Up Architecture for Mega Dropdown
+- **Date**: 2026-09-11
+- **Context**: The user requested that the mega dropdown menu smoothly descend from top to bottom when opening, and smoothly ascend from bottom to top when closing ("mega dropdown menu ta smoothly upor theke niche nambe abr smothly niche theke upore uthe jabe erokom animation daw").
+- **Decision**:
+  - **Clip-Path Curtain Framing**: Wrap the mega menu in an outer container (`.mega-menu-wrapper`) using `clip-path: inset(0 -60px -120px -60px)`. This strictly clips any pixels that attempt to rise above the navbar's bottom red border (`top: 0`), preventing them from overlapping the navbar, while allowing soft drop shadows on the bottom and sides to render unclipped.
+  - **Bi-Directional Slide Interpolation**:
+    - **Slide Down (Entrance)**: Translate from `-100%` (`translate3d(0, -100%, 0)`) down to `0` over 380ms with `cubic-bezier(0.16, 1, 0.3, 1)` easing. The menu visually emerges from behind the navbar line.
+    - **Slide Up (Exit)**: Translate from `0` back up to `-100%` over 320ms with `cubic-bezier(0.4, 0, 0.2, 1)` easing. The menu pulls back up into the navbar line before hiding.
+  - **Delayed Visibility for Clean Unmounting**: When `.is-open` is toggled off, `visibility: hidden` is delayed by 350ms, allowing the entire slide-up animation to complete smoothly in view before becoming invisible.
+  - **Tab Crossfade Stability**: When switching between active nav items (e.g. "About CRC" to "Programs"), `.is-open` remains active so the drawer does not re-slide; only the internal content cross-fades smoothly via `.animate-mega-content`.
+- **Status**: Accepted & Implemented.
+---
+
+### [ADL-023] CSS Grid Stacking & Direction-Aware Horizontal Tab Transitions
+- **Date**: 2026-09-11
+- **Context**: When hovering directly from one navbar option to another (e.g., from "About CRC" to "Programs & Activities"), the previous menu content snapped away instantaneously with no smooth transition, which the user found abrupt ("navbar e jokhn ami ekta option theke onno option e hover korsi direct tokhn sathe sathe mega menu ta change hosse. eytai ekta smooth minimul transition animation add kora jai na?").
+- **Decision**:
+  - **CSS Grid Stacking Architecture**: Arrange all 5 mega menu panes in the exact same cell (`col-start-1 row-start-1 w-full`) of a single CSS grid container (`grid grid-cols-1 grid-rows-1 items-start`). This avoids dynamic React component unmounting and ensures zero-gap simultaneous interpolation.
+  - **Direction-Aware Horizontal Glide**:
+    - Compute relative navigation index (`activeIdx = megaMenuKeys.indexOf(activeMegaKey)`).
+    - If a tab index is before the active index (`index < activeIdx`), apply `-translate-x-6 opacity-0`.
+    - If a tab index is after the active index (`index > activeIdx`), apply `translate-x-6 opacity-0`.
+    - Active tab sits at `translate-x-0 opacity-100`.
+    - When mouse traverses links, outgoing content glides 24px and dissolves while incoming content glides in from the opposite side simultaneously over `300ms cubic-bezier(0.16, 1, 0.3, 1)`.
+- **Status**: Accepted & Implemented.
+
+
+
+
