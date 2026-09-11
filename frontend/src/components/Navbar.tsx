@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Search, ChevronRight, Menu, X } from "lucide-react";
@@ -12,11 +13,11 @@ import {
   navItems,
 } from "@/data/navigation";
 
-interface JaagoNavbarProps {
+interface NavbarProps {
   breadcrumbs?: BreadcrumbItem[];
 }
 
-export default function JaagoNavbar({ breadcrumbs }: JaagoNavbarProps = {}) {
+export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
   const pathname = usePathname();
   const [isSticky, setIsSticky] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -97,7 +98,7 @@ export default function JaagoNavbar({ breadcrumbs }: JaagoNavbarProps = {}) {
   return (
     <header
       ref={navRef}
-      id="jaagonavbar"
+      id="crc-navbar"
       className="fixed top-0 left-0 z-[1000] w-full transition-all duration-300 ease-out"
     >
       {/* 1. Top Bar (Black background with red established date, values & email) */}
@@ -133,11 +134,18 @@ export default function JaagoNavbar({ breadcrumbs }: JaagoNavbarProps = {}) {
         }`}
       >
         <div className="max-w-[1536px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-2 xl:gap-4 font-sans">
-          {/* Brand Identity: Red CRC Box + 2-line Text */}
+          {/* Brand Identity: Official CRC Logo + 2-line Text */}
           <Link href="/" className="group flex items-center gap-2.5 sm:gap-3 shrink-0">
-            <span className="flex size-10 sm:size-11 items-center justify-center rounded bg-[#e6000a] text-white font-heading font-black text-lg sm:text-xl shadow-md transition-transform duration-300 group-hover:scale-105 active:scale-95">
-              CRC
-            </span>
+            <div className="relative size-10 sm:size-11 shrink-0 transition-transform duration-300 group-hover:scale-105 active:scale-95 drop-shadow-sm">
+              <Image
+                src="/logo/logo-navbar.png"
+                alt="Come For Road Child (CRC) Official Logo"
+                width={44}
+                height={44}
+                className="w-full h-full object-contain rounded-full"
+                priority
+              />
+            </div>
             <span className="flex flex-col text-left leading-tight whitespace-nowrap">
               <span className="block font-heading text-sm sm:text-base font-black text-[#0d0f14] group-hover:text-[#e6000a] transition-colors tracking-tight">
                 Come For Road Child
@@ -354,13 +362,13 @@ export default function JaagoNavbar({ breadcrumbs }: JaagoNavbarProps = {}) {
               </div>
             ))}
             <div className="pt-3">
-              <link
+              <Link
                 href="/#sponsor"
                 onClick={() => setMobileDrawerOpen(false)}
                 className="block text-center py-3 bg-[#e6000a] text-white font-heading font-bold rounded shadow-lg hover:bg-[#a20002]"
               >
                 Donate Now
-              </link>
+              </Link>
             </div>
           </div>
         )}

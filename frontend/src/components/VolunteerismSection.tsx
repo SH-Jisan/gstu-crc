@@ -2,7 +2,7 @@
 
 import React from "react";
 
-export default function JaagoVolunteerism() {
+export default function VolunteerismSection() {
   return (
     <section id="volunteer" className="max-w-full bg-[#0d0f14]">
       {/* 1. Top Section */}
@@ -63,7 +63,7 @@ export default function JaagoVolunteerism() {
           </h3>
           <div className="mt-8">
             <a
-              className="btn btn-secondary font-heading text-lg md:text-xl capitalize px-8 py-4 text-white bg-[#0d0f14] hover:bg-[#1f2937] inline-block shadow-2xl hover:scale-105 transition-transform"
+              className="btn btn-secondary font-heading text-lg md:text-xl capitalize px-8 py-4 text-white bg-[#0d0f14] hover:bg-[#1f2937] inline-block shadow-2xl hover:scale-105 transition-transform rounded"
               href="#join"
             >
               Join as a CRC Volunteer

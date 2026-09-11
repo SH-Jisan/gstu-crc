@@ -1,22 +1,22 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 
-export default function JaagoSponsorChild() {
+export default function SponsorChildSection() {
   return (
     <section id="sponsor" className="sac-section relative bg-cover bg-no-repeat centered min-h-96 pb-12 bg-[#f6f4f1]">
       {/* 1. Main 50/50 Split Card */}
       <div className="max-w-6xl 2xl:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="flex flex-col lg:flex-row shadow-2xl md:rounded-l-2xl md:rounded-r-2xl overflow-hidden bg-white border border-gray-100">
           {/* Left Column: Picture */}
-          <div className="basis-1/2 flex-1 md:rounded-l-2xl overflow-hidden">
-            <img
-              loading="lazy"
-              width={576}
-              height={550}
-              className="w-full h-full min-h-[380px] lg:min-h-[500px] object-cover object-center md:rounded-l-2xl hover:scale-105 transition-transform duration-700"
-              src="https://jaago.com.bd/images/2024/04/sponsor-a-child_1714365666_yl5a0ydht.jpg?tr=f-auto,fo-auto,pr-true,c-maintain_ratio"
+          <div className="basis-1/2 flex-1 md:rounded-l-2xl overflow-hidden relative min-h-[380px] lg:min-h-[500px]">
+            <Image
+              fill
+              className="object-cover object-center md:rounded-l-2xl hover:scale-105 transition-transform duration-700"
+              src="/assets/school.jpg"
               alt="Sponsor a street child with Come for Road Child CRC Hatekhori School"
+              sizes="(max-width: 1024px) 100vw, 50vw"
             />
           </div>
 
@@ -39,7 +39,7 @@ export default function JaagoSponsorChild() {
                 With just <strong className="text-[#e6000a] font-bold">BDT 1,500</strong> per month, you can sponsor a street child&apos;s complete education, textbooks, school bag, uniform, and daily nutrition. Stand with GSTU volunteers and transform a child&apos;s destiny!
               </p>
               <a
-                className="btn btn-primary px-8 py-3.5 text-base font-sans shadow-md capitalize font-bold text-white bg-[#e6000a] hover:bg-[#a20002] inline-block hover:scale-105 transition-transform"
+                className="btn btn-primary px-8 py-3.5 text-base font-sans shadow-md capitalize font-bold text-white bg-[#e6000a] hover:bg-[#a20002] inline-block hover:scale-105 transition-transform rounded"
                 href="#donate"
               >
                 Sponsor a Child Today
@@ -65,7 +65,7 @@ export default function JaagoSponsorChild() {
         </p>
         <div className="text-center mt-4">
           <a
-            className="btn btn-primary px-8 py-3.5 text-base font-sans shadow-md capitalize font-bold text-white bg-[#e6000a] hover:bg-[#a20002] inline-block hover:scale-105 transition-transform"
+            className="btn btn-primary px-8 py-3.5 text-base font-sans shadow-md capitalize font-bold text-white bg-[#e6000a] hover:bg-[#a20002] inline-block hover:scale-105 transition-transform rounded"
             href="#donate"
           >
             Become a Child Sponsor

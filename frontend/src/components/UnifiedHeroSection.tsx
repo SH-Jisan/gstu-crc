@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Sparkles, ArrowRight, Heart, ShieldCheck, Award } from "lucide-react";
 
@@ -21,13 +22,15 @@ export default function UnifiedHeroSection() {
               maxHeight: "calc(100dvh - 136px)",
             }}
           >
-            <img
+            <Image
               src="/assets/crc-banner.png"
               alt="CRC, GSTU Official Banner — Brotherhood, Commitment, Trust"
+              width={1919}
+              height={955}
+              priority
               className="w-auto h-auto max-w-full object-contain transition-transform duration-700 group-hover:scale-[1.015]"
               style={{
                 maxHeight: "calc(100dvh - 136px)",
-                aspectRatio: "1919 / 955",
               }}
             />
           </div>
@@ -138,10 +141,12 @@ export default function UnifiedHeroSection() {
               data-aos-duration="600"
               className="col-span-2 rounded-2xl overflow-hidden border border-white/10 shadow-xl group relative aspect-[16/10]"
             >
-              <img
+              <Image
                 src="/assets/school.jpg"
                 alt="Volunteer teaching street children outdoors in Hatekhori school"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                fill
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
                 <span className="text-xs font-bold text-white uppercase tracking-wider bg-[#e6000a] px-2.5 py-1 rounded-md">
@@ -157,10 +162,12 @@ export default function UnifiedHeroSection() {
               data-aos-delay="150"
               className="rounded-2xl overflow-hidden border border-white/10 shadow-xl group relative aspect-[4/3]"
             >
-              <img
+              <Image
                 src="/assets/campaign.jpg"
                 alt="Volunteers distributing winter clothes and blankets"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                fill
+                sizes="(max-width: 1024px) 50vw, 20vw"
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-3">
                 <span className="text-[10px] font-bold text-white uppercase tracking-wider bg-[#007938] px-2 py-0.5 rounded">
@@ -176,10 +183,12 @@ export default function UnifiedHeroSection() {
               data-aos-delay="250"
               className="rounded-2xl overflow-hidden border border-white/10 shadow-xl group relative aspect-[4/3]"
             >
-              <img
+              <Image
                 src="/assets/health.jpg"
                 alt="Nutrition and health awareness session"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                fill
+                sizes="(max-width: 1024px) 50vw, 20vw"
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-3">
                 <span className="text-[10px] font-bold text-white uppercase tracking-wider bg-amber-600 px-2 py-0.5 rounded">

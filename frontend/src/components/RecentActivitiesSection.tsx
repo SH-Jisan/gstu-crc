@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Calendar } from "lucide-react";
 
@@ -68,10 +69,12 @@ export default function RecentActivitiesSection() {
               className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-1.5 border border-gray-100 flex flex-col group"
             >
               <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
-                <img
+                <Image
                   src={item.img}
                   alt={item.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute top-3 left-3">
                   <span className={`text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full shadow ${item.tagColor}`}>

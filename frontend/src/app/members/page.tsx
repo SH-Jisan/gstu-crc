@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import {
   Search,
@@ -20,8 +21,8 @@ import {
   Copy,
 } from "lucide-react";
 import AosInit from "@/components/AosInit";
-import JaagoNavbar from "@/components/JaagoNavbar";
-import JaagoFooter from "@/components/JaagoFooter";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import PageHeader from "@/components/PageHeader";
 import { MOCK_COUNCILS, CouncilMember } from "@/data/crcMockData";
 
@@ -126,7 +127,7 @@ export default function MembersPage() {
   return (
     <div className="flex flex-col min-h-screen bg-[#f6f4f1] text-[#0d0f14] font-sans antialiased">
       <AosInit />
-      <JaagoNavbar />
+      <Navbar />
 
       <main className="flex-grow">
         {/* 1. Viewport-Fitted Crimson Slash Header */}
@@ -336,11 +337,12 @@ export default function MembersPage() {
                       {/* Card Header: Avatar & Badges */}
                       <div className="flex items-start gap-3.5 mb-4">
                         <div className="relative w-16 h-16 rounded-2xl overflow-hidden shadow-sm shrink-0 border-2 border-gray-100 group-hover:scale-105 transition-transform duration-300 bg-gray-100">
-                          <img
+                          <Image
                             src={member.photo}
                             alt={member.name}
-                            className="w-full h-full object-cover"
-                            loading="lazy"
+                            fill
+                            sizes="64px"
+                            className="object-cover"
                           />
                         </div>
 
@@ -479,7 +481,7 @@ export default function MembersPage() {
         </section>
       </main>
 
-      <JaagoFooter />
+      <Footer />
 
       {/* 6. Member Profile Modal View (Outside main & header with z-[99999] to float above navbar) */}
       {selectedMember && (
@@ -515,10 +517,12 @@ export default function MembersPage() {
               {/* Avatar & Badges */}
               <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-3 -mt-12 sm:-mt-14 mb-3">
                 <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border-4 border-white shadow-xl bg-gray-100 shrink-0 z-10">
-                  <img
+                  <Image
                     src={selectedMember.photo}
                     alt={selectedMember.name}
-                    className="w-full h-full object-cover"
+                    fill
+                    sizes="(max-width: 640px) 96px, 112px"
+                    className="object-cover"
                   />
                 </div>
 

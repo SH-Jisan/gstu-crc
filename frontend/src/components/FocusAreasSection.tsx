@@ -3,7 +3,7 @@
 import React from "react";
 import { BookOpen, ShieldAlert, HeartPulse, Sparkles, Users, ArrowRight } from "lucide-react";
 
-export default function JaagoFocusAreas() {
+export default function FocusAreasSection() {
   const areas = [
     {
       title: "Hatekhori Free School",

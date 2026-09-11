@@ -1,10 +1,11 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Mail, Phone, MapPin, Heart } from "lucide-react";
 
-export default function JaagoFooter() {
+export default function Footer() {
   return (
     <>
       <footer className="bg-[#0d0f14] py-14 text-white">
@@ -12,9 +13,15 @@ export default function JaagoFooter() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             {/* Col 1: About CRC */}
             <div className="flex flex-col justify-start space-y-4">
-              <div className="flex items-center gap-2">
-                <div className="w-10 h-10 rounded-xl bg-[#e6000a] flex items-center justify-center text-white font-black text-lg border border-red-500 shadow-md">
-                  CRC
+              <div className="flex items-center gap-3">
+                <div className="size-10 shrink-0 relative drop-shadow-sm">
+                  <Image
+                    src="/logo/logo-navbar.png"
+                    alt="Come For Road Child (CRC) Official Logo"
+                    width={40}
+                    height={40}
+                    className="w-full h-full object-contain rounded-full"
+                  />
                 </div>
                 <div className="flex flex-col text-left leading-none">
                   <span className="text-xs font-black uppercase tracking-wider text-white">

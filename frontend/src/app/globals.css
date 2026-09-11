@@ -112,18 +112,18 @@ html {
 }
 
 /* CRC Navbar Navigation & Dropdown Animations */
-.jaago-nav-link {
+.crc-nav-link {
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   border: 1px solid transparent;
   border-radius: 9999px;
 }
 
-.jaago-nav-link:hover {
+.crc-nav-link:hover {
   background-color: #f3f4f6;
   border-color: #e5e7eb;
 }
 
-.jaago-dropdown {
+.crc-dropdown {
   transform-origin: top center;
   transform: translate3d(0, 10px, 0) scale(0.96);
   opacity: 0;
@@ -132,9 +132,9 @@ html {
   will-change: transform, opacity;
 }
 
-.group:hover > .jaago-dropdown,
-.group:focus-within > .jaago-dropdown,
-.jaago-dropdown.active-dropdown {
+.group:hover > .crc-dropdown,
+.group:focus-within > .crc-dropdown,
+.crc-dropdown.active-dropdown {
   transform: translate3d(0, 0, 0) scale(1) !important;
   opacity: 1 !important;
   pointer-events: auto !important;
@@ -228,7 +228,7 @@ html {
 }
 
 /* Hover bridge so mouse never loses contact between pill and dropdown */
-.jaago-dropdown::before {
+.crc-dropdown::before {
   content: "";
   position: absolute;
   top: -14px;
@@ -237,22 +237,22 @@ html {
   height: 16px;
 }
 
-.jaago-chevron {
+.crc-chevron {
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.group:hover .jaago-chevron {
+.group:hover .crc-chevron {
   transform: rotate(180deg);
 }
 
-.jaago-dropdown-item {
+.crc-dropdown-item {
   position: relative;
   overflow: hidden;
   padding-bottom: 0.5rem;
   transition: color 0.2s ease;
 }
 
-.jaago-dropdown-item::after {
+.crc-dropdown-item::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -265,7 +265,7 @@ html {
   transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.jaago-dropdown-item:hover::after {
+.crc-dropdown-item:hover::after {
   transform-origin: left;
   transform: scaleX(1);
 }

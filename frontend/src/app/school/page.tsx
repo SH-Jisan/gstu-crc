@@ -4,8 +4,8 @@ import React from "react";
 import Image from "next/image";
 import { CheckCircle2, GraduationCap } from "lucide-react";
 import AosInit from "@/components/AosInit";
-import JaagoNavbar from "@/components/JaagoNavbar";
-import JaagoFooter from "@/components/JaagoFooter";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import PageHeader from "@/components/PageHeader";
 
 const CLASSES = [
@@ -28,7 +28,7 @@ export default function SchoolPage() {
   return (
     <div className="flex flex-col min-h-screen bg-[#f6f4f1] text-[#0d0f14] font-sans antialiased">
       <AosInit />
-      <JaagoNavbar />
+      <Navbar />
 
       <main className="flex-grow">
         <PageHeader
@@ -244,7 +244,7 @@ export default function SchoolPage() {
         </section>
       </main>
 
-      <JaagoFooter />
+      <Footer />
     </div>
   );
 }

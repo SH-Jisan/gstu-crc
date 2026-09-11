@@ -154,3 +154,25 @@ Chronological record of developer-agent interactions, user requirements, plannin
     - Resolved 100% of ESLint errors and warnings across all pages (0 errors, clean build).
     - Expanded top clearance in `PageHeader.tsx` to prevent any visual clash with the sticky navbar and breadcrumb strip.
     - Verified all 8 application routes (`/`, `/about`, `/programs`, `/school`, `/branches`, `/members`, `/media`, `/promises`) return HTTP 200 OK.
+  - **Official CRC Logo Integration & Favicon Pipeline (2026-09-12)**:
+    - Located master 842.5 KB emblem in `frontend/public/logo/logo.png`.
+    - Generated optimized 128x128 navbar asset (`logo-navbar.png`, 16 KB) with Lanczos anti-aliased downsampling.
+    - Generated multi-tier web favicons: `favicon.ico` (16x16, 32x32, 48x48, 64x64), `icon.png` (192x192), and `apple-icon.png` (180x180) in both `src/app/` and `public/`.
+    - Integrated brand logo into `Navbar.tsx` and `Footer.tsx` with Next.js `<Image priority />`.
+    - Configured metadata in `frontend/src/app/layout.tsx`.
+    - Verified with `npm run lint` (0 errors), `npm run build` (code 0), and Puppeteer screenshots.
+  - **Complete Purge of "Jaago" Legacy Artifacts & Component Renaming (2026-09-12)**:
+    - User noted that retaining "jaago" names in a CRC project is unprofessional and requested a total purge.
+    - Renamed all legacy components: `Navbar.tsx`, `Footer.tsx`, `SponsorChildSection.tsx`, `FocusAreasSection.tsx`, `VolunteerismSection.tsx`.
+    - Replaced external `jaago.com.bd` image hotlink with local CRC photography (`/assets/school.jpg`).
+    - Re-scoped `.jaago-` CSS classes in `globals.css` to `.crc-` utility classes.
+    - Updated imports and JSX tags across all 8 application pages.
+    - Deleted all 5 superseded `Jaago*.tsx` files.
+    - Verified 0 remaining occurrences of `jaago` in `frontend/src/` via regex grep.
+    - Verified build passes with 0 lint errors in 1.29s.
+  - **Full Codebase Linter Warning Remediation (2026-09-12)**:
+    - Configured `next.config.ts` with `images.remotePatterns` for Unsplash avatar CDN.
+    - Upgraded all 7 raw `<img>` tags in `UnifiedHeroSection.tsx`, `RecentActivitiesSection.tsx`, and `members/page.tsx` to Next.js `<Image fill / priority />`.
+    - Eliminated all `@next/next/no-img-element` warnings across the repository.
+    - Verified with `npm run lint` (**0 errors, 0 warnings**) and `npm run build` (**compiled in 1.16s**).
+

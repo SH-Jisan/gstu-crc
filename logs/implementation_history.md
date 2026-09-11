@@ -525,5 +525,117 @@ Chronological registry of all file additions, edits, component implementations, 
   - `[MODIFY]` [`frontend/src/app/promises/page.tsx`](../frontend/src/app/promises/page.tsx)
 - **Verification**:
   - `npm run lint`: **0 errors** across entire codebase (Exit code 0).
-  - `npm run build`: Compiled all static routes in 1.6s (Exit code 0).
-  - Automated HTTP route test: Verified all 8 routes (`/`, `/about`, `/programs`, `/school`, `/branches`, `/members`, `/media`, `/promises`) return HTTP 200 OK.
+---
+
+### [ENTRY-033] 2026-09-12 — Official CRC Logo Integration in Navbar & Multi-Resolution Web Favicons
+- **Type**: Brand Identity, Asset Optimization & Favicon Pipeline
+- **User Request**: "public folder er vitore dekho logo folder ache. oi logo ta navbar e replace koro. logo er size er somossa thakle logo resize kore generate koro. also website er icon taw o oi logo diye replace koro."
+- **Asset Processing & Performance Engineering**:
+  - Located official high-resolution emblem: `frontend/public/logo/logo.png` (1254x1254, 842.5 KB RGBA).
+  - Optimized for high performance and zero layout shift without losing crispness on Retina/HiDPI screens:
+    - `frontend/public/logo/logo-navbar.png`: 128x128 px (~16 KB, >98% size reduction for instantaneous LCP loading).
+    - `frontend/src/app/icon.png` & `frontend/public/icon.png`: 192x192 px PWA & standard web icon.
+    - `frontend/src/app/apple-icon.png` & `frontend/public/apple-icon.png`: 180x180 px iOS Apple touch icon.
+    - `frontend/src/app/favicon.ico` & `frontend/public/favicon.ico`: Multi-resolution Windows/browser icon (16x16, 32x32, 48x48, 64x64).
+- **Component & Metadata Integration**:
+  1. **JaagoNavbar Brand Mark**:
+     - Replaced legacy placeholder red block with Next.js `<Image src="/logo/logo-navbar.png" width={44} height={44} className="w-full h-full object-contain rounded-full" priority />`.
+     - Preserved circular red & black emblem aspect ratio and typography ("Come For Road Child" / "GSTU BRANCH").
+  2. **JaagoFooter Brand Consistency**:
+     - Replaced legacy text `CRC` box with `<Image src="/logo/logo-navbar.png" width={40} height={40} className="w-full h-full object-contain rounded-full" />`.
+  3. **Next.js App Router Metadata**:
+     - Updated `frontend/src/app/layout.tsx` metadata with `icons: { icon: [...], apple: [...], shortcut: "/favicon.ico" }`.
+- **Affected Paths**:
+  - `[NEW]` [`frontend/public/logo/logo-navbar.png`](../frontend/public/logo/logo-navbar.png)
+  - `[NEW]` [`frontend/public/icon.png`](../frontend/public/icon.png)
+  - `[NEW]` [`frontend/public/apple-icon.png`](../frontend/public/apple-icon.png)
+  - `[NEW]` [`frontend/public/favicon.ico`](../frontend/public/favicon.ico)
+  - `[NEW]` [`frontend/src/app/icon.png`](../frontend/src/app/icon.png)
+  - `[NEW]` [`frontend/src/app/apple-icon.png`](../frontend/src/app/apple-icon.png)
+  - `[MODIFY]` [`frontend/src/app/favicon.ico`](../frontend/src/app/favicon.ico)
+  - `[MODIFY]` [`frontend/src/app/layout.tsx`](../frontend/src/app/layout.tsx)
+  - `[MODIFY]` [`frontend/src/components/JaagoNavbar.tsx`](../frontend/src/components/JaagoNavbar.tsx)
+  - `[MODIFY]` [`frontend/src/components/JaagoFooter.tsx`](../frontend/src/components/JaagoFooter.tsx)
+- **Verification**:
+  - `npm run lint`: **0 errors**.
+  - `npm run build`: Production build succeeded in 2.2s with static routes for `/icon.png`, `/apple-icon.png`, `/favicon.ico`.
+  - HTTP Verification: Verified `200 OK` on `/logo/logo-navbar.png`, `/favicon.ico`, `/icon.png`.
+  - Visual Verification: Puppeteer automated screenshot confirmed pixel-perfect rendering in navbar and footer.
+
+---
+
+### [ENTRY-034] 2026-09-12 — Complete Purge of "Jaago" Legacy Artifacts & Professional Component Refactoring
+- **Type**: Code Hygiene, Brand Integrity & Professional Architecture Refactoring
+- **User Request**: "remove the 'jaago' name from everything. this is crc not jaago and file name erokom howa taw professional na amr joto tuku knowledge,correct me if i am wrong."
+- **Analysis & Rationale**:
+  - During early scaffolding, architectural references to the JAAGO Foundation website led to component names like `JaagoNavbar.tsx`, `JaagoFooter.tsx`, `JaagoSponsorChild.tsx`, `JaagoFocusAreas.tsx`, `JaagoVolunteerism.tsx`, along with CSS identifiers (`id="jaagonavbar"`, `.jaago-nav-link`, etc.) and external image URLs (`https://jaago.com.bd/...`).
+  - The user correctly observed that leaving another NGO's name throughout a CRC codebase is unprofessional, misleading to future maintainers, and technically inconsistent with the organization's identity.
+- **Refactoring & Clean-up Executed**:
+  1. **Component Renaming & Export Modernization**:
+     - `JaagoNavbar.tsx` -> [`Navbar.tsx`](../frontend/src/components/Navbar.tsx) (`export default function Navbar`, `interface NavbarProps`, `id="crc-navbar"`).
+     - `JaagoFooter.tsx` -> [`Footer.tsx`](../frontend/src/components/Footer.tsx) (`export default function Footer`).
+     - `JaagoSponsorChild.tsx` -> [`SponsorChildSection.tsx`](../frontend/src/components/SponsorChildSection.tsx) (`export default function SponsorChildSection`).
+     - `JaagoFocusAreas.tsx` -> [`FocusAreasSection.tsx`](../frontend/src/components/FocusAreasSection.tsx) (`export default function FocusAreasSection`).
+     - `JaagoVolunteerism.tsx` -> [`VolunteerismSection.tsx`](../frontend/src/components/VolunteerismSection.tsx) (`export default function VolunteerismSection`).
+  2. **Elimination of External Image Dependency**:
+     - In `SponsorChildSection.tsx`, removed external hotlinked image `https://jaago.com.bd/images/...` and replaced it with Next.js optimized `<Image src="/assets/school.jpg" fill ... />` using authentic CRC school photography.
+  3. **CSS Class Nomenclature Normalization**:
+     - In `frontend/src/app/globals.css`, replaced legacy classes (`.jaago-nav-link`, `.jaago-dropdown`, `.jaago-chevron`, `.jaago-dropdown-item`) with semantic `.crc-` prefixed utility classes.
+  4. **Import Unification Across All 8 Pages**:
+     - Updated `frontend/src/app/page.tsx`, `about/page.tsx`, `branches/page.tsx`, `media/page.tsx`, `members/page.tsx`, `programs/page.tsx`, `promises/page.tsx`, and `school/page.tsx` with clean semantic component imports.
+  5. **Superseded File Purge**:
+     - Completely deleted the 5 obsolete `Jaago*.tsx` files.
+- **Affected Paths**:
+  - `[NEW]` [`frontend/src/components/Navbar.tsx`](../frontend/src/components/Navbar.tsx)
+  - `[NEW]` [`frontend/src/components/Footer.tsx`](../frontend/src/components/Footer.tsx)
+  - `[NEW]` [`frontend/src/components/SponsorChildSection.tsx`](../frontend/src/components/SponsorChildSection.tsx)
+  - `[NEW]` [`frontend/src/components/FocusAreasSection.tsx`](../frontend/src/components/FocusAreasSection.tsx)
+  - `[NEW]` [`frontend/src/components/VolunteerismSection.tsx`](../frontend/src/components/VolunteerismSection.tsx)
+  - `[DELETE]` 5 legacy `Jaago*.tsx` component files
+  - `[MODIFY]` [`frontend/src/app/globals.css`](../frontend/src/app/globals.css)
+  - `[MODIFY]` [`frontend/src/app/page.tsx`](../frontend/src/app/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/about/page.tsx`](../frontend/src/app/about/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/branches/page.tsx`](../frontend/src/app/branches/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/media/page.tsx`](../frontend/src/app/media/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/members/page.tsx`](../frontend/src/app/members/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/programs/page.tsx`](../frontend/src/app/programs/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/promises/page.tsx`](../frontend/src/app/promises/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/school/page.tsx`](../frontend/src/app/school/page.tsx)
+- **Verification**:
+  - Full codebase grep search for `jaago` in `frontend/src`: **0 occurrences found**.
+  - `npm run lint`: **0 errors**.
+  - `npm run build`: Compiled in 1.29s with all static routes (Exit code 0).
+  - Headless Puppeteer verification: Confirmed homepage and subpages render flawlessly.
+
+---
+
+### [ENTRY-035] 2026-09-12 — Complete Linter Warning Remediation & Full Next.js Image Optimization
+- **Type**: Linter Warning Remediation & Image Performance Optimization
+- **User Request**: "codebase ta analze koro and ja ja warning ache segula fix koro ."
+- **Audit Findings**:
+  - Running `npm run lint` flagged 7 warnings (all `@next/next/no-img-element`):
+    - 4 occurrences in `UnifiedHeroSection.tsx` (top banner and 3-photo mosaic).
+    - 1 occurrence in `RecentActivitiesSection.tsx` (activity card thumbnails).
+    - 2 occurrences in `members/page.tsx` (member roster card avatar and modal profile avatar).
+  - `next.config.ts` lacked `images.remotePatterns` for Unsplash image assets (`images.unsplash.com`), which prevented using `<Image />` for dynamic member photos.
+- **Remediation Implemented**:
+  1. **Configured `next.config.ts`**:
+     - Added `images.remotePatterns` with `protocol: "https"` and `hostname: "images.unsplash.com"`.
+  2. **Upgraded `UnifiedHeroSection.tsx`**:
+     - Upgraded top CRC banner to `<Image src="/assets/crc-banner.png" width={1919} height={955} priority ... />`.
+     - Upgraded the 3-photo mosaic images (`school.jpg`, `campaign.jpg`, `health.jpg`) to `<Image fill sizes="..." ... />` with `object-cover`.
+  3. **Upgraded `RecentActivitiesSection.tsx`**:
+     - Upgraded activity thumbnails to `<Image src={item.img} fill sizes="(max-width: 768px) 100vw, 33vw" ... />`.
+  4. **Upgraded `members/page.tsx`**:
+     - Upgraded member card avatar and modal profile avatar to Next.js `<Image fill sizes="..." ... />`.
+- **Affected Paths**:
+  - `[MODIFY]` [`frontend/next.config.ts`](../frontend/next.config.ts)
+  - `[MODIFY]` [`frontend/src/components/UnifiedHeroSection.tsx`](../frontend/src/components/UnifiedHeroSection.tsx)
+  - `[MODIFY]` [`frontend/src/components/RecentActivitiesSection.tsx`](../frontend/src/components/RecentActivitiesSection.tsx)
+  - `[MODIFY]` [`frontend/src/app/members/page.tsx`](../frontend/src/app/members/page.tsx)
+- **Verification**:
+  - `npx tsc --noEmit`: 0 errors.
+  - `npm run lint`: **0 errors, 0 warnings** (completely clean output).
+  - `npm run build`: Compiled successfully in 1.16s (Exit code 0).
+  - Puppeteer visual inspection: Confirmed member avatars, cards, and hero mosaic render crisply with zero layout shift.
+

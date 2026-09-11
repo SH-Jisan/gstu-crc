@@ -275,3 +275,49 @@ Record of key decisions, trade-offs evaluated, and consensus reached between use
   - **Viewport Clearance Guarantee**: Expand top padding on `PageHeader.tsx` to `pt-40 sm:pt-44` (160px–176px), ensuring comfortable visual breathing space below both the main navbar (72px) and the sticky breadcrumb sub-bar (36px).
   - **Event-Driven Dropdown Synchronization**: Eliminate synchronous `setState` in `useEffect` for `displayedMenuKey`, switching to direct synchronous assignment within `handleMouseEnterItem` for zero cascading renders and complete React 19 strict linter compliance.
 - **Status**: Accepted & Implemented.
+---
+
+### [ADL-025] High-Fidelity Asset Downsampling & Dual-Tier App Router Favicon Architecture
+- **Date**: 2026-09-12
+- **Context**: The user requested that the official logo from `public/logo/` be integrated into the navigation bar, resized if necessary to prevent layout or performance issues, and configured as the official website favicon and app icon ("public folder er vitore dekho logo folder ache. oi logo ta navbar e replace koro. logo er size er somossa thakle logo resize kore generate koro. also website er icon taw o oi logo diye replace koro.").
+- **Decision**:
+  - **High-Fidelity Resampling Pipeline**:
+    - The master source `frontend/public/logo/logo.png` is a 1254x1254, 842.5 KB high-resolution RGBA PNG.
+    - Directly embedding 842 KB into the fixed navbar would trigger excessive bandwidth consumption and compromise LCP (Largest Contentful Paint).
+    - Used PIL's anti-aliasing `Resampling.LANCZOS` filter to generate `logo-navbar.png` at 128x128 px (16 KB, >98% payload compression) while preserving sharp edges on 2x/3x Retina viewports.
+  - **Multi-Resolution Dual-Tier Icon Architecture**:
+    - **App Router Conventional File-System Routing**: Placed `icon.png` (192x192), `apple-icon.png` (180x180), and multi-tier `favicon.ico` (16x16, 32x32, 48x48, 64x64) directly in `src/app/`. Next.js automatically detects and serves these with cache busting headers.
+    - **Public Fallback Tier**: Mirrored the icon files into `frontend/public/` so direct static requests (e.g. `/favicon.ico` requested by external bots, bookmarks, and RSS readers) resolve reliably with HTTP 200.
+    - **Metadata Declaration**: Explicitly configured the `icons` attribute in `RootLayout` (`frontend/src/app/layout.tsx`) ensuring standard HTML `<link rel="icon">`, `<link rel="apple-touch-icon">`, and `<link rel="shortcut icon">` tags are injected into every document head.
+  - **Cross-Component Brand Cohesion**:
+    - Extended brand integration to `frontend/src/components/Footer.tsx`, replacing the legacy generic red `CRC` box with the official circular emblem to ensure 100% brand consistency throughout the application.
+- **Status**: Accepted & Implemented.
+---
+
+### [ADL-026] Total Purge of "Jaago" Legacy Artifacts & Semantic Component Normalization
+- **Date**: 2026-09-12
+- **Context**: The user identified that naming components `JaagoNavbar`, `JaagoFooter`, etc., in a Come for Road Child (CRC) project is unprofessional, confusing to contributors, and compromises code maintainability ("remove the 'jaago' name from everything. this is crc not jaago and file name erokom howa taw professional na amr joto tuku knowledge,correct me if i am wrong.").
+- **Decision**:
+  - **Eliminate Misleading Prefixes**: Refactored all components to clean, standard React/Next.js semantic names:
+    - `JaagoNavbar` -> `Navbar` (`Navbar.tsx`)
+    - `JaagoFooter` -> `Footer` (`Footer.tsx`)
+    - `JaagoSponsorChild` -> `SponsorChildSection` (`SponsorChildSection.tsx`)
+    - `JaagoFocusAreas` -> `FocusAreasSection` (`FocusAreasSection.tsx`)
+    - `JaagoVolunteerism` -> `VolunteerismSection` (`VolunteerismSection.tsx`)
+  - **Self-Contained Local Assets**: Replaced external image hotlinks (`jaago.com.bd/...`) in `SponsorChildSection` with authentic local CRC assets (`/assets/school.jpg`) loaded via optimized Next.js `<Image fill ... />`.
+  - **CSS Scoping Hygiene**: Cleaned up legacy `.jaago-` CSS classes in `globals.css`, re-scoping them under `.crc-` utilities to prevent stale class dependencies.
+  - **Zero-Residual Invariant**: Verified via exhaustive regex grep that `jaago` has been 100% eradicated from `frontend/src/`.
+- **Status**: Accepted & Implemented.
+---
+
+### [ADL-027] Full-Stack Next.js Image Optimization & Remote Pattern Configuration
+- **Date**: 2026-09-12
+- **Context**: The user requested that the codebase be analyzed and all warnings be fixed ("codebase ta analze koro and ja ja warning ache segula fix koro ."). ESLint identified 7 instances of `@next/next/no-img-element`.
+- **Decision**:
+  - **Remote Pattern Allowlist**: Added `images.unsplash.com` to `frontend/next.config.ts` under `images.remotePatterns` to safely support high-definition volunteer and advisor avatars.
+  - **Zero-Layout-Shift Picture Pipeline**: Replaced all raw HTML `<img>` elements in `UnifiedHeroSection.tsx`, `RecentActivitiesSection.tsx`, and `members/page.tsx` with Next.js `<Image />`:
+    - Responsive `fill` with explicit `sizes` property to avoid excessive bandwidth consumption on mobile viewports.
+    - Automatic WebP/AVIF generation, prefetching, and priority loading for the above-the-fold CRC hero banner.
+  - **Strict Lint Compliance**: Achieved a 100% warning-free codebase with 0 ESLint warnings and 0 TypeScript compilation errors.
+- **Status**: Accepted & Implemented.
+
