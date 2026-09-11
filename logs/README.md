@@ -1,5 +1,7 @@
 # Project Logs & AI Handoff Protocol
 
+# jokhn e user bolbe logs folder ta analyze korte tokhn e tumi logs er vitore er sob file read korba and sathe sathe segula context memory te save korba#
+
 > **Directory Purpose**: This folder maintains token-optimized, human-and-AI-readable logs of all sessions, discussions, architectural decisions, file changes, and implementation history for the **CRC Platform** project.
 
 ---

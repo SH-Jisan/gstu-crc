@@ -215,3 +215,188 @@ Chronological registry of all file additions, edits, component implementations, 
      - Central office: Gopalganj Science and Technology University (GSTU), Gopalganj-8100.
      - Official contacts: `info@gstu-crc.org`, helpline numbers, copyright `© 2016–2026 Come for Road Child (CRC), GSTU`.
 - **Verification**: `npm run build` compiled in 682ms with 0 errors. Verified in live Puppeteer session on `http://localhost:3000`. Full visual integrity confirmed across all sections.
+
+---
+
+### [ENTRY-013] 2026-09-09 — Harmonized Sleek Navbar & Multi-Line Overflow Prevention
+- **Type**: UI Modernization & Layout Stabilization (Feature Branch: `feature/frontend-client-demo`)
+- **Affected Paths**:
+  - `[MODIFY]` [`frontend/src/components/JaagoNavbar.tsx`](../frontend/src/components/JaagoNavbar.tsx): Added top announcement strip (`ESTD. 2016`, core values, email), red bottom border accent (`border-b-4 border-[#e6000a]`), and unified typography.
+  - `[MODIFY]` [`frontend/src/app/globals.css`](../frontend/src/app/globals.css): Enforced single-line navbar constraints.
+- **Problem & Solution**:
+  - Navbar links wrapped into multiple lines on standard 1366px and 1440px displays due to bulky chevron icons and constrained widths.
+  - Resolved by applying `whitespace-nowrap` across all links, removing chevron clutter, expanding header wrapper to `1536px`, and setting responsive padding (`text-xs xl:text-[12.5px] 2xl:text-[13.5px] px-2 xl:px-2.5 2xl:px-3`).
+- **Verification**: Verified on desktop and tablet viewport widths; all 9 menu items render on a single row without text overflow.
+
+---
+
+### [ENTRY-014] 2026-09-09 — Crimson `.slash-band` Brand Identity & Subpage Header System
+- **Type**: Design System Enhancement
+- **Affected Paths**:
+  - `[MODIFY]` [`frontend/src/app/globals.css`](../frontend/src/app/globals.css): Defined `@utility slash-band` and `.slash-band` using `linear-gradient(105deg, transparent 0 62%, #0d0f14 62% 74%, transparent 74% 100%)`.
+  - `[MODIFY]` [`frontend/src/components/PageHeader.tsx`](../frontend/src/components/PageHeader.tsx): Upgraded default subpage hero banner to signature crimson red with angular slash.
+  - `[MODIFY]` [`frontend/src/components/JaagoVolunteerism.tsx`](../frontend/src/components/JaagoVolunteerism.tsx): Applied slash-band styling to the volunteer recruitment callout banner.
+- **Verification**: Visual inspection across all subpages confirmed consistent brand elevation.
+
+---
+
+### [ENTRY-015] 2026-09-09 — Full Subpages & Content Migration from `crc_loveable`
+- **Type**: Multi-Page Content Architecture & Migration
+- **Affected Paths**:
+  - `[NEW]` [`frontend/src/app/about/page.tsx`](../frontend/src/app/about/page.tsx): Ported History from 2016, 3 Pillars, Vision/Mission cards, 5 Core Principles, 5 Values, Executive Leadership roster, and 10-year growth timeline.
+  - `[NEW]` [`frontend/src/app/school/page.tsx`](../frontend/src/app/school/page.tsx): Hatekhori Free School curriculum (4 class tiers), operational rules, interactive weekly schedule timetable, authentic photo gallery, and transition model.
+  - `[NEW]` [`frontend/src/app/programs/page.tsx`](../frontend/src/app/programs/page.tsx): 7 core programs, volunteer shift routine, and child safeguarding matrix.
+  - `[NEW]` [`frontend/src/app/branches/page.tsx`](../frontend/src/app/branches/page.tsx): 6 campus chapters (GSTU, Gopalganj Town, Tungipara, Kotalipara, Barishal, Khulna), 6 governance pillars, and campus charter.
+  - `[NEW]` [`frontend/src/app/media/page.tsx`](../frontend/src/app/media/page.tsx): Interactive photo gallery with category filter tabs, YouTube documentary embed, press highlights, and official CRC banner asset.
+- **Verification**: `npm run build` compiled all routes statically without errors.
+
+---
+
+### [ENTRY-016] 2026-09-09 — Responsive Viewport-Fitted CRC Banner
+- **Type**: Visual Asset Layout Optimization
+- **Affected Paths**:
+  - `[MODIFY]` [`frontend/src/components/UnifiedHeroSection.tsx`](../frontend/src/components/UnifiedHeroSection.tsx): Constrained banner height to `maxHeight: calc(100dvh - 136px)` with `object-contain`.
+- **Problem & Solution**:
+  - The CRC banner asset was overflowing beyond the screen viewing window, clipping the bottom text and red border on laptops and desktops.
+  - Reduced section padding from `pt-36` to `pt-[106px] sm:pt-[114px]`, enforced dynamic viewport constraint with `1919 / 955` aspect ratio, ensuring 100% of the banner is visible within the viewport without scrolling.
+- **Verification**: Tested at various viewport resolutions (1366x768, 1920x1080) in Puppeteer.
+
+---
+
+### [ENTRY-017] 2026-09-10 — Comprehensive Members Directory & Mock Data
+- **Type**: Directory Feature & Mock Dataset Expansion
+- **Affected Paths**:
+  - `[NEW]` [`frontend/src/app/members/page.tsx`](../frontend/src/app/members/page.tsx): Built full-featured Members Directory with search, category tabs, blood group filters, and member detail cards.
+  - `[MODIFY]` [`frontend/src/data/crcMockData.ts`](../frontend/src/data/crcMockData.ts): Added 20 realistic student leaders, teachers, convenors, and professors with realistic GSTU departments and sessions.
+  - `[MODIFY]` [`frontend/src/components/JaagoNavbar.tsx`](../frontend/src/components/JaagoNavbar.tsx): Linked "Members" navigation item to `/members`.
+- **Verification**: Live search, filtering, and responsive card layouts verified on dev server.
+
+---
+
+### [ENTRY-018] 2026-09-10 — Member Profile View Modal Implementation & Surgical UI Bug Fixes
+- **Type**: Modal Feature Implementation & UI Bug Fix
+- **Affected Paths**:
+  - `[MODIFY]` [`frontend/src/app/members/page.tsx`](../frontend/src/app/members/page.tsx):
+    - **Navbar Stacking Clash**: Moved modal DOM out of `<main>` to root level after `<JaagoFooter />` with `z-[99999]` and `backdrop-blur-md`.
+    - **Avatar Clipping**: Extracted avatar, category badges, member name, and designation from `overflow-y-auto` into a fixed non-scrolling header block so negative margin (`-mt-12`) never clips.
+    - **Sticky Action Bar**: Pinned Email Member, Call, Copy Info, and Close buttons in a sticky bottom container (`shrink-0 bg-gray-50 border-t`).
+    - **Safe Clipboard API**: Wrapped `navigator.clipboard.writeText` in async try-catch to prevent unhandled promise rejection in restricted/headless contexts.
+- **Verification**:
+  - `npm run build` completed with code 0 (10/10 static pages generated).
+  - Puppeteer headless browser verified opening, avatar display, clipboard copy, and closing modal without errors.
+
+---
+
+### [ENTRY-019] 2026-09-11 — Constitutional Alignment from Official 20-Page Document
+- **Type**: Content Alignment & New Route Implementation
+- **Reference**: [`docs/Vision-Mission-Objectives-Mode-of-Action.pdf`](../docs/Vision-Mission-Objectives-Mode-of-Action.pdf)
+- **Affected Paths**:
+  - `[MODIFY]` [`frontend/src/app/about/page.tsx`](../frontend/src/app/about/page.tsx): Fully revamped with authentic 2016 Eid shopping origin story at railway station (Md. Rasel Ahmed & Md. Sakib Ahmed), 5 June 2016 founding milestone, 3 Fundamental Principles (Brotherhood, Commitment, Trust), Vision, 5 Mission Pillars (Protection, Development, Awareness, Engagement, Humanity), 5 Strategic Objectives, 8 Guiding Values, 7 Modes of Action, 3-Council Governance, Financial Integrity policy, and Best Branch Prize recognition.
+  - `[NEW]` [`frontend/src/app/promises/page.tsx`](../frontend/src/app/promises/page.tsx): Dedicated Section 4 implementation ("Our Promises") featuring "See a Need? Speak Up" interactive reporting form with tracking code generation, "You Can Speak Up Without Fear" zero-retaliation guarantee, Social Welfare responsibility manifesto, and child dignity/data protection policies.
+- **Verification**: Next.js build compiled 11 static routes successfully with code 0.
+
+---
+
+### [ENTRY-020] 2026-09-11 — Static Stats Counter Strip (Animation Removal)
+- **Type**: UI Simplification / Animation Removal
+- **Affected Paths**:
+  - `[MODIFY]` [`frontend/src/components/StatsCounterBar.tsx`](../frontend/src/components/StatsCounterBar.tsx):
+    - Removed dynamic count-up animation (`IntersectionObserver`, `requestAnimationFrame`, `useState`, `useEffect`).
+    - Removed `data-aos="fade-up"` scroll delay and hover scaling on icons.
+    - Rendered values statically and instantly (`1,200+`, `350+`, `6`, `180+`) for clean, stable display without jitter or scroll resets.
+- **Verification**:
+  - `npm run build` passed with code 0.
+  - Puppeteer screenshot verified instant, clean rendering of the red stats bar on `http://localhost:3000`.
+
+---
+
+### [ENTRY-021] 2026-09-11 — Semantic Breadcrumb Navigation & Schema.org JSON-LD SEO
+- **Type**: Feature Implementation & SEO Enhancement
+- **Affected Paths**:
+  - `[NEW]` [`frontend/src/components/Breadcrumb.tsx`](../frontend/src/components/Breadcrumb.tsx): Reusable, accessible breadcrumb component supporting multiple variants (`banner`, `light`, `dark`, `bar`), with Home icon, chevrons, interactive path links, and automatic `schema.org/BreadcrumbList` JSON-LD microdata generation for Google search indexing.
+  - `[MODIFY]` [`frontend/src/components/PageHeader.tsx`](../frontend/src/components/PageHeader.tsx): Replaced plain text breadcrumb markup with the new `Breadcrumb` component.
+  - `[MODIFY]` [`frontend/src/app/members/page.tsx`](../frontend/src/app/members/page.tsx): Added hierarchical breadcrumb trail (`Home > About Us > Members Directory`).
+- **Verification**:
+  - `npm run build` compiled 11 static pages in 1043ms with code 0.
+  - Visual verification with Puppeteer screenshots captured across `/about`, `/members`, and `/school`.
+
+---
+
+### [ENTRY-022] 2026-09-11 — Dedicated Breadcrumb Sub-Bar Repositioning Directly Below Navbar
+- **Type**: UI/UX Layout Refinement
+- **Affected Paths**:
+  - `[MODIFY]` [`frontend/src/components/PageHeader.tsx`](../frontend/src/components/PageHeader.tsx): Extracted breadcrumb out of the inner hero banner and created a dedicated full-width sub-bar (`pt-[101px] sm:pt-[106px] bg-[#f4f2ee] border-b border-gray-200/80 shadow-xs`) placed directly below the fixed navbar.
+  - `[MODIFY]` [`frontend/src/components/Breadcrumb.tsx`](../frontend/src/components/Breadcrumb.tsx): Added unboxed, clean inline `variant="bar"` without bulky button outlines for clean header integration. Added campus metadata on the right (`GSTU Campus · Estd 2016`).
+- **Verification**:
+  - `npm run build` compiled all 11 routes in 1012ms with code 0.
+  - Puppeteer screenshots verified seamless positioning directly under the fixed navbar on `/about`, `/members`, `/school`, and `/promises`.
+
+---
+
+### [ENTRY-023] 2026-09-11 — Landing Page Animation Removal Below StatsCounterBar
+- **Type**: UI Simplification & Motion Elimination (User Request: "landing page e eytar niche theke joto animation ache sob bondho kore daw footer chara")
+- **Affected Paths**:
+  - `[MODIFY]` [`frontend/src/components/JaagoSponsorChild.tsx`](../frontend/src/components/JaagoSponsorChild.tsx): Removed count-up animation (`useEffect`, `IntersectionObserver`, `requestAnimationFrame`), rendered static count `120`, removed all `data-aos` attributes.
+  - `[MODIFY]` [`frontend/src/components/JaagoFocusAreas.tsx`](../frontend/src/components/JaagoFocusAreas.tsx): Removed `data-aos` scroll animations across title card and all 5 focus cards.
+  - `[MODIFY]` [`frontend/src/components/RecentActivitiesSection.tsx`](../frontend/src/components/RecentActivitiesSection.tsx): Removed `data-aos` attributes from heading, intro, explore button, and all 3 activity cards.
+  - `[MODIFY]` [`frontend/src/components/StoriesSection.tsx`](../frontend/src/components/StoriesSection.tsx): Removed `data-aos` attributes from impact badge, heading, intro, and all 3 story quote cards.
+  - `[MODIFY]` [`frontend/src/components/JaagoVolunteerism.tsx`](../frontend/src/components/JaagoVolunteerism.tsx): Removed dynamic count-up loops (`volunteers`, `years`, `lives`), rendered static impact numbers (`1,500+`, `10+`, `10,000+`), removed all `data-aos` fade-up and zoom-out-up attributes.
+  - `[MODIFY]` [`frontend/src/components/PartnersSection.tsx`](../frontend/src/components/PartnersSection.tsx): Removed `data-aos` attributes from heading, intro, and partner cards.
+  - `[PRESERVED]` [`frontend/src/components/JaagoFooter.tsx`](../frontend/src/components/JaagoFooter.tsx): Intentionally preserved without changes per explicit user instruction ("footer chara").
+- **Verification**:
+  - `npm run build` compiled with Exit Code 0 in 1270ms.
+  - Puppeteer headless screenshots verified instant static rendering of all metrics (`120`, `1,500+`, `10+`, `10,000+`) without counting delays or scroll resets.
+
+---
+
+### [ENTRY-024] 2026-09-11 — Lenis Smooth Momentum Scrolling Integration
+- **Type**: UX Performance & Physics-Based Scrolling
+- **Affected Paths**:
+  - `[NEW]` [`frontend/src/components/SmoothScroll.tsx`](../frontend/src/components/SmoothScroll.tsx): Initialized Lenis smooth momentum scroll engine with exponential easing (`(t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))`), 1.2s duration, smooth mouse wheel physics, and in-page anchor hash link smooth targeting.
+  - `[MODIFY]` [`frontend/src/app/globals.css`](../frontend/src/app/globals.css): Imported `lenis/dist/lenis.css`, removed native `scroll-behavior: smooth;` from `html` to prevent conflicts and jitter.
+  - `[MODIFY]` [`frontend/src/app/layout.tsx`](../frontend/src/app/layout.tsx): Mounted `<SmoothScroll />` globally in `RootLayout`.
+- **Verification**:
+  - `npm run build` passed with Exit Code 0 in 1425ms (all 11 static routes generated).
+  - Puppeteer verified `html.lenis` class activation and tested programmatic wheel events confirming gentle, easing-driven momentum scrolling.
+
+---
+
+### [ENTRY-025] 2026-09-11 — Fixed Navbar Breadcrumb Integration (Sticky On Scroll)
+- **Type**: UI/UX Layout Architecture
+- **User Request**: "breadcrumb ta navbar er sathe fix obosthai daw jate page scroll korle o hide na hoye jai"
+- **Affected Paths**:
+  - `[MODIFY]` [`frontend/src/components/JaagoNavbar.tsx`](../frontend/src/components/JaagoNavbar.tsx): Integrated breadcrumb sub-bar directly into the fixed `<header>` element with `usePathname()` automatic route matching (`defaultRouteBreadcrumbMap`) and optional `breadcrumbs` prop override. Kept suppressed on `/` (home). When scrolled, the top black bar collapses and the breadcrumb sub-bar stays permanently fixed directly below the white navbar line.
+  - `[MODIFY]` [`frontend/src/components/PageHeader.tsx`](../frontend/src/components/PageHeader.tsx): Removed redundant in-page breadcrumb bar and adjusted section padding to `pt-36 sm:pt-40` for clean breathing room under the fixed header stack.
+- **Verification**:
+  - `npm run build` compiled all 11 static routes in 2.1s with Exit Code 0.
+  - Puppeteer live browser test verified `/about`, `/members`, and `/` at top and scrolled 500px down: breadcrumbs remain permanently visible and pinned beneath the navbar without disappearing.
+---
+
+### [ENTRY-026] 2026-09-11 — Stacking Context & Navbar Dropdown Overlap Fix
+- **Type**: UI Bug Fix / CSS Stacking Context Isolation
+- **User Request**: "breadcrumb ta besi e fix hoye gese. breadcrumb navbar er option gular upor diye overlap korse"
+- **Affected Paths**:
+  - `[MODIFY]` [`frontend/src/components/JaagoNavbar.tsx`](../frontend/src/components/JaagoNavbar.tsx):
+    - Added `relative z-30` to the Main Navigation Bar container (`div 2`), elevating it and its dropdown children (`z-50`) above sibling elements.
+    - Added `relative z-10` to the Sub-Navbar Breadcrumb Strip (`div 3`).
+- **Root Cause**:
+  - The breadcrumb strip had `backdrop-blur-md`, which creates a new stacking context in modern Chromium/WebKit browsers. Because `div 3` followed `div 2` in DOM order without an explicit higher stacking context on `div 2`, the breadcrumb strip was rendering on top of the dropdown menus (`top-full`) when users hovered over navbar options like "About CRC" or "Programs & Activities", slicing off the top options and blocking clicks.
+- **Verification**:
+  - `npm run build` compiled all 11 static routes in 1654ms with Exit Code 0.
+  - Puppeteer desktop testing (1440x900) verified both at top of page and when scrolled 500px: hovering "About CRC" and "Programs & Activities" displays crisp dropdowns fully floating above the breadcrumb with zero overlap or slicing.
+---
+
+### [ENTRY-027] 2026-09-11 — Minimalistic Staggered Scroll Entrance & Hover Micro-Interactions in Focus Areas
+- **Type**: UI/UX Motion Design & Micro-Interactions
+- **User Request**: "ami chai protibar scroll korle e animation dekhak"
+- **User Preference**: "Both (স্ক্রলে আসলে টাইটেল ও ৫টি কার্ড আলতোভাবে Staggered Fade-Up হয়ে আসবে + হোভারে আইকন ও অ্যারো মাইক্রো-অ্যানিমেশন)" with recurring trigger on every scroll.
+- **Affected Paths**:
+  - `[MODIFY]` [`frontend/src/components/JaagoFocusAreas.tsx`](../frontend/src/components/JaagoFocusAreas.tsx):
+    - Configured `data-aos="fade-up"` with `data-aos-once="false"` so that the staggered entrance triggers smoothly every time the user scrolls to the section.
+    - Gentle staggered timing (`delay: 80ms, 160ms, 240ms, 320ms, 400ms`) across the 5 focus cards and red title card.
+    - Added decorative ambient background glow and subtle geometric circle (`w-36 h-36 rounded-full bg-white/[0.08]`) inside the red title card with smooth scale expansion (`group-hover:scale-125`).
+    - Added interactive micro-animation to focus card icon containers: icon gently scales up (`scale-110`) and tilts (`rotate-3`) with soft spring transition (`duration-300 ease-out`).
+    - Integrated Lucide's `ArrowRight` on the "Learn More" link with smooth rightward translation (`group-hover:translate-x-1.5 transition-transform`).
+- **Verification**:
+  - `npm run build` compiled all 11 static routes in 743ms with Exit Code 0.
+  - All other sections on the landing page remain strictly untouched, preserving their previous static state.

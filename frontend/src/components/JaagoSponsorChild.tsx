@@ -1,68 +1,13 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 
 export default function JaagoSponsorChild() {
-  const [count, setCount] = useState(0);
-  const counterRef = useRef<HTMLParagraphElement>(null);
-
-  useEffect(() => {
-    let frameId: number;
-    let isCounting = false;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !isCounting) {
-          isCounting = true;
-          const start = 0;
-          const end = 120;
-          const duration = 1800;
-          let startTime: number | null = null;
-
-          const animateCount = (timestamp: number) => {
-            if (!startTime) startTime = timestamp;
-            const progress = Math.min((timestamp - startTime) / duration, 1);
-            const easeOutCubic = 1 - Math.pow(1 - progress, 3);
-            const currentVal = Math.floor(start + (end - start) * easeOutCubic);
-            setCount(currentVal);
-
-            if (progress < 1) {
-              frameId = requestAnimationFrame(animateCount);
-            } else {
-              setCount(end);
-            }
-          };
-
-          frameId = requestAnimationFrame(animateCount);
-        } else if (!entry.isIntersecting) {
-          isCounting = false;
-          cancelAnimationFrame(frameId);
-          setCount(0);
-        }
-      },
-      { threshold: 0.25 }
-    );
-
-    if (counterRef.current) {
-      observer.observe(counterRef.current);
-    }
-
-    return () => {
-      observer.disconnect();
-      cancelAnimationFrame(frameId);
-    };
-  }, []);
-
   return (
     <section id="sponsor" className="sac-section relative bg-cover bg-no-repeat centered min-h-96 pb-12 bg-[#f6f4f1]">
-      {/* 1. Main 50/50 Split Card with data-aos */}
+      {/* 1. Main 50/50 Split Card */}
       <div className="max-w-6xl 2xl:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div
-          data-aos="fade-up"
-          data-aos-duration="500"
-          data-aos-delay="300"
-          className="flex flex-col lg:flex-row shadow-2xl md:rounded-l-2xl md:rounded-r-2xl overflow-hidden bg-white border border-gray-100"
-        >
+        <div className="flex flex-col lg:flex-row shadow-2xl md:rounded-l-2xl md:rounded-r-2xl overflow-hidden bg-white border border-gray-100">
           {/* Left Column: Picture */}
           <div className="basis-1/2 flex-1 md:rounded-l-2xl overflow-hidden">
             <img
@@ -104,23 +49,16 @@ export default function JaagoSponsorChild() {
         </div>
       </div>
 
-      {/* 2. Number of Unsponsored Children Counter Block with data-aos and Animated Counter */}
-      <div
-        data-aos="fade-up"
-        data-aos-duration="500"
-        className="max-w-5xl mx-auto px-6 relative z-10 pb-10"
-      >
+      {/* 2. Number of Unsponsored Children Static Counter Block */}
+      <div className="max-w-5xl mx-auto px-6 relative z-10 pb-10">
         <span className="text-xs font-bold uppercase tracking-widest text-[#007938] block text-center mb-1">
           COMMUNITY IMPACT · HATEKHORI CAMPUS
         </span>
         <h2 className="font-heading text-2xl sm:text-4xl text-[#0d0f14] text-center font-extrabold uppercase tracking-tight">
           Children Currently Seeking Sponsorship
         </h2>
-        <p
-          ref={counterRef}
-          className="font-heading text-5xl sm:text-7xl text-center text-[#e6000a] font-black my-3 tracking-tight"
-        >
-          {count}
+        <p className="font-heading text-5xl sm:text-7xl text-center text-[#e6000a] font-black my-3 tracking-tight">
+          120
         </p>
         <p className="text-center text-sm font-semibold text-[#007938] mb-4">
           Every BDT 1,500/month guarantees a child&apos;s complete schooling, learning supplies, and daily food.

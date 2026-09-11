@@ -1,9 +1,27 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Search, ChevronDown, Menu, X } from "lucide-react";
+import Breadcrumb, { BreadcrumbItem } from "@/components/Breadcrumb";
 
-export default function JaagoNavbar() {
+const defaultRouteBreadcrumbMap: Record<string, BreadcrumbItem[]> = {
+  "/about": [{ label: "About Us" }],
+  "/members": [{ label: "About Us", href: "/about" }, { label: "Members Directory" }],
+  "/programs": [{ label: "Programs & Activities" }],
+  "/school": [{ label: "Programs", href: "/programs" }, { label: "Hatekhori Free School" }],
+  "/branches": [{ label: "Branches" }],
+  "/media": [{ label: "Media & Gallery" }],
+  "/promises": [{ label: "Our Promises" }],
+};
+
+interface JaagoNavbarProps {
+  breadcrumbs?: BreadcrumbItem[];
+}
+
+export default function JaagoNavbar({ breadcrumbs }: JaagoNavbarProps = {}) {
+  const pathname = usePathname();
   const [isSticky, setIsSticky] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
@@ -17,7 +35,7 @@ export default function JaagoNavbar() {
         document.documentElement.scrollTop ||
         document.body.scrollTop ||
         0;
-      setIsSticky(scrollPos >= 50);
+      setIsSticky(scrollPos >= 40);
     };
 
     const handleClickOutside = (event: MouseEvent) => {
@@ -38,358 +56,202 @@ export default function JaagoNavbar() {
     };
   }, []);
 
-  const handleDropdownToggle = (name: string, e: React.MouseEvent) => {
-    e.preventDefault();
-    setActiveDropdown((prev) => (prev === name ? null : name));
-  };
+  const navItems = [
+    {
+      label: "About CRC",
+      href: "/about",
+      id: "about",
+      dropdown: [
+        { label: "Overview & History", href: "/about#history" },
+        { label: "Vision, Mission & Values", href: "/about#vision" },
+        { label: "5 Core Principles", href: "/about#principles" },
+        { label: "Executive Leadership", href: "/about#leadership" },
+        { label: "Growth Timeline", href: "/about#timeline" },
+      ],
+    },
+    {
+      label: "Programs & Activities",
+      href: "/programs",
+      id: "programs",
+      dropdown: [
+        { label: "All 7 Core Programs", href: "/programs" },
+        { label: "Street Children Education", href: "/programs#education" },
+        { label: "Nutrition & Health Camps", href: "/programs#health-camps" },
+        { label: "Winter Warmth & Relief", href: "/programs#winter-warmth" },
+        { label: "Child Safeguarding Policy", href: "/programs#safeguarding" },
+      ],
+    },
+    {
+      label: "CRC School",
+      href: "/school",
+      id: "school",
+      dropdown: [
+        { label: "Hatekhori Free School", href: "/school" },
+        { label: "Class Curriculum (Pre-Primary to 8)", href: "/school#curriculum" },
+        { label: "Weekly Timetable Routine", href: "/school#schedule" },
+        { label: "Volunteer Teaching Standards", href: "/school#standards" },
+      ],
+    },
+    {
+      label: "Branches",
+      href: "/branches",
+      id: "branches",
+      dropdown: [
+        { label: "All 6 Campus Chapters", href: "/branches" },
+        { label: "GSTU Central Branch", href: "/branches#gstu" },
+        { label: "Gopalganj Town Chapter", href: "/branches#town" },
+        { label: "Tungipara & Kotalipara", href: "/branches#upazila" },
+        { label: "Barishal & Khulna Wings", href: "/branches#divisional" },
+      ],
+    },
+    {
+      label: "Members",
+      href: "/members",
+    },
+    {
+      label: "Media & Gallery",
+      href: "/media",
+      id: "media",
+      dropdown: [
+        { label: "Photo Archives", href: "/media#gallery" },
+        { label: "Documentary Video", href: "/media#video" },
+        { label: "Press & News Coverage", href: "/media#press" },
+        { label: "Official CRC Banner", href: "/media#banner" },
+      ],
+    },
+    {
+      label: "Get Involved",
+      href: "/#volunteer",
+    },
+    {
+      label: "Resources",
+      href: "/programs#safeguarding",
+    },
+    {
+      label: "Contact Us",
+      href: "/about#contact",
+    },
+  ];
 
   return (
     <header
       ref={navRef}
       id="jaagonavbar"
-      className={`fixed top-0 left-0 z-[1000] w-full transition-all duration-300 ease-out will-change-[padding,background-color] ${
-        isSticky
-          ? "py-1.5 bg-[#0d0f14]/95 backdrop-blur-xl shadow-2xl border-b border-gray-800/80"
-          : "py-3 bg-[#0d0f14]"
-      }`}
+      className="fixed top-0 left-0 z-[1000] w-full transition-all duration-300 ease-out"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between gap-3 font-sans font-semibold">
-          {/* 1. Official CRC Brand Identity & Logo with Size Transition on Scroll */}
-          <div className="w-auto shrink-0">
-            <a href="/" className="inline-block group">
-              <div
-                className={`flex items-center gap-2 transition-all duration-300 ease-out group-hover:scale-105 active:scale-95 ${
-                  isSticky ? "scale-95" : "scale-100"
-                }`}
-              >
-                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#e6000a] flex items-center justify-center shadow-lg text-white font-black text-base sm:text-lg tracking-tighter border border-red-500">
-                  CRC
-                </div>
-                <div className="flex flex-col text-left leading-none">
-                  <span className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-white drop-shadow">
-                    Come for Road Child
-                  </span>
-                  <span className="text-[8px] sm:text-[9px] font-bold text-[#e6000a] tracking-tight mt-0.5">
-                    Est. 5 June 2016 · GSTU
-                  </span>
-                </div>
-              </div>
-            </a>
+      {/* 1. Top Bar (Black background with red established date, values & email) */}
+      <div
+        className={`bg-[#0d0f14] text-white transition-all duration-300 ease-out ${
+          isSticky
+            ? "max-h-0 opacity-0 overflow-hidden py-0"
+            : "max-h-12 opacity-100 py-1.5 border-b border-gray-800/60"
+        }`}
+      >
+        <div className="max-w-[1536px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between text-[11px] font-bold tracking-[0.22em] uppercase font-sans">
+          <span className="text-[#e6000a] tracking-[0.25em] whitespace-nowrap">ESTD. 2016</span>
+
+          <div className="hidden md:flex items-center gap-6 xl:gap-8 text-white font-bold tracking-[0.25em] whitespace-nowrap">
+            <span>BROTHERHOOD</span>
+            <span>COMMITMENT</span>
+            <span>TRUST</span>
           </div>
 
-          {/* 2. Center Floating Capsule Navigation */}
-          <div className="hidden md:flex flex-1 justify-center">
-            <ul className="flex items-center bg-white px-4 lg:px-6 py-1.5 shadow-xl rounded-full font-sans text-xs lg:text-sm text-gray-800 transition-all duration-300">
-              {/* Home */}
-              <li>
-                <a
-                  href="/"
-                  className="jaago-nav-link flex items-center font-bold py-1 px-3 rounded-full hover:bg-gray-100 hover:border-gray-200 transition-colors"
-                >
-                  Home
-                </a>
-              </li>
+          <a
+            href="mailto:crcgstu@gmail.com"
+            className="text-white hover:text-[#e6000a] transition-colors tracking-[0.18em] whitespace-nowrap"
+          >
+            CRCGSTU@GMAIL.COM
+          </a>
+        </div>
+      </div>
 
-              {/* Focus Dropdown (CRC Core Pillars) */}
-              <li
-                className="relative group"
-                onMouseEnter={() => setActiveDropdown("focus")}
-                onMouseLeave={() => setActiveDropdown(null)}
-              >
-                <button
-                  type="button"
-                  onClick={(e) => handleDropdownToggle("focus", e)}
-                  className={`jaago-nav-link flex items-center font-bold py-1 px-3 rounded-full transition-colors cursor-pointer border-none bg-transparent ${
-                    activeDropdown === "focus"
-                      ? "bg-gray-100 border-gray-200 text-gray-900"
-                      : "hover:bg-gray-100 hover:border-gray-200"
-                  }`}
-                >
-                  <span>Focus</span>
-                  <ChevronDown
-                    className={`jaago-chevron w-3.5 h-3.5 ml-1 opacity-70 transition-transform duration-300 ${
-                      activeDropdown === "focus" ? "rotate-180" : "group-hover:rotate-180"
-                    }`}
-                  />
-                </button>
+      {/* 2. Main Navigation Bar (White background, bottom red border, logo, links, search & donate) */}
+      <div
+        className={`relative z-30 border-b-4 border-[#e6000a] bg-white/95 backdrop-blur-md transition-all duration-300 ${
+          isSticky ? "py-2 shadow-xl" : "py-2.5 sm:py-3 shadow-md"
+        }`}
+      >
+        <div className="max-w-[1536px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-2 xl:gap-4 font-sans">
+          {/* Brand Identity: Red CRC Box + 2-line Text */}
+          <Link href="/" className="group flex items-center gap-2.5 sm:gap-3 shrink-0">
+            <span className="flex size-10 sm:size-11 items-center justify-center rounded bg-[#e6000a] text-white font-heading font-black text-lg sm:text-xl shadow-md transition-transform duration-300 group-hover:scale-105 active:scale-95">
+              CRC
+            </span>
+            <span className="flex flex-col text-left leading-tight whitespace-nowrap">
+              <span className="block font-heading text-sm sm:text-base font-black text-[#0d0f14] group-hover:text-[#e6000a] transition-colors tracking-tight">
+                Come For Road Child
+              </span>
+              <span className="block text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-gray-500 uppercase mt-0.5">
+                GSTU BRANCH
+              </span>
+            </span>
+          </Link>
 
-                {/* Dropdown Menu */}
+          {/* Desktop Navigation Links (Single line, strictly whitespace-nowrap) */}
+          <nav className="hidden xl:flex items-center gap-0.5 2xl:gap-1.5 shrink-0">
+            {navItems.map((item) => {
+              const hasDropdown = Boolean(item.dropdown);
+              return (
                 <div
-                  className={`jaago-dropdown absolute min-w-[270px] left-0 mt-2 p-5 bg-white rounded-2xl shadow-2xl z-50 border border-gray-100 ${
-                    isSticky ? "top-7" : "top-9"
-                  } ${activeDropdown === "focus" ? "active-dropdown" : ""}`}
+                  key={item.label}
+                  className="relative group/nav"
+                  onMouseEnter={() => hasDropdown && setActiveDropdown(item.id || null)}
+                  onMouseLeave={() => hasDropdown && setActiveDropdown(null)}
                 >
-                  <ul className="divide-y divide-dashed divide-gray-200 text-xs font-semibold text-gray-700">
-                    <li className="jaago-dropdown-item pt-2">
-                      <a
-                        href="#hatekhori"
-                        className="block hover:text-amber-600 transition-colors"
-                      >
-                        Hatekhori Free School (হাতেখড়ি পাঠশালা)
-                      </a>
-                    </li>
-                    <li className="jaago-dropdown-item pt-2">
-                      <a
-                        href="#safeguarding"
-                        className="block hover:text-amber-600 transition-colors"
-                      >
-                        Child Safeguarding & Protection
-                      </a>
-                    </li>
-                    <li className="jaago-dropdown-item pt-2">
-                      <a
-                        href="#health"
-                        className="block hover:text-amber-600 transition-colors"
-                      >
-                        Health & Nutrition Camps
-                      </a>
-                    </li>
-                    <li className="jaago-dropdown-item pt-2">
-                      <a
-                        href="#winter-relief"
-                        className="block hover:text-amber-600 transition-colors"
-                      >
-                        Winter Warmth & Disaster Relief
-                      </a>
-                    </li>
-                    <li className="jaago-dropdown-item pt-2">
-                      <a
-                        href="#youth"
-                        className="block hover:text-amber-600 transition-colors"
-                      >
-                        Youth Leadership & Volunteerism
-                      </a>
-                    </li>
-                  </ul>
+                  <Link
+                    href={item.href}
+                    className="block whitespace-nowrap px-2 xl:px-2.5 2xl:px-3 py-1.5 text-xs xl:text-[12.5px] 2xl:text-[13.5px] font-bold text-[#0d0f14] hover:text-[#e6000a] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
+                  >
+                    {item.label}
+                  </Link>
+
+                  {/* Dropdown Menu with Smooth Transition */}
+                  {hasDropdown && item.dropdown && (
+                    <div
+                      className={`absolute left-0 top-full pt-2 z-50 min-w-[240px] transition-all duration-200 ${
+                        activeDropdown === item.id
+                          ? "opacity-100 visible translate-y-0"
+                          : "opacity-0 invisible -translate-y-2 pointer-events-none"
+                      }`}
+                    >
+                      <div className="bg-white rounded-xl shadow-2xl border border-gray-100 p-2.5 space-y-0.5">
+                        {item.dropdown.map((sub) => (
+                          <Link
+                            key={sub.label}
+                            href={sub.href}
+                            className="block whitespace-nowrap px-3 py-2 text-xs font-semibold text-gray-700 hover:text-[#e6000a] hover:bg-gray-50 rounded-lg transition-colors"
+                          >
+                            {sub.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
-              </li>
+              );
+            })}
+          </nav>
 
-              {/* Programs Dropdown */}
-              <li
-                className="relative group"
-                onMouseEnter={() => setActiveDropdown("projects")}
-                onMouseLeave={() => setActiveDropdown(null)}
-              >
-                <button
-                  type="button"
-                  onClick={(e) => handleDropdownToggle("projects", e)}
-                  className={`jaago-nav-link flex items-center font-bold py-1 px-3 rounded-full transition-colors cursor-pointer border-none bg-transparent ${
-                    activeDropdown === "projects"
-                      ? "bg-gray-100 border-gray-200 text-gray-900"
-                      : "hover:bg-gray-100 hover:border-gray-200"
-                  }`}
-                >
-                  <span>Programs</span>
-                  <ChevronDown
-                    className={`jaago-chevron w-3.5 h-3.5 ml-1 opacity-70 transition-transform duration-300 ${
-                      activeDropdown === "projects" ? "rotate-180" : "group-hover:rotate-180"
-                    }`}
-                  />
-                </button>
-
-                <div
-                  className={`jaago-dropdown absolute min-w-[250px] left-0 mt-2 p-5 bg-white rounded-2xl shadow-2xl z-50 border border-gray-100 ${
-                    isSticky ? "top-7" : "top-9"
-                  } ${activeDropdown === "projects" ? "active-dropdown" : ""}`}
-                >
-                  <ul className="divide-y divide-dashed divide-gray-200 text-xs font-semibold text-gray-700">
-                    <li className="jaago-dropdown-item pt-2">
-                      <a
-                        href="#current-programs"
-                        className="block hover:text-amber-600 transition-colors"
-                      >
-                        Ongoing School Programs
-                      </a>
-                    </li>
-                    <li className="jaago-dropdown-item pt-2">
-                      <a
-                        href="#relief-drives"
-                        className="block hover:text-amber-600 transition-colors"
-                      >
-                        Annual Winter Relief Drives
-                      </a>
-                    </li>
-                    <li className="jaago-dropdown-item pt-2">
-                      <a
-                        href="#campus-wings"
-                        className="block hover:text-amber-600 transition-colors"
-                      >
-                        GSTU Campus Operations
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-
-              {/* Updates Dropdown */}
-              <li
-                className="relative group"
-                onMouseEnter={() => setActiveDropdown("updates")}
-                onMouseLeave={() => setActiveDropdown(null)}
-              >
-                <button
-                  type="button"
-                  onClick={(e) => handleDropdownToggle("updates", e)}
-                  className={`jaago-nav-link flex items-center font-bold py-1 px-3 rounded-full transition-colors cursor-pointer border-none bg-transparent ${
-                    activeDropdown === "updates"
-                      ? "bg-gray-100 border-gray-200 text-gray-900"
-                      : "hover:bg-gray-100 hover:border-gray-200"
-                  }`}
-                >
-                  <span>Updates</span>
-                  <ChevronDown
-                    className={`jaago-chevron w-3.5 h-3.5 ml-1 opacity-70 transition-transform duration-300 ${
-                      activeDropdown === "updates" ? "rotate-180" : "group-hover:rotate-180"
-                    }`}
-                  />
-                </button>
-
-                <div
-                  className={`jaago-dropdown absolute min-w-[220px] left-0 mt-2 p-5 bg-white rounded-2xl shadow-2xl z-50 border border-gray-100 ${
-                    isSticky ? "top-7" : "top-9"
-                  } ${activeDropdown === "updates" ? "active-dropdown" : ""}`}
-                >
-                  <ul className="divide-y divide-dashed divide-gray-200 text-xs font-semibold text-gray-700">
-                    <li className="jaago-dropdown-item pt-2">
-                      <a href="#blog" className="block hover:text-amber-600 transition-colors">
-                        Field Stories & Blog
-                      </a>
-                    </li>
-                    <li className="jaago-dropdown-item pt-2">
-                      <a href="#news" className="block hover:text-amber-600 transition-colors">
-                        Media & Press Coverage
-                      </a>
-                    </li>
-                    <li className="jaago-dropdown-item pt-2">
-                      <a href="#audit" className="block hover:text-amber-600 transition-colors">
-                        Audited Financial Reports
-                      </a>
-                    </li>
-                    <li className="jaago-dropdown-item pt-2">
-                      <a href="#yearbook" className="block hover:text-amber-600 transition-colors">
-                        Annual Activity Yearbook
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-
-              {/* About Us (Exact 2-Column MegaMenu) */}
-              <li
-                className="relative group"
-                onMouseEnter={() => setActiveDropdown("about")}
-                onMouseLeave={() => setActiveDropdown(null)}
-              >
-                <button
-                  type="button"
-                  onClick={(e) => handleDropdownToggle("about", e)}
-                  className={`jaago-nav-link flex items-center font-bold py-1 px-3 rounded-full transition-colors cursor-pointer border-none bg-transparent ${
-                    activeDropdown === "about"
-                      ? "bg-gray-100 border-gray-200 text-gray-900"
-                      : "hover:bg-gray-100 hover:border-gray-200"
-                  }`}
-                >
-                  <span>About Us</span>
-                  <ChevronDown
-                    className={`jaago-chevron w-3.5 h-3.5 ml-1 opacity-70 transition-transform duration-300 ${
-                      activeDropdown === "about" ? "rotate-180" : "group-hover:rotate-180"
-                    }`}
-                  />
-                </button>
-
-                {/* MegaMenu container */}
-                <div
-                  id="megaMenu"
-                  className={`jaago-dropdown absolute min-w-[460px] -left-28 mt-2 p-6 bg-white rounded-2xl shadow-2xl z-50 border border-gray-100 ${
-                    isSticky ? "top-7" : "top-9"
-                  } ${activeDropdown === "about" ? "active-dropdown" : ""}`}
-                >
-                  <div className="grid grid-cols-2 gap-x-8 gap-y-3 text-xs font-semibold text-gray-700">
-                    <a
-                      href="#vision-mission"
-                      className="jaago-dropdown-item hover:text-amber-600 block"
-                    >
-                      Vision, Mission, Values
-                    </a>
-                    <a
-                      href="#gstu-history"
-                      className="jaago-dropdown-item hover:text-amber-600 block"
-                    >
-                      Founding & GSTU Roots
-                    </a>
-                    <a
-                      href="#committee"
-                      className="jaago-dropdown-item hover:text-amber-600 block"
-                    >
-                      Executive Committee
-                    </a>
-                    <a
-                      href="#advisors"
-                      className="jaago-dropdown-item hover:text-amber-600 block"
-                    >
-                      Faculty Advisors
-                    </a>
-                    <a
-                      href="#contact"
-                      className="jaago-dropdown-item hover:text-amber-600 block"
-                    >
-                      Contact & Emergency Help
-                    </a>
-                    <a
-                      href="#child-safeguarding"
-                      className="jaago-dropdown-item hover:text-amber-600 block"
-                    >
-                      Child Safeguarding Policy
-                    </a>
-                    <a
-                      href="#transparency"
-                      className="jaago-dropdown-item hover:text-amber-600 block"
-                    >
-                      Transparency & Audits
-                    </a>
-                    <a
-                      href="#volunteer"
-                      className="jaago-dropdown-item hover:text-amber-600 block"
-                    >
-                      Become a Volunteer Teacher
-                    </a>
-                  </div>
-                </div>
-              </li>
-
-              {/* Donate */}
-              <li>
-                <a
-                  href="#sponsor"
-                  className="jaago-nav-link flex items-center font-bold py-1 px-3 lg:px-4 rounded-full hover:bg-gray-100 hover:border-gray-200 transition-colors"
-                >
-                  Donate
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* 3. Right End: Animated Search Toggle + Sponsor a Child Button */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* Search Button with Click Reveal */}
+          {/* Right Controls: Search Icon + Donate Button + Hamburger */}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            {/* Search Popover Button */}
             <div className="relative">
               <button
                 onClick={() => setSearchOpen(!searchOpen)}
                 aria-label="Search CRC Website"
-                className="btn btn-primary btn-circle w-9 h-9 sm:w-11 sm:h-11 bg-[#e6000a] text-white shadow-lg flex items-center justify-center hover:bg-[#a20002] hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 hover:text-[#e6000a] flex items-center justify-center transition-all duration-200 cursor-pointer active:scale-95"
               >
-                <Search className="h-4 w-4 sm:h-5 sm:w-5" />
+                <Search className="w-4 h-4" />
               </button>
 
-              {/* Interactive Search Box Popover */}
+              {/* Search Box Popover */}
               {searchOpen && (
-                <div className="absolute right-0 top-12 sm:top-14 w-64 sm:w-72 bg-white rounded-2xl shadow-2xl p-3 border border-gray-200 z-50 animate-in fade-in zoom-in-95 duration-200">
-                  <div className="flex items-center space-x-2 bg-gray-50 px-3 py-2 rounded-xl border border-gray-200">
+                <div className="absolute right-0 top-12 sm:top-14 w-64 sm:w-72 bg-white rounded-xl shadow-2xl p-3 border border-gray-200 z-50 animate-in fade-in zoom-in-95 duration-200">
+                  <div className="flex items-center space-x-2 bg-gray-50 px-3 py-2 rounded-lg border border-gray-200">
                     <Search className="w-4 h-4 text-gray-400" />
                     <input
                       type="text"
-                      placeholder="Search CRC programs, reports..."
+                      placeholder="Search CRC programs, school..."
                       className="bg-transparent border-none text-xs text-gray-800 focus:outline-none w-full"
                       autoFocus
                     />
@@ -404,54 +266,96 @@ export default function JaagoNavbar() {
               )}
             </div>
 
-            {/* Signature Sponsor a Child CTA with Hover Lift & Active Feedback */}
+            {/* Donate Button (Matches screenshot: red box with bold white text) */}
             <a
-              className="btn btn-primary px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm lg:text-base font-sans shadow-xl capitalize font-bold text-white bg-[#e6000a] hover:bg-[#a20002] hover:scale-105 active:scale-95 hover:shadow-2xl transition-all duration-200 shrink-0"
-              href="#sponsor"
+              href="/#sponsor"
+              className="bg-[#e6000a] hover:bg-[#a20002] text-white font-heading font-bold text-sm tracking-wide px-5 sm:px-6 py-2.5 rounded shadow-md hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 shrink-0"
             >
-              Sponsor a Child
+              Donate
             </a>
 
-            {/* Mobile Drawer Trigger */}
-            <div className="md:hidden">
+            {/* Mobile Drawer Trigger (Visible below XL) */}
+            <div className="xl:hidden">
               <button
                 onClick={() => setMobileDrawerOpen(!mobileDrawerOpen)}
-                className="p-2 text-white bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors"
+                className="p-2 text-gray-800 hover:text-[#e6000a] hover:bg-gray-100 rounded-lg transition-colors"
                 aria-label="Toggle navigation menu"
               >
-                {mobileDrawerOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                {mobileDrawerOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
             </div>
           </div>
         </div>
+
+        {/* Mobile Drawer Menu with Smooth Slide Animation */}
+        {mobileDrawerOpen && (
+          <div className="xl:hidden bg-white px-6 py-5 border-t border-gray-200 text-[#0d0f14] text-sm font-bold space-y-2 animate-in slide-in-from-top duration-200 shadow-xl max-h-[80vh] overflow-y-auto">
+            {navItems.map((item) => (
+              <div key={item.label} className="border-b border-gray-100 pb-2">
+                <Link
+                  href={item.href}
+                  onClick={() => setMobileDrawerOpen(false)}
+                  className="block py-1.5 text-gray-900 hover:text-[#e6000a] hover:translate-x-1 transition-all font-heading text-sm"
+                >
+                  {item.label}
+                </Link>
+                {item.dropdown && (
+                  <div className="pl-3 py-1 space-y-1">
+                    {item.dropdown.map((sub) => (
+                      <Link
+                        key={sub.label}
+                        href={sub.href}
+                        onClick={() => setMobileDrawerOpen(false)}
+                        className="block py-1 text-xs text-gray-600 hover:text-[#e6000a] transition-colors"
+                      >
+                        • {sub.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+            <div className="pt-3">
+              <a
+                href="/#sponsor"
+                onClick={() => setMobileDrawerOpen(false)}
+                className="block text-center py-3 bg-[#e6000a] text-white font-heading font-bold rounded shadow-lg hover:bg-[#a20002]"
+              >
+                Donate Now
+              </a>
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Mobile Drawer Menu */}
-      {mobileDrawerOpen && (
-        <div className="md:hidden bg-[#0d0f14] px-6 py-5 border-t border-gray-800 text-white text-sm font-semibold space-y-3 animate-in slide-in-from-top duration-300">
-          <a href="/" className="block py-1.5 border-b border-gray-800 hover:text-[#e6000a]">
-            Home
-          </a>
-          <a href="#hatekhori" className="block py-1.5 border-b border-gray-800 hover:text-[#e6000a]">
-            Focus: Hatekhori Free School
-          </a>
-          <a href="#safeguarding" className="block py-1.5 border-b border-gray-800 hover:text-[#e6000a]">
-            Focus: Child Safeguarding & Health
-          </a>
-          <a href="#current-programs" className="block py-1.5 border-b border-gray-800 hover:text-[#e6000a]">
-            Programs: Field Campaigns
-          </a>
-          <a href="#blog" className="block py-1.5 border-b border-gray-800 hover:text-[#e6000a]">
-            Updates: Field Stories & Audits
-          </a>
-          <a href="#about" className="block py-1.5 border-b border-gray-800 hover:text-[#e6000a]">
-            About Us: GSTU Roots & Committee
-          </a>
-          <a href="#sponsor" className="block py-2 text-[#e6000a] font-bold">
-            Sponsor a Child
-          </a>
-        </div>
-      )}
+      {/* 3. Sub-Navbar Breadcrumb Strip (Fixed with Navbar, stays visible during scroll) */}
+      {(() => {
+        const activeBreadcrumbs =
+          breadcrumbs !== undefined
+            ? breadcrumbs
+            : pathname && pathname !== "/"
+            ? defaultRouteBreadcrumbMap[pathname] || [
+                {
+                  label:
+                    pathname.replace(/^\//, "").replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()) ||
+                    "Page",
+                },
+              ]
+            : null;
+
+        if (!activeBreadcrumbs || activeBreadcrumbs.length === 0) return null;
+
+        return (
+          <div className="relative z-10 bg-[#f4f2ee]/95 backdrop-blur-md border-b border-gray-200/90 shadow-xs transition-colors">
+            <div className="max-w-[1536px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-between">
+              <Breadcrumb items={activeBreadcrumbs} variant="bar" />
+              <span className="hidden sm:inline-block text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">
+                GSTU Campus · Estd 2016
+              </span>
+            </div>
+          </div>
+        );
+      })()}
     </header>
   );
 }

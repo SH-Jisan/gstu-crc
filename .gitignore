@@ -45,3 +45,10 @@ scratch/
 # Database dumps (except documentation templates)
 *.sql.gz
 *.dump
+
+# Office temporary lock files
+~$*
+
+# Vite / Wrangler / Nitro Build Outputs
+.output/
+.wrangler/

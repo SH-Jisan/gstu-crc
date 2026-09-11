@@ -39,33 +39,33 @@ export default function JaagoFooter() {
               </h3>
               <ul className="flex flex-col gap-2.5 text-sm font-semibold text-gray-300">
                 <li>
-                  <a className="hover:text-[#e6000a] transition-colors" href="#sponsor">
+                  <a className="hover:text-[#e6000a] transition-colors" href="/#sponsor">
                     Sponsor a Child Program
                   </a>
                 </li>
                 <li>
-                  <a className="hover:text-[#e6000a] transition-colors" href="#hatekhori">
-                    Hatekhori Free School
+                  <a className="hover:text-[#e6000a] transition-colors" href="/school">
+                    Hatekhori Free School (হাতেখড়ি পাঠশালা)
                   </a>
                 </li>
                 <li>
-                  <a className="hover:text-[#e6000a] transition-colors" href="#volunteer">
-                    Join as Volunteer Teacher
+                  <a className="hover:text-[#e6000a] transition-colors" href="/programs">
+                    7 Core Welfare Programs
                   </a>
                 </li>
                 <li>
-                  <a className="hover:text-[#e6000a] transition-colors" href="#safeguarding">
-                    Child Safeguarding Policy
+                  <a className="hover:text-[#e6000a] transition-colors" href="/branches">
+                    6 Campus Branches & Chapters
                   </a>
                 </li>
                 <li>
-                  <a className="hover:text-[#e6000a] transition-colors" href="#audit">
-                    Audited Financial Transparency
+                  <a className="hover:text-[#e6000a] transition-colors" href="/about">
+                    About CRC, Vision & Leadership
                   </a>
                 </li>
                 <li>
-                  <a className="hover:text-[#e6000a] transition-colors" href="#contact">
-                    Emergency Child Support
+                  <a className="hover:text-[#e6000a] transition-colors" href="/media">
+                    Media, Press & Gallery
                   </a>
                 </li>
               </ul>

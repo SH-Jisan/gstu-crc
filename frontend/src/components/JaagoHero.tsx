@@ -172,7 +172,7 @@ export default function JaagoHero() {
                   className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white max-w-[340px] sm:max-w-[420px]"
                 >
                   <img
-                    src="https://jaago.com.bd/images/2024/04/sponsor-a-child_1714365666_yl5a0ydht.jpg?tr=f-auto,fo-auto,pr-true,c-maintain_ratio"
+                    src="/assets/school.jpg"
                     alt="Hatekhori Free School Students"
                     className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700"
                   />

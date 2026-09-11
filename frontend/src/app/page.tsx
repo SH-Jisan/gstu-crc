@@ -3,11 +3,14 @@
 import React from "react";
 import AosInit from "../components/AosInit";
 import JaagoNavbar from "../components/JaagoNavbar";
-import JaagoHero from "../components/JaagoHero";
+import UnifiedHeroSection from "../components/UnifiedHeroSection";
+import StatsCounterBar from "../components/StatsCounterBar";
 import JaagoSponsorChild from "../components/JaagoSponsorChild";
 import JaagoFocusAreas from "../components/JaagoFocusAreas";
+import RecentActivitiesSection from "../components/RecentActivitiesSection";
+import StoriesSection from "../components/StoriesSection";
 import JaagoVolunteerism from "../components/JaagoVolunteerism";
-import JaagoNewsArticles from "../components/JaagoNewsArticles";
+import PartnersSection from "../components/PartnersSection";
 import JaagoFooter from "../components/JaagoFooter";
 
 export default function HomePage() {
@@ -16,28 +19,37 @@ export default function HomePage() {
       {/* 0. AOS (Animate On Scroll) Initializer */}
       <AosInit />
 
-      {/* 1. Exact JAAGO Navbar with Sticky Scroll & Hover Animations */}
+      {/* 1. Floating Capsule Navbar with Dropdowns & Search */}
       <JaagoNavbar />
 
-      {/* Main Content Sections */}
+      {/* Main Content Sections: Blending Frontend & CRC Loveable */}
       <main className="flex-grow">
-        {/* 2. Exact JAAGO Hero Slider & Quotes with AOS */}
-        <JaagoHero />
+        {/* 2. Unified Hero: Official CRC Banner + Mission + Real Photo Mosaic */}
+        <UnifiedHeroSection />
 
-        {/* 3. Exact JAAGO Sponsor a Child Program & 1100 Unsponsored Children with Count-Up */}
+        {/* 3. 4-Key Metrics Counter Bar (Children, Volunteers, Branches, Drives) */}
+        <StatsCounterBar />
+
+        {/* 4. Sponsor a Child Program with Live Count-Up */}
         <JaagoSponsorChild />
 
-        {/* 4. Exact JAAGO Our Focus Areas (6 Cards with Sweep & Staggered AOS) */}
+        {/* 5. 6 Core Focus Areas with Hover Sweeps */}
         <JaagoFocusAreas />
 
-        {/* 5. Exact JAAGO Volunteerism & Overlapping Yellow Banner with Zoom-Out-Up & Count-Up */}
+        {/* 6. Recent Field Activities & Action Updates */}
+        <RecentActivitiesSection />
+
+        {/* 7. Voices from the Street: Real Transformation Stories */}
+        <StoriesSection />
+
+        {/* 8. Volunteerism at CRC & University Student Impact */}
         <JaagoVolunteerism />
 
-        {/* 6. Exact JAAGO News & Articles with Dashed Borders & Staggered Fade-Up */}
-        <JaagoNewsArticles />
+        {/* 9. Institutional Collaborations & Partners */}
+        <PartnersSection />
       </main>
 
-      {/* 7. Exact JAAGO 3-Column Footer & Copyright */}
+      {/* 10. Comprehensive Footer */}
       <JaagoFooter />
     </div>
   );
