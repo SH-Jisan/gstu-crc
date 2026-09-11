@@ -5,6 +5,7 @@ export interface MegaMenuSubLink {
   href: string;
   badge?: string;
   isSubItem?: boolean;
+  description?: string;
 }
 
 export interface MegaMenuColumn {
@@ -50,38 +51,97 @@ export const megaMenus: Record<string, MegaMenuSection> = {
         title: "About",
         href: "/about",
         items: [
-          { label: "Principles", href: "/about#principles" },
-          { label: "Vision and mission", href: "/about#vision" },
-          { label: "Objectives", href: "/about#objectives" },
-          { label: "Mode of Action", href: "/about#modes-of-action" },
-          { label: "Achievements", href: "/about#achievements" },
+          {
+            label: "Principles",
+            href: "/about#principles",
+            description: "3 fundamental principles & 8 guiding values defining volunteer ethics.",
+          },
+          {
+            label: "Vision and mission",
+            href: "/about#vision",
+            description: "Our vision for a street-child-free society across 5 key pillars.",
+          },
+          {
+            label: "Objectives",
+            href: "/about#objectives",
+            description: "5 core goals targeting child welfare, open schooling, and youth leadership.",
+          },
+          {
+            label: "Mode of Action",
+            href: "/about#modes-of-action",
+            description: "7 grassroots methods: direct aid, schooling, advocacy, and safeguarding.",
+          },
+          {
+            label: "Achievements",
+            href: "/about#achievements",
+            description: "Best Branch award, 1,200+ street children empowered, and 350+ volunteers.",
+          },
         ],
       },
       {
         title: "Our history",
         href: "/about#history",
         items: [
-          { label: "How we founded", href: "/about#history" },
-          { label: "Leadership over years", href: "/about#leadership" },
+          {
+            label: "How we founded",
+            href: "/about#history",
+            description: "Started 5 June 2016 from an Eid shopping railway station initiative.",
+          },
+          {
+            label: "Leadership over years",
+            href: "/about#leadership",
+            description: "Student conveners, executive panels, and advisors across a decade.",
+          },
         ],
       },
       {
         title: "How we run",
         href: "/about#governance",
         items: [
-          { label: "Finance", href: "/about#finance" },
-          { label: "Governance Overview", href: "/about#governance" },
-          { label: "Executive Council", href: "/about#executive-council", isSubItem: true },
-          { label: "Permanent Council", href: "/about#permanent-council", isSubItem: true },
-          { label: "Temporary Council", href: "/about#temporary-council", isSubItem: true },
+          {
+            label: "Finance",
+            href: "/about#finance",
+            description: "Strict financial discipline with restricted child funds and open audits.",
+          },
+          {
+            label: "Governance Overview",
+            href: "/about#governance",
+            description: "3-tier constitutional system ensuring democratic leadership and accountability.",
+          },
+          {
+            label: "Executive Council",
+            href: "/about#executive-council",
+            isSubItem: true,
+            description: "Elected student panel managing daily operations and Hatekhori School.",
+          },
+          {
+            label: "Permanent Council",
+            href: "/about#permanent-council",
+            isSubItem: true,
+            description: "Supreme constitutional trustee body of founding members and alumni.",
+          },
+          {
+            label: "Temporary Council",
+            href: "/about#temporary-council",
+            isSubItem: true,
+            description: "Independent ad-hoc committees for elections, audits, and special drives.",
+          },
         ],
       },
       {
         title: "Symbol & Flag",
         href: "/about#symbol-flag",
         items: [
-          { label: "Official Emblem & Logo", href: "/about#symbol-flag" },
-          { label: "Flag Colors & Motto", href: "/about#symbol-flag" },
+          {
+            label: "Official Emblem & Logo",
+            href: "/about#symbol-flag",
+            description: "Embracing hands protecting a child within a circle of unity.",
+          },
+          {
+            label: "Flag Colors & Motto",
+            href: "/about#symbol-flag",
+            description: "4 banner colors and our motto for a street-child-free society.",
+          },
         ],
       },
     ],
