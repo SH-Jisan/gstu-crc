@@ -3,196 +3,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Search, ChevronDown, ChevronRight, Menu, X } from "lucide-react";
+import { Search, ChevronRight, Menu, X } from "lucide-react";
 import Breadcrumb, { BreadcrumbItem } from "@/components/Breadcrumb";
-
-interface MegaMenuColumn {
-  title: string;
-  href: string;
-  description: string;
-}
-
-interface MegaMenuSection {
-  spotlight: {
-    title: string;
-    description: string;
-    ctaText: string;
-    ctaHref: string;
-  };
-  columns: MegaMenuColumn[];
-}
-
-const megaMenus: Record<string, MegaMenuSection> = {
-  about: {
-    spotlight: {
-      title: "We are Come For Road Child (CRC)",
-      description:
-        "A student-led volunteer social welfare organization founded on 5 June 2016 at GSTU, dedicated to ensuring the fundamental rights, education, and healthcare of underprivileged street children.",
-      ctaText: "Discover who we are",
-      ctaHref: "/about",
-    },
-    columns: [
-      {
-        title: "History & Genesis",
-        href: "/about#history",
-        description:
-          "From a 2016 Eid shopping moment at a railway station to an organized nationwide campus movement.",
-      },
-      {
-        title: "Principles & Values",
-        href: "/about#principles",
-        description:
-          "Brotherhood, Commitment, and Trust guiding our 8 operational values and non-profit ethics.",
-      },
-      {
-        title: "How We Are Run",
-        href: "/about#governance",
-        description:
-          "A 3-Council structure (Permanent, Executive, Temporary) ensuring transparent, student-led management.",
-      },
-      {
-        title: "Milestones & Awards",
-        href: "/about#timeline",
-        description:
-          "A 10-year development trajectory and official recognition with the Best Branch Prize.",
-      },
-    ],
-  },
-  programs: {
-    spotlight: {
-      title: "Our Humanitarian Programs",
-      description:
-        "Direct field operations, basic education, healthcare checkups, and seasonal emergency relief for street children across Bangladesh.",
-      ctaText: "Explore all programs",
-      ctaHref: "/programs",
-    },
-    columns: [
-      {
-        title: "Street Child Education",
-        href: "/programs#education",
-        description:
-          "Free open-air schooling, stationery, books, and basic literacy training for street children.",
-      },
-      {
-        title: "Nutrition & Health Camps",
-        href: "/programs#health-camps",
-        description:
-          "Routine doctor checkups, hygiene kits, soap distribution, and treatment for seasonal illnesses.",
-      },
-      {
-        title: "Winter Warmth & Relief",
-        href: "/programs#winter-warmth",
-        description:
-          "Annual distribution of warm sweaters, blankets, and rations to floating homeless families.",
-      },
-      {
-        title: "Child Safeguarding",
-        href: "/programs#safeguarding",
-        description:
-          "Safe shelter support, anti-trafficking vigilance, and emergency rescue protocols.",
-      },
-    ],
-  },
-  school: {
-    spotlight: {
-      title: "Hatekhori Free School",
-      description:
-        "Our flagship open-air education initiative transforming street children into confident, literate learners with moral and formal foundation.",
-      ctaText: "View school model",
-      ctaHref: "/school",
-    },
-    columns: [
-      {
-        title: "Class Curriculum",
-        href: "/school#curriculum",
-        description:
-          "Structured tiers from Pre-Primary basics to Grade 8 mainstream school transitions.",
-      },
-      {
-        title: "Weekly Timetable",
-        href: "/school#schedule",
-        description:
-          "Flexible afternoon sessions accommodating children's daily survival routines.",
-      },
-      {
-        title: "Volunteer Teaching",
-        href: "/school#standards",
-        description:
-          "GSTU university students acting as dedicated mentors, tutors, and positive role models.",
-      },
-    ],
-  },
-  branches: {
-    spotlight: {
-      title: "Campus & Regional Chapters",
-      description:
-        "A synchronized network of passionate university student volunteers driving street child welfare across divisions and districts.",
-      ctaText: "Explore all branches",
-      ctaHref: "/branches",
-    },
-    columns: [
-      {
-        title: "GSTU Central Branch",
-        href: "/branches#gstu",
-        description:
-          "The founding branch and central operational engine headquartered in Gopalganj.",
-      },
-      {
-        title: "Town & Upazila Wings",
-        href: "/branches#upazila",
-        description:
-          "Gopalganj Town, Tungipara, and Kotalipara local volunteer action teams.",
-      },
-      {
-        title: "Divisional Chapters",
-        href: "/branches#divisional",
-        description:
-          "Expanding initiatives across Barishal, Khulna, and neighboring universities.",
-      },
-    ],
-  },
-  media: {
-    spotlight: {
-      title: "Media, Press & Documentary",
-      description:
-        "Authentic photographs, video documentaries, and press coverage of our field campaigns and milestones from 2016 to the present day.",
-      ctaText: "Explore media gallery",
-      ctaHref: "/media",
-    },
-    columns: [
-      {
-        title: "Photo Archives",
-        href: "/media#gallery",
-        description:
-          "High-resolution captures of Hatekhori classrooms, Eid clothes distribution, and relief drives.",
-      },
-      {
-        title: "Documentary Stories",
-        href: "/media#video",
-        description:
-          "Impact videos and authentic interviews with student volunteers and school beneficiaries.",
-      },
-      {
-        title: "Press & News Coverage",
-        href: "/media#press",
-        description:
-          "National and regional newspaper reports, recognition, and branch achievements.",
-      },
-    ],
-  },
-};
-
-const megaMenuKeys = ["about", "programs", "school", "branches", "media"] as const;
-
-const defaultRouteBreadcrumbMap: Record<string, BreadcrumbItem[]> = {
-  "/about": [{ label: "About Us" }],
-  "/members": [{ label: "About Us", href: "/about" }, { label: "Members Directory" }],
-  "/programs": [{ label: "Programs & Activities" }],
-  "/school": [{ label: "Programs", href: "/programs" }, { label: "Hatekhori Free School" }],
-  "/branches": [{ label: "Branches" }],
-  "/media": [{ label: "Media & Gallery" }],
-  "/promises": [{ label: "Our Promises" }],
-};
+import {
+  megaMenus,
+  megaMenuKeys,
+  defaultRouteBreadcrumbMap,
+  navItems,
+} from "@/data/navigation";
 
 interface JaagoNavbarProps {
   breadcrumbs?: BreadcrumbItem[];
@@ -208,12 +26,6 @@ export default function JaagoNavbar({ breadcrumbs }: JaagoNavbarProps = {}) {
   const navRef = useRef<HTMLElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
-    if (activeDropdown && megaMenus[activeDropdown]) {
-      setDisplayedMenuKey(activeDropdown);
-    }
-  }, [activeDropdown]);
-
   const isMegaOpen = Boolean(activeDropdown && megaMenus[activeDropdown]);
   const activeMegaKey = (activeDropdown && megaMenus[activeDropdown]) ? activeDropdown : displayedMenuKey;
   const activeIdx = megaMenuKeys.indexOf(activeMegaKey as (typeof megaMenuKeys)[number]) !== -1
@@ -227,6 +39,9 @@ export default function JaagoNavbar({ breadcrumbs }: JaagoNavbarProps = {}) {
       timeoutRef.current = null;
     }
     setActiveDropdown(id);
+    if (id && megaMenus[id]) {
+      setDisplayedMenuKey(id);
+    }
   };
 
   const handleMouseLeaveItem = () => {
@@ -278,83 +93,6 @@ export default function JaagoNavbar({ breadcrumbs }: JaagoNavbarProps = {}) {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
-
-  const navItems = [
-    {
-      label: "About CRC",
-      href: "/about",
-      id: "about",
-      dropdown: [
-        { label: "Overview & History", href: "/about#history" },
-        { label: "Vision, Mission & Values", href: "/about#vision" },
-        { label: "5 Core Principles", href: "/about#principles" },
-        { label: "Executive Leadership", href: "/about#leadership" },
-        { label: "Growth Timeline", href: "/about#timeline" },
-      ],
-    },
-    {
-      label: "Programs & Activities",
-      href: "/programs",
-      id: "programs",
-      dropdown: [
-        { label: "All 7 Core Programs", href: "/programs" },
-        { label: "Street Children Education", href: "/programs#education" },
-        { label: "Nutrition & Health Camps", href: "/programs#health-camps" },
-        { label: "Winter Warmth & Relief", href: "/programs#winter-warmth" },
-        { label: "Child Safeguarding Policy", href: "/programs#safeguarding" },
-      ],
-    },
-    {
-      label: "CRC School",
-      href: "/school",
-      id: "school",
-      dropdown: [
-        { label: "Hatekhori Free School", href: "/school" },
-        { label: "Class Curriculum (Pre-Primary to 8)", href: "/school#curriculum" },
-        { label: "Weekly Timetable Routine", href: "/school#schedule" },
-        { label: "Volunteer Teaching Standards", href: "/school#standards" },
-      ],
-    },
-    {
-      label: "Branches",
-      href: "/branches",
-      id: "branches",
-      dropdown: [
-        { label: "All 6 Campus Chapters", href: "/branches" },
-        { label: "GSTU Central Branch", href: "/branches#gstu" },
-        { label: "Gopalganj Town Chapter", href: "/branches#town" },
-        { label: "Tungipara & Kotalipara", href: "/branches#upazila" },
-        { label: "Barishal & Khulna Wings", href: "/branches#divisional" },
-      ],
-    },
-    {
-      label: "Members",
-      href: "/members",
-    },
-    {
-      label: "Media & Gallery",
-      href: "/media",
-      id: "media",
-      dropdown: [
-        { label: "Photo Archives", href: "/media#gallery" },
-        { label: "Documentary Video", href: "/media#video" },
-        { label: "Press & News Coverage", href: "/media#press" },
-        { label: "Official CRC Banner", href: "/media#banner" },
-      ],
-    },
-    {
-      label: "Get Involved",
-      href: "/#volunteer",
-    },
-    {
-      label: "Resources",
-      href: "/programs#safeguarding",
-    },
-    {
-      label: "Contact Us",
-      href: "/about#contact",
-    },
-  ];
 
   return (
     <header
@@ -479,12 +217,12 @@ export default function JaagoNavbar({ breadcrumbs }: JaagoNavbarProps = {}) {
             </div>
 
             {/* Donate Button (Matches screenshot: red box with bold white text) */}
-            <a
+            <Link
               href="/#sponsor"
               className="bg-[#e6000a] hover:bg-[#a20002] text-white font-heading font-bold text-sm tracking-wide px-5 sm:px-6 py-2.5 rounded shadow-md hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 shrink-0"
             >
               Donate
-            </a>
+            </Link>
 
             {/* Mobile Drawer Trigger (Visible below XL) */}
             <div className="xl:hidden">
@@ -616,13 +354,13 @@ export default function JaagoNavbar({ breadcrumbs }: JaagoNavbarProps = {}) {
               </div>
             ))}
             <div className="pt-3">
-              <a
+              <link
                 href="/#sponsor"
                 onClick={() => setMobileDrawerOpen(false)}
                 className="block text-center py-3 bg-[#e6000a] text-white font-heading font-bold rounded shadow-lg hover:bg-[#a20002]"
               >
                 Donate Now
-              </a>
+              </link>
             </div>
           </div>
         )}

@@ -264,7 +264,14 @@ Record of key decisions, trade-offs evaluated, and consensus reached between use
     - Active tab sits at `translate-x-0 opacity-100`.
     - When mouse traverses links, outgoing content glides 24px and dissolves while incoming content glides in from the opposite side simultaneously over `300ms cubic-bezier(0.16, 1, 0.3, 1)`.
 - **Status**: Accepted & Implemented.
+---
 
-
-
-
+### [ADL-024] Modular Data Architecture, Dead Code Elimination & Viewport Spacing
+- **Date**: 2026-09-11
+- **Context**: As features and constitutional documentation expanded, file sizes in `JaagoNavbar.tsx` (27.4 KB) and `about/page.tsx` (42.9 KB) grew excessively large with hundreds of lines of inlined static data. Additionally, 14 dead component files lingered in `src/components/`, while subpages exhibited tight clearances with fixed navbar elements on small screens.
+- **Decision**:
+  - **Data Modularization**: Extract static configurations, navigation trees, and constitutional content into dedicated data modules (`src/data/navigation.ts`, `src/data/aboutData.ts`). Keep React components focused strictly on presentation and state handling.
+  - **Dead Code Purge**: Delete all 14 superseded legacy components from `src/components/` to prevent cognitive overhead and build clutter.
+  - **Viewport Clearance Guarantee**: Expand top padding on `PageHeader.tsx` to `pt-40 sm:pt-44` (160px–176px), ensuring comfortable visual breathing space below both the main navbar (72px) and the sticky breadcrumb sub-bar (36px).
+  - **Event-Driven Dropdown Synchronization**: Eliminate synchronous `setState` in `useEffect` for `displayedMenuKey`, switching to direct synchronous assignment within `handleMouseEnterItem` for zero cascading renders and complete React 19 strict linter compliance.
+- **Status**: Accepted & Implemented.

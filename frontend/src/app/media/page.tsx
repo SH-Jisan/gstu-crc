@@ -2,8 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { Play, Newspaper, ExternalLink, Image as ImageIcon, Video } from "lucide-react";
+import { Newspaper, ExternalLink } from "lucide-react";
 import AosInit from "@/components/AosInit";
 import JaagoNavbar from "@/components/JaagoNavbar";
 import JaagoFooter from "@/components/JaagoFooter";
@@ -164,7 +163,7 @@ export default function MediaPage() {
                 <Newspaper className="w-6 h-6 text-[#007938] mb-3" />
                 <h3 className="font-heading text-base text-[#0d0f14]">Campus Magazine — 2023</h3>
                 <p className="mt-2 text-xs sm:text-sm text-gray-600 leading-relaxed">
-                  In-depth interview with the founding batch exploring the journey, constitutional framework, and milestones of CRC's initial seven years.
+                  In-depth interview with the founding batch exploring the journey, constitutional framework, and milestones of CRC&apos;s initial seven years.
                 </p>
               </div>
 
@@ -172,7 +171,7 @@ export default function MediaPage() {
                 <Newspaper className="w-6 h-6 text-[#0d0f14] mb-3" />
                 <h3 className="font-heading text-base text-[#0d0f14]">Television Special — 2022</h3>
                 <p className="mt-2 text-xs sm:text-sm text-gray-600 leading-relaxed">
-                  Broadcast segment highlighting CRC's annual winter clothes drive and warm meal distributions to disadvantaged bus stand families.
+                  Broadcast segment highlighting CRC&apos;s annual winter clothes drive and warm meal distributions to disadvantaged bus stand families.
                 </p>
               </div>
             </div>

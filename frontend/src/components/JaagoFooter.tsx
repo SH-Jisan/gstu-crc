@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { Mail, Phone, MapPin, Heart } from "lucide-react";
 
 export default function JaagoFooter() {
@@ -39,34 +40,34 @@ export default function JaagoFooter() {
               </h3>
               <ul className="flex flex-col gap-2.5 text-sm font-semibold text-gray-300">
                 <li>
-                  <a className="hover:text-[#e6000a] transition-colors" href="/#sponsor">
+                  <Link className="hover:text-[#e6000a] transition-colors" href="/#sponsor">
                     Sponsor a Child Program
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="hover:text-[#e6000a] transition-colors" href="/school">
+                  <Link className="hover:text-[#e6000a] transition-colors" href="/school">
                     Hatekhori Free School (হাতেখড়ি পাঠশালা)
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="hover:text-[#e6000a] transition-colors" href="/programs">
+                  <Link className="hover:text-[#e6000a] transition-colors" href="/programs">
                     7 Core Welfare Programs
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="hover:text-[#e6000a] transition-colors" href="/branches">
+                  <Link className="hover:text-[#e6000a] transition-colors" href="/branches">
                     6 Campus Branches & Chapters
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="hover:text-[#e6000a] transition-colors" href="/about">
+                  <Link className="hover:text-[#e6000a] transition-colors" href="/about">
                     About CRC, Vision & Leadership
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="hover:text-[#e6000a] transition-colors" href="/media">
+                  <Link className="hover:text-[#e6000a] transition-colors" href="/media">
                     Media, Press & Gallery
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

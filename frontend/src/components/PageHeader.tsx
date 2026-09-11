@@ -1,11 +1,10 @@
 import React from "react";
-import Breadcrumb, { BreadcrumbItem } from "@/components/Breadcrumb";
 
 interface PageHeaderProps {
   eyebrow: string;
   title: string;
   intro?: string;
-  breadcrumbs?: BreadcrumbItem[];
+  breadcrumbs?: Array<{ label: string; href?: string }>;
 }
 
 export default function PageHeader({
@@ -14,7 +13,7 @@ export default function PageHeader({
   intro,
 }: PageHeaderProps) {
   return (
-    <section className="slash-band relative bg-[#e6000a] text-white pt-36 sm:pt-40 pb-14 sm:pb-20 border-b border-red-700 overflow-hidden">
+    <section className="slash-band relative bg-[#e6000a] text-white pt-40 sm:pt-44 pb-14 sm:pb-20 border-b border-red-700 overflow-hidden">
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Eyebrow */}
           <p className="text-xs font-bold uppercase tracking-[0.28em] text-white/85 mb-3 font-sans">

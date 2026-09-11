@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { CheckCircle2, Heart, BookOpen, Utensils, ShieldAlert, Sparkles, Users, Calendar } from "lucide-react";
+import { CheckCircle2, ShieldAlert, Sparkles, Users, Calendar } from "lucide-react";
 import AosInit from "@/components/AosInit";
 import JaagoNavbar from "@/components/JaagoNavbar";
 import JaagoFooter from "@/components/JaagoFooter";
@@ -261,7 +261,7 @@ export default function ProgramsPage() {
               <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                 <h3 className="font-heading text-lg text-[#0d0f14]">Village Programme</h3>
                 <p className="mt-2 text-sm text-gray-600 leading-relaxed">
-                  Weekend student teams visit nearby suburban and rural villages for enrolment surveys, health camps, and children's study circles.
+                  Weekend student teams visit nearby suburban and rural villages for enrolment surveys, health camps, and children&apos;s study circles.
                 </p>
               </div>
 

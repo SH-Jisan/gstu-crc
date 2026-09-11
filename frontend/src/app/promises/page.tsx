@@ -7,17 +7,14 @@ import {
   ShieldCheck,
   Lock,
   Heart,
-  AlertTriangle,
   Send,
   Phone,
   Mail,
   Users,
   CheckCircle2,
-  FileText,
   EyeOff,
   UserCheck,
   ChevronRight,
-  Sparkles,
 } from "lucide-react";
 import AosInit from "@/components/AosInit";
 import JaagoNavbar from "@/components/JaagoNavbar";
@@ -74,7 +71,7 @@ export default function PromisesPage() {
                 Do you know a child who needs help? Have you seen a situation that concerns you? Tell us.
               </p>
               <p className="mt-2 text-sm text-gray-600 leading-relaxed">
-                You may know a child who is struggling to continue their education, does not have enough food or clothing, needs healthcare, or is living in circumstances where support is needed. You can also report any concern related to CRC GSTU's activities, conduct, policies, finances, or member behavior.
+                You may know a child who is struggling to continue their education, does not have enough food or clothing, needs healthcare, or is living in circumstances where support is needed. You can also report any concern related to CRC GSTU&apos;s activities, conduct, policies, finances, or member behavior.
               </p>
               <div className="mt-4 p-3.5 bg-red-50 rounded-xl border border-red-200 text-xs sm:text-sm text-red-900 font-semibold">
                 “You do not need to solve the problem yourself. You only need to speak up and let us know. Your concern may be the first step toward helping a child receive the support they need.”

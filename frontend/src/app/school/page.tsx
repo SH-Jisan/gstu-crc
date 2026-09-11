@@ -2,8 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { CheckCircle2, GraduationCap, Clock, Award, BookCheck, Users, HelpCircle } from "lucide-react";
+import { CheckCircle2, GraduationCap } from "lucide-react";
 import AosInit from "@/components/AosInit";
 import JaagoNavbar from "@/components/JaagoNavbar";
 import JaagoFooter from "@/components/JaagoFooter";

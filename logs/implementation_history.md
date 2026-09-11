@@ -482,6 +482,48 @@ Chronological registry of all file additions, edits, component implementations, 
     2. Hovering "Programs & Activities" glides "About" to the left while "Programs" glides in from the right.
     3. Hovering back to "About CRC" reverses the direction smoothly.
 
+---
 
-
-
+### [ENTRY-032] 2026-09-11 — Frontend Codebase Refactoring, Dead Component Purge & Comprehensive UI Audit
+- **Type**: Code Hygiene, Architecture Refactoring, Lint Cleanup & UI Polish
+- **User Request**: "frontend er code file gula maybe ektu boro hoye gese. frontend er folder structure and code aro clean koro. then full frontend ui ta ekbar check koro kono bugs, missmatch, ui overlapping etc ui bugs ache naki. thekle fix kore github e push koro"
+- **Root Cause & Structural Debt**:
+  - `JaagoNavbar.tsx` contained ~200 lines of inlined static data (`megaMenus`, `navItems`, `defaultRouteBreadcrumbMap`, types), bloating the component to 27.4 KB and 662 lines.
+  - `about/page.tsx` contained ~300 lines of inlined constitution data (`GUIDING_VALUES`, `MISSIONS`, `OBJECTIVES`, `MODES_OF_ACTION`, `TIMELINE`), bloating the page to 42.9 KB.
+  - 14 completely unused dead component files from previous iterations remained in `src/components/` (~115 KB dead code).
+  - ESLint errors: Lowercase `<link>` tag used in `JaagoNavbar.tsx`, raw `<a>` tags instead of Next.js `<Link>` in `JaagoFooter.tsx` and `members/page.tsx`, unescaped JSX quotes in `about`, `media`, `programs`, `promises`, and a synchronous `setState` warning in `JaagoNavbar.tsx`.
+- **Architectural Refactoring & Fixes**:
+  1. **Purged 14 Unused Dead Components**:
+     - Removed `Navbar.tsx`, `Footer.tsx`, `HeroSection.tsx`, `JaagoHero.tsx`, `JaagoGovernanceTransparency.tsx`, `GovernanceSection.tsx`, `TransparencySection.tsx`, `HappeningNow.tsx`, `BranchesMap.tsx`, `HatekhoriSchool.tsx`, `CrcBannerSection.tsx`, `JaagoNewsArticles.tsx`, `DonationModal.tsx`, `ReportConcernModal.tsx`.
+  2. **Modularized Static Datasets into `src/data/`**:
+     - Created `src/data/navigation.ts` containing all mega menu data, category links, breadcrumb mappings, and navigation items.
+     - Created `src/data/aboutData.ts` containing constitutional guiding values, mission pillars, strategic objectives, modes of action, and timeline milestones.
+  3. **Component Code Size Reduction**:
+     - `JaagoNavbar.tsx`: Reduced by >40% (from 662 lines / 27.4 KB to 400 lines / 18.7 KB) with clean imports and zero effect warnings.
+     - `about/page.tsx`: Reduced from 790 lines / 42.9 KB to 594 lines / 33.9 KB while preserving 100% of the authentic constitution data.
+  4. **Lint & Syntax Error Resolutions**:
+     - Replaced lowercase `<link>` with `<Link>` in `JaagoNavbar.tsx`.
+     - Replaced `<a>` tags with `<Link>` in `JaagoFooter.tsx` and `members/page.tsx`.
+     - Replaced synchronous `setDisplayedMenuKey` in `useEffect` with instant update in `handleMouseEnterItem`.
+     - Escaped all unescaped quotes (`&apos;`) in `about/page.tsx`, `media/page.tsx`, `programs/page.tsx`, `promises/page.tsx`.
+     - Cleaned up unused imports across all modified components.
+  5. **UI & Layout Audit Adjustments**:
+     - Increased top padding in `PageHeader.tsx` to `pt-40 sm:pt-44` (160px–176px) to guarantee generous breathing room beneath the fixed navbar and breadcrumb strip across mobile and desktop.
+     - Verified table horizontal scroll safety (`overflow-x-auto`) on mobile in `school/page.tsx`.
+- **Affected Paths**:
+  - `[NEW]` [`frontend/src/data/navigation.ts`](../frontend/src/data/navigation.ts)
+  - `[NEW]` [`frontend/src/data/aboutData.ts`](../frontend/src/data/aboutData.ts)
+  - `[DELETE]` 14 unused files in `frontend/src/components/`
+  - `[MODIFY]` [`frontend/src/components/JaagoNavbar.tsx`](../frontend/src/components/JaagoNavbar.tsx)
+  - `[MODIFY]` [`frontend/src/components/JaagoFooter.tsx`](../frontend/src/components/JaagoFooter.tsx)
+  - `[MODIFY]` [`frontend/src/components/PageHeader.tsx`](../frontend/src/components/PageHeader.tsx)
+  - `[MODIFY]` [`frontend/src/app/about/page.tsx`](../frontend/src/app/about/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/members/page.tsx`](../frontend/src/app/members/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/programs/page.tsx`](../frontend/src/app/programs/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/school/page.tsx`](../frontend/src/app/school/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/media/page.tsx`](../frontend/src/app/media/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/promises/page.tsx`](../frontend/src/app/promises/page.tsx)
+- **Verification**:
+  - `npm run lint`: **0 errors** across entire codebase (Exit code 0).
+  - `npm run build`: Compiled all static routes in 1.6s (Exit code 0).
+  - Automated HTTP route test: Verified all 8 routes (`/`, `/about`, `/programs`, `/school`, `/branches`, `/members`, `/media`, `/promises`) return HTTP 200 OK.
