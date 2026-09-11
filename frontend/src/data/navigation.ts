@@ -1,9 +1,17 @@
 import { BreadcrumbItem } from "@/components/Breadcrumb";
 
+export interface MegaMenuSubLink {
+  label: string;
+  href: string;
+  badge?: string;
+  isSubItem?: boolean;
+}
+
 export interface MegaMenuColumn {
   title: string;
   href: string;
-  description: string;
+  description?: string;
+  items?: MegaMenuSubLink[];
 }
 
 export interface MegaMenuSection {
@@ -39,28 +47,42 @@ export const megaMenus: Record<string, MegaMenuSection> = {
     },
     columns: [
       {
-        title: "History & Genesis",
+        title: "About",
+        href: "/about",
+        items: [
+          { label: "Principles", href: "/about#principles" },
+          { label: "Vision and mission", href: "/about#vision" },
+          { label: "Objectives", href: "/about#objectives" },
+          { label: "Mode of Action", href: "/about#modes-of-action" },
+          { label: "Achievements", href: "/about#achievements" },
+        ],
+      },
+      {
+        title: "Our history",
         href: "/about#history",
-        description:
-          "From a 2016 Eid shopping moment at a railway station to an organized nationwide campus movement.",
+        items: [
+          { label: "How we founded", href: "/about#history" },
+          { label: "Leadership over years", href: "/about#leadership" },
+        ],
       },
       {
-        title: "Principles & Values",
-        href: "/about#principles",
-        description:
-          "Brotherhood, Commitment, and Trust guiding our 8 operational values and non-profit ethics.",
-      },
-      {
-        title: "How We Are Run",
+        title: "How we run",
         href: "/about#governance",
-        description:
-          "A 3-Council structure (Permanent, Executive, Temporary) ensuring transparent, student-led management.",
+        items: [
+          { label: "Finance", href: "/about#finance" },
+          { label: "Governance Overview", href: "/about#governance" },
+          { label: "Executive Council", href: "/about#executive-council", isSubItem: true },
+          { label: "Permanent Council", href: "/about#permanent-council", isSubItem: true },
+          { label: "Temporary Council", href: "/about#temporary-council", isSubItem: true },
+        ],
       },
       {
-        title: "Milestones & Awards",
-        href: "/about#timeline",
-        description:
-          "A 10-year development trajectory and official recognition with the Best Branch Prize.",
+        title: "Symbol & Flag",
+        href: "/about#symbol-flag",
+        items: [
+          { label: "Official Emblem & Logo", href: "/about#symbol-flag" },
+          { label: "Flag Colors & Motto", href: "/about#symbol-flag" },
+        ],
       },
     ],
   },
@@ -206,11 +228,19 @@ export const navItems: NavItem[] = [
     href: "/about",
     id: "about",
     dropdown: [
-      { label: "Overview & History", href: "/about#history" },
-      { label: "Vision, Mission & Values", href: "/about#vision" },
-      { label: "5 Core Principles", href: "/about#principles" },
-      { label: "Executive Leadership", href: "/about#leadership" },
-      { label: "Growth Timeline", href: "/about#timeline" },
+      { label: "Principles", href: "/about#principles" },
+      { label: "Vision and mission", href: "/about#vision" },
+      { label: "Objectives", href: "/about#objectives" },
+      { label: "Mode of Action", href: "/about#modes-of-action" },
+      { label: "Achievements", href: "/about#achievements" },
+      { label: "How we founded", href: "/about#history" },
+      { label: "Leadership over years", href: "/about#leadership" },
+      { label: "Finance", href: "/about#finance" },
+      { label: "Governance (Councils & Structure)", href: "/about#governance" },
+      { label: "Executive Council", href: "/about#executive-council" },
+      { label: "Permanent Council", href: "/about#permanent-council" },
+      { label: "Temporary Council", href: "/about#temporary-council" },
+      { label: "Symbol & Flag", href: "/about#symbol-flag" },
     ],
   },
   {

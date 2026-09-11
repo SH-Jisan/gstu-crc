@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Heart,
   Shield,
@@ -40,7 +41,7 @@ export default function AboutPage() {
         />
 
         {/* 1. Origin & Founding History Section */}
-        <section className="py-14 sm:py-20 bg-white border-b border-gray-100">
+        <section id="history" className="py-14 sm:py-20 bg-white border-b border-gray-100 scroll-mt-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
               <div className="lg:col-span-7 space-y-5">
@@ -80,7 +81,7 @@ export default function AboutPage() {
 
               {/* Right Side: 3 Foundational Pillars + Best Branch Award */}
               <div className="lg:col-span-5 space-y-4">
-                <div className="bg-[#0d0f14] text-white p-6 sm:p-8 rounded-3xl shadow-xl relative overflow-hidden">
+                <div id="achievements" className="bg-[#0d0f14] text-white p-6 sm:p-8 rounded-3xl shadow-xl relative overflow-hidden scroll-mt-28">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-[#e6000a]/20 rounded-full blur-2xl pointer-events-none" />
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-amber-300 text-xs font-bold mb-4">
                     <Award className="w-3.5 h-3.5" />
@@ -129,7 +130,7 @@ export default function AboutPage() {
         </section>
 
         {/* 2. Fundamental Principles (1.1.1) */}
-        <section className="py-14 sm:py-20 bg-[#0d0f14] text-white relative overflow-hidden">
+        <section id="principles" className="py-14 sm:py-20 bg-[#0d0f14] text-white relative overflow-hidden scroll-mt-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="max-w-3xl">
               <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#e6000a]">
@@ -196,7 +197,7 @@ export default function AboutPage() {
         </section>
 
         {/* 3. Vision & 5 Mission Pillars (1.2 & 1.3) */}
-        <section className="py-14 sm:py-20 bg-[#f6f4f1] border-b border-gray-200/60">
+        <section id="vision" className="py-14 sm:py-20 bg-[#f6f4f1] border-b border-gray-200/60 scroll-mt-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Vision Banner */}
             <div className="bg-white rounded-3xl p-8 sm:p-12 shadow-sm border border-gray-200 mb-12 relative overflow-hidden">
@@ -250,7 +251,7 @@ export default function AboutPage() {
         </section>
 
         {/* 4. Strategic Objectives (1.4) */}
-        <section className="py-14 sm:py-20 bg-white border-b border-gray-100">
+        <section id="objectives" className="py-14 sm:py-20 bg-white border-b border-gray-100 scroll-mt-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mb-10">
               <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#e6000a]">
@@ -341,7 +342,7 @@ export default function AboutPage() {
         </section>
 
         {/* 6. Modes of Action (1.5 - 7 Modes) */}
-        <section className="py-14 sm:py-20 bg-white border-b border-gray-100">
+        <section id="modes-of-action" className="py-14 sm:py-20 bg-white border-b border-gray-100 scroll-mt-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mb-10">
               <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#e6000a]">
@@ -399,17 +400,17 @@ export default function AboutPage() {
         </section>
 
         {/* 7. How We Run — Governance & Finance (Section 2) */}
-        <section className="py-14 sm:py-20 bg-[#f6f4f1] border-b border-gray-200/60">
+        <section id="governance" className="py-14 sm:py-20 bg-[#f6f4f1] border-b border-gray-200/60 scroll-mt-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mb-12">
               <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#007938]">
                 Section 2 · Governance & Financial Integrity
               </span>
               <h2 className="mt-2 font-heading text-2xl sm:text-4xl text-[#0d0f14] font-black tracking-tight">
-                Institutional Structure & Ethical Finance
+                How We Run: Governance & Finance
               </h2>
               <p className="mt-3 text-sm sm:text-base text-gray-600 leading-relaxed">
-                CRC GSTU manages its responsibilities through defined institutional councils and strict financial policies to guarantee zero corruption and full accountability.
+                CRC GSTU operates under a disciplined constitutional framework, distributing authority across three specialized councils and upholding strict zero-leakage financial controls.
               </p>
             </div>
 
@@ -425,49 +426,88 @@ export default function AboutPage() {
                       Section 2.2 · Governance Framework
                     </span>
                     <h3 className="font-heading text-xl font-bold text-[#0d0f14]">
-                      Three-Council Governance
+                      Three-Council Governance Model
                     </h3>
                   </div>
                 </div>
 
                 <div className="space-y-4 text-xs sm:text-sm">
-                  {/* Permanent Council */}
-                  <div className="p-4 rounded-xl bg-gray-50 border border-gray-200/60">
-                    <h4 className="font-heading font-bold text-[#0d0f14] text-sm flex items-center justify-between">
-                      <span>1. Permanent Council (স্থায়ী পরিষদ)</span>
-                      <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-green-100 text-[#007938]">Highest Body</span>
-                    </h4>
-                    <p className="text-xs text-gray-600 mt-1.5 leading-relaxed">
-                      Responsible for institutional continuity, long-term oversight, and safeguarding constitutional principles. Consists of the Founder of CRC GSTU, Chief Coordinator, Office Management, Financial Management, Alumni, and Advisory Committees.
-                    </p>
-                  </div>
-
                   {/* Executive Council */}
-                  <div className="p-4 rounded-xl bg-gray-50 border border-gray-200/60">
+                  <div id="executive-council" className="p-4 rounded-xl bg-gray-50 border border-gray-200/60 scroll-mt-28">
                     <h4 className="font-heading font-bold text-[#0d0f14] text-sm flex items-center justify-between">
-                      <span>2. Executive Council (নির্বাহী পরিষদ)</span>
+                      <span>1. Executive Council (নির্বাহী পরিষদ)</span>
                       <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-blue-100 text-blue-800">Operational</span>
                     </h4>
                     <p className="text-xs text-gray-600 mt-1.5 leading-relaxed">
-                      Principal body managing day-to-day administration, classes, field operations, and volunteer coordination through Advisory Members, Executive Members, and General Members.
+                      <strong>Role & Powers:</strong> Primary executive authority managing day-to-day administration, classroom operations, campus coordination, and program execution. Possesses operational leadership to deploy volunteer teams, coordinate branch activities, and carry out approved budgets.
                     </p>
+                    <p className="text-xs text-gray-500 mt-1 leading-relaxed">
+                      <strong>Committees Under Council:</strong> Branch Organizing Teams, Class Curriculum Teams, Healthcare Logistics, and Field Survey Wings.
+                    </p>
+                    <div className="mt-3 pt-2 border-t border-gray-200/60 flex items-center justify-between">
+                      <span className="text-[11px] text-gray-500">President, General Secretary & Executives</span>
+                      <Link
+                        href="/members"
+                        className="text-xs font-bold text-[#e6000a] hover:text-red-800 flex items-center gap-1 group"
+                      >
+                        <span>View Executive Members</span>
+                        <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* Permanent Council */}
+                  <div id="permanent-council" className="p-4 rounded-xl bg-gray-50 border border-gray-200/60 scroll-mt-28">
+                    <h4 className="font-heading font-bold text-[#0d0f14] text-sm flex items-center justify-between">
+                      <span>2. Permanent Council (স্থায়ী পরিষদ)</span>
+                      <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-green-100 text-[#007938]">Highest Body</span>
+                    </h4>
+                    <p className="text-xs text-gray-600 mt-1.5 leading-relaxed">
+                      <strong>Role & Powers:</strong> Supreme constitutional body ensuring institutional continuity, long-term policy formulation, and constitutional fidelity. Holds supreme authority to ratify charter amendments, evaluate performance, and resolve constitutional ambiguities.
+                    </p>
+                    <p className="text-xs text-gray-500 mt-1 leading-relaxed">
+                      <strong>Committees Under Council:</strong> Founder Body, Chief Coordinator, Office Management Committee, Permanent Financial Management Committee, Alumni Association, and Advisory Council.
+                    </p>
+                    <div className="mt-3 pt-2 border-t border-gray-200/60 flex items-center justify-between">
+                      <span className="text-[11px] text-gray-500">Founders, Chief Coordinators & Advisors</span>
+                      <Link
+                        href="/members"
+                        className="text-xs font-bold text-[#007938] hover:text-green-800 flex items-center gap-1 group"
+                      >
+                        <span>View Permanent Council</span>
+                        <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                      </Link>
+                    </div>
                   </div>
 
                   {/* Temporary Council */}
-                  <div className="p-4 rounded-xl bg-gray-50 border border-gray-200/60">
+                  <div id="temporary-council" className="p-4 rounded-xl bg-gray-50 border border-gray-200/60 scroll-mt-28">
                     <h4 className="font-heading font-bold text-[#0d0f14] text-sm flex items-center justify-between">
                       <span>3. Temporary Council (অস্থায়ী পরিষদ)</span>
                       <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-amber-100 text-amber-800">Mandated</span>
                     </h4>
                     <p className="text-xs text-gray-600 mt-1.5 leading-relaxed">
-                      Dedicated bodies established for transitional or specialized mandates: Audit Committee, Discipline Committee, Election Committee, and Special Program Committee.
+                      <strong>Role & Powers:</strong> Specialized bodies convened for transitional, statutory, or temporary mandates with independent investigatory and administrative powers.
                     </p>
+                    <p className="text-xs text-gray-500 mt-1 leading-relaxed">
+                      <strong>Committees Under Council:</strong> Independent Audit Committee, Discipline Committee (child safeguarding & conduct investigations), Election Commission, and Special Relief Taskforces.
+                    </p>
+                    <div className="mt-3 pt-2 border-t border-gray-200/60 flex items-center justify-between">
+                      <span className="text-[11px] text-gray-500">Statutory & Mandated Committees</span>
+                      <Link
+                        href="/members"
+                        className="text-xs font-bold text-amber-700 hover:text-amber-900 flex items-center gap-1 group"
+                      >
+                        <span>View Committee Roster</span>
+                        <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
 
               {/* Finance: Structured Financial Policy (2.1) */}
-              <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-200/80 space-y-5">
+              <div id="finance" className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-200/80 space-y-5 scroll-mt-28">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-red-50 text-[#e6000a] flex items-center justify-center">
                     <Scale className="w-5 h-5" />
@@ -529,7 +569,7 @@ export default function AboutPage() {
         </section>
 
         {/* 8. 10-Year Growth Timeline (2016 - 2026) */}
-        <section className="py-14 sm:py-20 bg-white">
+        <section id="timeline" className="py-14 sm:py-20 bg-white border-b border-gray-100 scroll-mt-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mb-12">
               <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#e6000a]">
@@ -563,7 +603,7 @@ export default function AboutPage() {
             </div>
 
             {/* Leadership Roster Link */}
-            <div className="mt-14 p-6 sm:p-8 rounded-3xl bg-[#f6f4f1] border border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div id="leadership" className="mt-14 p-6 sm:p-8 rounded-3xl bg-[#f6f4f1] border border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4 scroll-mt-28">
               <div>
                 <span className="text-xs font-bold uppercase text-[#007938] tracking-wider">
                   Section 3.2 · Leadership Over Years
@@ -582,6 +622,117 @@ export default function AboutPage() {
                 <span>View Full Members Directory</span>
                 <ChevronRight className="w-4 h-4" />
               </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* 9. Symbol & Flag Section (Section 1.7) */}
+        <section id="symbol-flag" className="py-14 sm:py-20 bg-[#f6f4f1] border-b border-gray-200/60 scroll-mt-24">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl mb-12">
+              <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#e6000a]">
+                Section 1.7 · Visual Identity & Insignia
+              </span>
+              <h2 className="mt-2 font-heading text-2xl sm:text-4xl text-[#0d0f14] font-black tracking-tight">
+                Symbol & Flag (প্রতীক ও পতাকা)
+              </h2>
+              <p className="mt-3 text-sm sm:text-base text-gray-600 leading-relaxed">
+                The official insignia, emblem, and color philosophy that define Come For Road Child (CRC) across our universities, schools, and humanitarian field drives.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+              {/* Official Emblem & Logo Box */}
+              <div className="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-sm flex flex-col justify-between">
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#007938] px-2.5 py-1 rounded-full bg-green-50 border border-green-200 inline-block mb-4">
+                    Official Emblem
+                  </span>
+                  <div className="w-28 h-28 mx-auto mb-6 relative flex items-center justify-center bg-gray-50 rounded-2xl p-3 border border-gray-100 shadow-inner">
+                    <Image
+                      src="/logo/logo-navbar.png"
+                      alt="Official CRC Emblem"
+                      width={96}
+                      height={96}
+                      className="object-contain"
+                    />
+                  </div>
+                  <h3 className="font-heading text-xl font-bold text-[#0d0f14] text-center mb-2">
+                    The CRC Insignia
+                  </h3>
+                  <p className="text-xs text-gray-600 leading-relaxed text-center">
+                    The emblem features protective hands embracing and uplifting a street child silhouette within a circle of unity, symbolizing care, education, and social protection.
+                  </p>
+                </div>
+
+                <div className="mt-6 pt-5 border-t border-gray-100 space-y-2 text-xs text-gray-600">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#e6000a]" />
+                    <span><strong>Circular Bond:</strong> Lifelong solidarity of student volunteers.</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#007938]" />
+                    <span><strong>Open Hands:</strong> Unconditional compassion and direct field care.</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#0d0f14]" />
+                    <span><strong>Child Figure:</strong> Centrality of every vulnerable child&apos;s dignity.</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Official Flag & Color Philosophy */}
+              <div className="lg:col-span-7 space-y-6 flex flex-col justify-between">
+                {/* Flag Card */}
+                <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-sm">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#e6000a] px-2.5 py-1 rounded-full bg-red-50 border border-red-200 inline-block mb-4">
+                    Constitutional Flag
+                  </span>
+                  <h3 className="font-heading text-xl font-bold text-[#0d0f14] mb-3">
+                    CRC Flag & Color Heritage
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-6">
+                    Flown at university branch headquarters, open-air Hatekhori school sessions, and major relief convocations across Bangladesh.
+                  </p>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div className="p-3.5 rounded-2xl bg-red-50 border border-red-200">
+                      <div className="w-6 h-6 rounded-lg bg-[#e6000a] mb-2 shadow-xs" />
+                      <span className="block font-heading text-xs font-bold text-gray-900">CRC Crimson</span>
+                      <span className="block text-[10px] text-gray-500 mt-0.5">Passion & Empathy</span>
+                    </div>
+                    <div className="p-3.5 rounded-2xl bg-green-50 border border-green-200">
+                      <div className="w-6 h-6 rounded-lg bg-[#007938] mb-2 shadow-xs" />
+                      <span className="block font-heading text-xs font-bold text-gray-900">Forest Green</span>
+                      <span className="block text-[10px] text-gray-500 mt-0.5">Youth & Renewal</span>
+                    </div>
+                    <div className="p-3.5 rounded-2xl bg-gray-100 border border-gray-200">
+                      <div className="w-6 h-6 rounded-lg bg-[#0d0f14] mb-2 shadow-xs" />
+                      <span className="block font-heading text-xs font-bold text-gray-900">Obsidian Black</span>
+                      <span className="block text-[10px] text-gray-500 mt-0.5">Steadfast Resolve</span>
+                    </div>
+                    <div className="p-3.5 rounded-2xl bg-white border border-gray-300">
+                      <div className="w-6 h-6 rounded-lg bg-white border border-gray-300 mb-2 shadow-xs" />
+                      <span className="block font-heading text-xs font-bold text-gray-900">Pure White</span>
+                      <span className="block text-[10px] text-gray-500 mt-0.5">Child Innocence</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Motto Card */}
+                <div className="bg-[#0d0f14] text-white rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-xl">
+                  <div className="absolute -right-6 -bottom-6 w-32 h-32 bg-[#e6000a]/20 rounded-full blur-2xl pointer-events-none" />
+                  <span className="text-xs font-bold uppercase tracking-widest text-[#e6000a] block mb-2">
+                    Official Motto
+                  </span>
+                  <blockquote className="font-heading text-lg sm:text-xl font-black text-white leading-snug">
+                    “The World Will Be Free from Street Children by Connected Together”
+                  </blockquote>
+                  <p className="text-sm font-semibold text-gray-300 mt-2">
+                    “থেকে একসাথে যুক্ত করব পৃথিবী পথশিশু মুক্ত”
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>

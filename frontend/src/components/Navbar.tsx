@@ -254,7 +254,7 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
               isMegaOpen ? "is-open" : ""
             }`}
           >
-            <div className="w-full bg-white/98 backdrop-blur-md shadow-[0_25px_60px_-15px_rgba(0,0,0,0.15)] border-b border-gray-200/80 mega-menu-drawer overflow-hidden">
+            <div className="w-full bg-white shadow-[0_25px_60px_-15px_rgba(0,0,0,0.18)] border-b border-gray-200 mega-menu-drawer overflow-hidden">
               <div className="max-w-[1536px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10 grid grid-cols-1 grid-rows-1 items-start">
                 {megaMenuKeys.map((key, index) => {
                   const menu = megaMenus[key];
@@ -276,14 +276,14 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
                         <h3 className="font-heading font-black text-2xl lg:text-[26px] text-[#0d0f14] leading-tight tracking-tight">
                           {menu.spotlight.title}
                         </h3>
-                        <p className="mt-3 text-xs sm:text-[13px] text-gray-600 leading-relaxed font-sans">
+                        <p className="mt-3 text-[13.5px] text-gray-600 leading-relaxed font-sans">
                           {menu.spotlight.description}
                         </p>
                         <div className="mt-6">
                           <Link
                             href={menu.spotlight.ctaHref}
                             onClick={() => setActiveDropdown(null)}
-                            className="group/pill inline-flex items-center gap-2 px-6 py-2.5 rounded-full border-2 border-[#0d0f14] text-xs font-bold text-[#0d0f14] hover:bg-[#0d0f14] hover:text-white hover:border-[#0d0f14] transition-all duration-300 ease-out tracking-wide font-heading shadow-xs hover:shadow-md hover:-translate-y-0.5 active:translate-y-0"
+                            className="group/pill inline-flex items-center gap-2 px-6 py-2.5 rounded-full border-2 border-[#0d0f14] text-xs sm:text-[13px] font-bold text-[#0d0f14] hover:bg-[#0d0f14] hover:text-white hover:border-[#0d0f14] transition-all duration-300 ease-out tracking-wide font-heading shadow-xs hover:shadow-md hover:-translate-y-0.5 active:translate-y-0"
                           >
                             <span>{menu.spotlight.ctaText}</span>
                             <ChevronRight className="w-3.5 h-3.5 transition-transform duration-300 ease-out group-hover/pill:translate-x-1" />
@@ -302,28 +302,90 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
                             : "grid-cols-1 md:grid-cols-3"
                         }`}
                       >
-                        {menu.columns.map((col) => (
-                          <Link
-                            key={col.title}
-                            href={col.href}
-                            onClick={() => setActiveDropdown(null)}
-                            className="group/col relative block p-3.5 -m-3.5 rounded-xl transition-all duration-300 ease-out hover:bg-red-50/40 hover:shadow-xs hover:-translate-y-0.5"
-                          >
-                            {/* Minimalist vertical red accent line on hover */}
-                            <span
-                              className="absolute left-0 top-3.5 bottom-3.5 w-1 rounded-full bg-[#e6000a] opacity-0 scale-y-0 group-hover/col:opacity-100 group-hover/col:scale-y-100 transition-all duration-300 ease-out origin-center"
-                              aria-hidden="true"
-                            />
+                        {menu.columns.map((col) => {
+                          if (col.items && col.items.length > 0) {
+                            return (
+                              <div
+                                key={col.title}
+                                className="group/col relative flex flex-col p-3.5 -m-3.5 rounded-xl transition-all duration-300 ease-out hover:bg-red-50/40 hover:shadow-xs hover:-translate-y-0.5"
+                              >
+                                {/* Minimalist vertical red accent line covering the full section height on hover */}
+                                <span
+                                  className="absolute left-0 top-3.5 bottom-3.5 w-1 rounded-full bg-[#e6000a] opacity-0 scale-y-0 group-hover/col:opacity-100 group-hover/col:scale-y-100 transition-all duration-300 ease-out origin-center"
+                                  aria-hidden="true"
+                                />
 
-                            <div className="flex items-center gap-1.5 text-sm lg:text-[15px] font-black font-heading text-[#0d0f14] group-hover/col:text-[#e6000a] transition-all duration-300 ease-out group-hover/col:translate-x-1.5">
-                              <span>{col.title}</span>
-                              <ChevronRight className="w-4 h-4 text-gray-400 group-hover/col:text-[#e6000a] group-hover/col:translate-x-1 transition-all duration-300 ease-out shrink-0" />
-                            </div>
-                            <p className="mt-2 text-xs text-gray-500 leading-relaxed group-hover/col:text-gray-800 group-hover/col:translate-x-1.5 transition-all duration-300 ease-out font-sans">
-                              {col.description}
-                            </p>
-                          </Link>
-                        ))}
+                                {/* Category Header */}
+                                <Link
+                                  href={col.href}
+                                  onClick={() => setActiveDropdown(null)}
+                                  className="flex items-center gap-1.5 text-[15px] lg:text-base font-black font-heading text-[#0d0f14] group-hover/col:text-[#e6000a] transition-all duration-300 ease-out group-hover/col:translate-x-1.5 mb-2.5"
+                                >
+                                  <span>{col.title}</span>
+                                  <ChevronRight className="w-4 h-4 text-gray-400 group-hover/col:text-[#e6000a] group-hover/col:translate-x-1 transition-all duration-300 ease-out shrink-0" />
+                                </Link>
+
+                                {/* List of Sub-links */}
+                                <ul className="space-y-0.5 pl-2.5 pt-0.5 group-hover/col:translate-x-1 transition-all duration-300 ease-out">
+                                  {col.items.map((subItem) => (
+                                    <li key={subItem.label}>
+                                      <Link
+                                        href={subItem.href}
+                                        onClick={() => setActiveDropdown(null)}
+                                        className={`group/sub flex items-center justify-between py-1 px-2 -mx-1 rounded-md transition-all duration-200 hover:bg-white/80 hover:shadow-2xs ${
+                                          subItem.isSubItem ? "ml-3.5 text-gray-600" : "text-gray-800"
+                                        }`}
+                                      >
+                                        <div className="flex items-center gap-2">
+                                          <span
+                                            className={`rounded-full transition-all duration-200 ${
+                                              subItem.isSubItem
+                                                ? "w-1.5 h-1.5 bg-gray-300 group-hover/sub:bg-[#e6000a] group-hover/sub:scale-125"
+                                                : "w-2 h-2 bg-gray-400 group-hover/sub:bg-[#e6000a] group-hover/sub:scale-125"
+                                            }`}
+                                            aria-hidden="true"
+                                          />
+                                          <span className={`text-[13.5px] transition-colors duration-200 ${
+                                            subItem.isSubItem
+                                              ? "font-medium text-gray-600 group-hover/sub:text-[#e6000a] group-hover/sub:font-semibold"
+                                              : "font-semibold text-gray-800 group-hover/sub:text-[#e6000a] group-hover/sub:font-bold"
+                                          }`}>
+                                            {subItem.label}
+                                          </span>
+                                        </div>
+
+                                        <ChevronRight className="w-3.5 h-3.5 text-gray-400 opacity-0 group-hover/sub:opacity-100 group-hover/sub:text-[#e6000a] group-hover/sub:translate-x-0.5 transition-all duration-200 shrink-0 ml-1" />
+                                      </Link>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            );
+                          }
+
+                          return (
+                            <Link
+                              key={col.title}
+                              href={col.href}
+                              onClick={() => setActiveDropdown(null)}
+                              className="group/col relative block p-3.5 -m-3.5 rounded-xl transition-all duration-300 ease-out hover:bg-red-50/40 hover:shadow-xs hover:-translate-y-0.5"
+                            >
+                              {/* Minimalist vertical red accent line on hover */}
+                              <span
+                                className="absolute left-0 top-3.5 bottom-3.5 w-1 rounded-full bg-[#e6000a] opacity-0 scale-y-0 group-hover/col:opacity-100 group-hover/col:scale-y-100 transition-all duration-300 ease-out origin-center"
+                                aria-hidden="true"
+                              />
+
+                              <div className="flex items-center gap-1.5 text-[15px] font-black font-heading text-[#0d0f14] group-hover/col:text-[#e6000a] transition-all duration-300 ease-out group-hover/col:translate-x-1.5">
+                                <span>{col.title}</span>
+                                <ChevronRight className="w-4 h-4 text-gray-400 group-hover/col:text-[#e6000a] group-hover/col:translate-x-1 transition-all duration-300 ease-out shrink-0" />
+                              </div>
+                              <p className="mt-2 text-[13px] text-gray-600 leading-relaxed group-hover/col:text-gray-900 group-hover/col:translate-x-1.5 transition-all duration-300 ease-out font-sans">
+                                {col.description}
+                              </p>
+                            </Link>
+                          );
+                        })}
                       </div>
                     </div>
                   );
@@ -402,6 +464,21 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
           </div>
         );
       })()}
+      {/* Dimmed & Grayish Backdrop Overlay for the Page when Mega Menu is Open */}
+      <div
+        className={`hidden xl:block fixed inset-0 top-0 w-screen h-screen -z-10 transition-all duration-300 ease-out ${
+          isMegaOpen
+            ? "opacity-100 pointer-events-auto visible"
+            : "opacity-0 pointer-events-none invisible"
+        }`}
+        style={{
+          backgroundColor: "rgba(15, 23, 42, 0.40)",
+          backdropFilter: "grayscale(65%) blur(1.5px)",
+          WebkitBackdropFilter: "grayscale(65%) blur(1.5px)",
+        }}
+        onClick={() => setActiveDropdown(null)}
+        aria-hidden="true"
+      />
     </header>
   );
 }
