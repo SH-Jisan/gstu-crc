@@ -1,0 +1,1 @@
+var e=`/assets/crc-banner-CcLqJjgM.png`;export{e as t};
