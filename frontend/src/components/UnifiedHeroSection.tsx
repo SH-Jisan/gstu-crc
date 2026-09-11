@@ -22,25 +22,16 @@ export default function UnifiedHeroSection() {
               maxHeight: "calc(100dvh - 136px)",
             }}
           >
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src="/assets/crc-banner.png"
               alt="CRC, GSTU Official Banner — Brotherhood, Commitment, Trust"
-              width={1919}
-              height={955}
-              priority
               className="w-auto h-auto max-w-full object-contain transition-transform duration-700 group-hover:scale-[1.015]"
               style={{
                 maxHeight: "calc(100dvh - 136px)",
+                aspectRatio: "1919 / 955",
               }}
             />
-          </div>
-
-          {/* Subtle scroll cue */}
-          <div className="mt-3 flex items-center gap-2 text-gray-400 text-xs font-semibold select-none">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#e6000a] animate-ping" />
-            <span className="tracking-wider uppercase text-[10px] sm:text-[11px] text-gray-400">
-              Scroll down for mission & field activities
-            </span>
           </div>
         </div>
 

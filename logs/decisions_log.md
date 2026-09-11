@@ -320,4 +320,14 @@ Record of key decisions, trade-offs evaluated, and consensus reached between use
     - Automatic WebP/AVIF generation, prefetching, and priority loading for the above-the-fold CRC hero banner.
   - **Strict Lint Compliance**: Achieved a 100% warning-free codebase with 0 ESLint warnings and 0 TypeScript compilation errors.
 - **Status**: Accepted & Implemented.
+---
+
+### [ADL-028] Banner Aspect Ratio Preservation & Scroll Cue Removal
+- **Date**: 2026-09-12
+- **Context**: The Next.js `<Image>` component strictly enforced `maxHeight: calc(100dvh - 136px)` with downscaled aspect bounds, shrinking the hero banner from 404px to 338px and creating an unwanted dark void below it. Furthermore, the user requested removing the `"SCROLL DOWN FOR MISSION & FIELD ACTIVITIES"` text indicator.
+- **Decision**:
+  - Restored raw HTML `<img>` with inline `style={{ maxHeight: "calc(100dvh - 136px)", aspectRatio: "1919 / 955" }}` and suppressed ESLint with an inline directive.
+  - Removed the scroll cue indicator completely from the hero section to keep the banner clean and uncluttered.
+- **Status**: Accepted & Implemented.
+
 

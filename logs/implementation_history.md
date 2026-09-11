@@ -639,3 +639,20 @@ Chronological registry of all file additions, edits, component implementations, 
   - `npm run build`: Compiled successfully in 1.16s (Exit code 0).
   - Puppeteer visual inspection: Confirmed member avatars, cards, and hero mosaic render crisply with zero layout shift.
 
+---
+
+### [ENTRY-036] 2026-09-12 · Banner Aspect Restoration & Scroll Cue Removal
+- **Type**: Visual Refinement
+- **User Requests**:
+  1. Identified that replacing raw `<img>` with Next.js `<Image>` caused the banner to shrink from 404px to 338px with empty black space below it.
+  2. "remove this": Requested complete removal of the `"SCROLL DOWN FOR MISSION & FIELD ACTIVITIES"` cue text below the hero banner.
+- **Remediation**:
+  - Restored full-size raw `<img>` with `style={{ maxHeight: "calc(100dvh - 136px)", aspectRatio: "1919 / 955" }}` and `// eslint-disable-next-line @next/next/no-img-element`.
+  - Removed the scroll cue text and animated red indicator completely from `UnifiedHeroSection.tsx`.
+- **Affected Paths**:
+  - `[MODIFY]` [`frontend/src/components/UnifiedHeroSection.tsx`](../frontend/src/components/UnifiedHeroSection.tsx)
+- **Verification**:
+  - `npm run lint`: **0 errors, 0 warnings**.
+  - `npx tsc --noEmit`: **0 errors**.
+
+

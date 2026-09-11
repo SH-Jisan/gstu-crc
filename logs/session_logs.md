@@ -175,4 +175,10 @@ Chronological record of developer-agent interactions, user requirements, plannin
     - Upgraded all 7 raw `<img>` tags in `UnifiedHeroSection.tsx`, `RecentActivitiesSection.tsx`, and `members/page.tsx` to Next.js `<Image fill / priority />`.
     - Eliminated all `@next/next/no-img-element` warnings across the repository.
     - Verified with `npm run lint` (**0 errors, 0 warnings**) and `npm run build` (**compiled in 1.16s**).
+  - **Banner Sizing Restoration & Scroll Cue Removal (2026-09-12)**:
+    - User compared screenshots between previous commit (`3a3a4f8`) and current commit (`37b198b`), highlighting that Next.js `<Image>` had constrained the banner height from 404px to 338px with empty space below.
+    - Restored raw `<img>` with `style={{ maxHeight: "calc(100dvh - 136px)", aspectRatio: "1919 / 955" }}` and inline eslint disable comment, maintaining 0 warnings.
+    - Removed `"SCROLL DOWN FOR MISSION & FIELD ACTIVITIES"` text indicator per user instruction.
+    - Verified with `npm run lint` (0 errors, 0 warnings) and `npx tsc --noEmit` (0 errors).
+
 
