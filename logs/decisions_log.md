@@ -389,3 +389,18 @@ Record of key decisions, trade-offs evaluated, and consensus reached between use
   - Dynamically apply `isOverflowingViewport ? "overflow-y-auto" : "overflow-hidden"`.
   - Completely prevents false vertical scrollbars from rendering on compact menus, while preserving graceful scrollability on ultra-low viewport heights or high browser zoom.
 - **Status**: Accepted & Implemented.
+---
+
+### [ADL-033] About Architecture Modularization, Full-Card Clickability & Complete Point/Chapter Number Purge
+- **Date**: 2026-09-13
+- **Context**: 
+  - The single About page contained extensive constitutional texts (History, 3-Council Governance, Symbol & Flag, Principles, Values, Objectives).
+  - Having all content on one page caused cognitive overload and required clumsy in-page anchors.
+  - Furthermore, bureaucratic numbering schemes ("Chapter 1 · Section 1.1", "1.1.1", "01", "Method 1", etc.) gave the website an overly academic/legalistic appearance rather than a modern, human-centric NGO aesthetic.
+- **Decision**:
+  - **Subpage Modularization**: Extracted detailed constitutional narratives into 3 dedicated subpages: `/about/our-history`, `/about/how-we-run`, and `/about/symbol-flag`.
+  - **Ergonomic Full-Card Redirection**: Redesigned bottom chapter buttons as compact, vertical white cards where the outer container is `<Link href={...}>` (rendering inner button as `<span>` to prevent nested `<a>` errors), ensuring users can click anywhere on the card to navigate.
+  - **Global Point Number Purge**: Eradicated all numerical indices (`1.`, `2.`, `01`, `Method 1`, `Value 1`, etc.) across all cards, replacing them with semantic Lucide icons (`Target`, `Shield`, `Sparkles`, `Users`) and elegant categorization pills (`Core Principle`, `Guiding Value`, `Strategic Goal`, `Action Method`).
+  - **Removal of Chapter & Section Nomenclature**: Purged all "Chapter X", "Section Y" text from headings, badges, and breadcrumbs in favor of clean, contemporary typography.
+- **Status**: Accepted & Implemented.
+

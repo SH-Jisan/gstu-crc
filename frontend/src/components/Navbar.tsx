@@ -191,7 +191,11 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
           <nav className="hidden xl:flex items-center gap-0.5 2xl:gap-1.5 shrink-0">
             {navItems.map((item) => {
               const hasMega = Boolean(item.id && megaMenus[item.id]);
-              const isActive = activeDropdown === item.id;
+              const isCurrentRoute =
+                item.href === "/"
+                  ? pathname === "/"
+                  : pathname?.startsWith(item.href);
+              const isActive = activeDropdown === item.id || (!activeDropdown && isCurrentRoute);
               return (
                 <div
                   key={item.label}

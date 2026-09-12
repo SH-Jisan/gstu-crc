@@ -373,7 +373,7 @@ export const MODES_OF_ACTION: ModeOfAction[] = [
 // 1.6 Achievements from Document
 export const ACHIEVEMENTS = {
   title: "Best Branch Prize",
-  badge: "Official Recognition (Section 1.6)",
+  badge: "Official Recognition",
   nomination:
     "“CRC GSTU Branch has been nominated for the Best Branch recognition in appreciation of its active participation, impactful initiatives, and continued commitment to serving children and the community.”",
   highlights: [

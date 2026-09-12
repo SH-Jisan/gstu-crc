@@ -80,49 +80,49 @@ export const megaMenus: Record<string, MegaMenuSection> = {
       },
       {
         title: "Our history",
-        href: "/about#history",
+        href: "/about/our-history",
         items: [
           {
             label: "How we founded",
-            href: "/about#history",
+            href: "/about/our-history#founding",
             description: "Originated on 5 June 2016 from a railway station Eid initiative by university students dedicating themselves to street children.",
           },
           {
             label: "Leadership over years",
-            href: "/about#leadership",
+            href: "/about/our-history#leadership",
             description: "The student conveners, executive panels, and university faculty advisors who guided our decade-long journey since 2016.",
           },
         ],
       },
       {
         title: "How we run",
-        href: "/about#governance",
+        href: "/about/how-we-run",
         items: [
           {
             label: "Finance",
-            href: "/about#finance",
+            href: "/about/how-we-run#finance",
             description: "Strict financial governance with restricted child funds, voluntary student dues, and 100% open independent audits.",
           },
           {
             label: "Governance Overview",
-            href: "/about#governance",
+            href: "/about/how-we-run#governance",
             description: "A 3-tier constitutional framework ensuring democratic leadership, transparent field operations, and institutional continuity.",
           },
           {
             label: "Executive Council",
-            href: "/about#executive-council",
+            href: "/about/how-we-run#executive-council",
             isSubItem: true,
             description: "The elected student leadership team actively managing day-to-day operations, Hatekhori School, and field campaigns.",
           },
           {
             label: "Permanent Council",
-            href: "/about#permanent-council",
+            href: "/about/how-we-run#permanent-council",
             isSubItem: true,
             description: "Supreme constitutional trustee body of founding members and alumni ensuring institutional ethics and policy continuity.",
           },
           {
             label: "Temporary Council",
-            href: "/about#temporary-council",
+            href: "/about/how-we-run#temporary-council",
             isSubItem: true,
             description: "Specialized independent ad-hoc committees appointed for election conduction, annual audits, and emergency mandates.",
           },
@@ -130,16 +130,16 @@ export const megaMenus: Record<string, MegaMenuSection> = {
       },
       {
         title: "Symbol & Flag",
-        href: "/about#symbol-flag",
+        href: "/about/symbol-flag",
         items: [
           {
             label: "Official Emblem & Logo",
-            href: "/about#symbol-flag",
+            href: "/about/symbol-flag#emblem",
             description: "Protective hands embracing a street child within a circle of unity, symbolizing collective compassion, shelter, and hope.",
           },
           {
             label: "Flag Colors & Motto",
-            href: "/about#symbol-flag",
+            href: "/about/symbol-flag#flag",
             description: "Four symbolic banner colors and our official motto uniting us to build a society free from street children.",
           },
         ],
@@ -274,6 +274,9 @@ export const megaMenuKeys = ["about", "programs", "school", "branches", "media"]
 
 export const defaultRouteBreadcrumbMap: Record<string, BreadcrumbItem[]> = {
   "/about": [{ label: "About Us" }],
+  "/about/our-history": [{ label: "About Us", href: "/about" }, { label: "Our History" }],
+  "/about/how-we-run": [{ label: "About Us", href: "/about" }, { label: "How We Run" }],
+  "/about/symbol-flag": [{ label: "About Us", href: "/about" }, { label: "Symbol & Flag" }],
   "/members": [{ label: "About Us", href: "/about" }, { label: "Members Directory" }],
   "/programs": [{ label: "Programs & Activities" }],
   "/school": [{ label: "Programs", href: "/programs" }, { label: "Hatekhori Free School" }],
@@ -293,14 +296,9 @@ export const navItems: NavItem[] = [
       { label: "Objectives", href: "/about#objectives" },
       { label: "Mode of Action", href: "/about#modes-of-action" },
       { label: "Achievements", href: "/about#achievements" },
-      { label: "How we founded", href: "/about#history" },
-      { label: "Leadership over years", href: "/about#leadership" },
-      { label: "Finance", href: "/about#finance" },
-      { label: "Governance (Councils & Structure)", href: "/about#governance" },
-      { label: "Executive Council", href: "/about#executive-council" },
-      { label: "Permanent Council", href: "/about#permanent-council" },
-      { label: "Temporary Council", href: "/about#temporary-council" },
-      { label: "Symbol & Flag", href: "/about#symbol-flag" },
+      { label: "Our History", href: "/about/our-history" },
+      { label: "How We Run (Governance & Finance)", href: "/about/how-we-run" },
+      { label: "Symbol & Flag", href: "/about/symbol-flag" },
     ],
   },
   {

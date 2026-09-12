@@ -2,20 +2,15 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import {
-  Shield,
   Award,
-  Sparkles,
   ChevronRight,
-  Building2,
-  Scale,
-  BookOpen,
-  Eye,
   Printer,
   Check,
   FileDown,
   Link2,
+  ArrowRight,
+  Target,
 } from "lucide-react";
 import AosInit from "@/components/AosInit";
 import Navbar from "@/components/Navbar";
@@ -37,14 +32,38 @@ interface NavPanelItem {
 }
 
 const NAV_PANEL_ITEMS: NavPanelItem[] = [
-  { id: "principles", label: "1.1 Principles & Values" },
-  { id: "vision", label: "1.2 Vision & 1.3 Mission" },
-  { id: "objectives", label: "1.4 Strategic Objectives" },
-  { id: "modes-of-action", label: "1.5 Mode of Action" },
-  { id: "achievements", label: "1.6 Achievements" },
-  { id: "history", label: "3.1 Founding History" },
-  { id: "governance", label: "2.2 Governance & Finance" },
-  { id: "symbol-flag", label: "1.7 Symbol & Flag" },
+  { id: "principles", label: "Principles" },
+  { id: "vision", label: "Mission & Vision" },
+  { id: "objectives", label: "Objectives" },
+  { id: "modes-of-action", label: "Mode of Action" },
+  { id: "achievements", label: "Achievements" },
+  { id: "history", label: "Our History" },
+  { id: "governance", label: "How We Run" },
+  { id: "symbol-flag", label: "Symbol & Flag" },
+];
+
+const FURTHER_CHAPTER_CARDS = [
+  {
+    id: "history",
+    title: "Our History",
+    href: "/about/our-history",
+    description:
+      "Originated on 5 June 2016 from an Eid shopping initiative at a railway platform by university students. Explore our 10-year journey, founding genesis, and leadership legacy.",
+  },
+  {
+    id: "governance",
+    title: "How We Run",
+    href: "/about/how-we-run",
+    description:
+      "A 3-tier constitutional governance framework ensuring democratic student leadership, strict financial governance, 100% voluntary student dues, and restricted child funds safeguarding.",
+  },
+  {
+    id: "symbol-flag",
+    title: "Symbol & Flag",
+    href: "/about/symbol-flag",
+    description:
+      "Protective hands embracing a street child within a circle of unity, four symbolic banner colors, and our official motto uniting us to build a society free from street children.",
+  },
 ];
 
 export default function AboutPage() {
@@ -116,7 +135,7 @@ export default function AboutPage() {
 
       <main className="flex-grow">
         <PageHeader
-          eyebrow="Official Constitution & Operational Framework · Chapter 1: About"
+          eyebrow="Official Constitution & Operational Framework"
           title="About Come For Road Child (CRC)"
           intro="CRC foundation is founded upon three fundamental principles forming the foundation of its organizational identity and purpose. CRC GSTU adopts a set of Guiding Values to translate the fundamental principles into organizational practice. Together, the Fundamental Principles and Guiding Values provide the ethical and organizational framework for CRC GSTU branch."
           breadcrumbs={[{ label: "About Us" }]}
@@ -145,7 +164,7 @@ export default function AboutPage() {
                       isActive ? "bg-white" : "bg-gray-400"
                     }`}
                   />
-                  <span>{item.label.replace(/^[0-9.]+\s*/, "")}</span>
+                  <span>{item.label}</span>
                 </button>
               );
             })}
@@ -339,38 +358,34 @@ export default function AboutPage() {
             {/* ========================================================= */}
             <div className="lg:col-span-8 xl:col-span-9 space-y-16 lg:space-y-20 min-w-0">
               {/* ========================================================= */}
-              {/* SECTION 1.1 PRINCIPLES (1.1.1 FUNDAMENTAL + 1.1.2 GUIDING) */}
+              {/* PRINCIPLES (FUNDAMENTAL & GUIDING VALUES) */}
               {/* ========================================================= */}
               <section
                 id="principles"
                 className="bg-white rounded-3xl p-6 sm:p-10 border border-gray-200 shadow-sm scroll-mt-28"
               >
                 <div className="max-w-3xl">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 text-[#e6000a] text-xs font-bold uppercase tracking-wider border border-red-200 mb-3">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>Chapter 1 · Section 1.1</span>
-                  </div>
                   <h2 className="font-heading text-2xl sm:text-4xl text-[#0d0f14] font-black tracking-tight leading-tight">
-                    1.1 Principles
+                    Principles
                   </h2>
                   <p className="mt-4 text-sm sm:text-base text-gray-700 leading-relaxed bg-[#f6f4f1] p-4 sm:p-5 rounded-2xl border border-gray-200/80">
                     CRC foundation is founded upon three fundamental principles forming the foundation of its organizational identity and purpose. CRC GSTU adopts a set of Guiding Values to translate the fundamental principles into organizational practice. Together, the Fundamental Principles and Guiding Values provide the ethical and organizational framework for CRC GSTU branch.
                   </p>
                 </div>
 
-                {/* 1.1.1 Fundamental Principles */}
+                {/* Fundamental Principles */}
                 <div className="mt-10">
                   <div className="flex items-center gap-2.5 mb-6">
                     <span className="w-2.5 h-2.5 rounded-full bg-[#e6000a]" />
                     <h3 className="font-heading text-xl sm:text-2xl font-bold text-[#0d0f14] tracking-tight">
-                      1.1.1 Fundamental Principles
+                      Fundamental Principles
                     </h3>
                   </div>
 
                   <div className="grid gap-6 md:grid-cols-3">
                     {FUNDAMENTAL_PRINCIPLES.map((principle) => (
                       <div
-                        key={principle.num}
+                        key={principle.name}
                         className={`bg-[#f6f4f1] rounded-2xl p-6 border-l-4 ${principle.borderColor} border-t border-r border-b border-gray-200/80 shadow-xs flex flex-col justify-between transition-all hover:bg-white hover:shadow-md hover:-translate-y-0.5`}
                       >
                         <div>
@@ -381,12 +396,12 @@ export default function AboutPage() {
                               <principle.icon className="w-5 h-5" />
                             </div>
                             <span className="text-[10px] font-bold tracking-widest text-gray-400 uppercase">
-                              Principle {principle.num}
+                              Core Principle
                             </span>
                           </div>
 
                           <h4 className="font-heading text-lg font-bold text-[#0d0f14] mb-0.5">
-                            {principle.num}. {principle.name}
+                            {principle.name}
                           </h4>
                           <span className="text-xs font-semibold text-gray-500 block mb-3">
                             ({principle.bengali})
@@ -405,13 +420,13 @@ export default function AboutPage() {
                   </div>
                 </div>
 
-                {/* 1.1.2 Guiding Values */}
+                {/* Guiding Values */}
                 <div className="mt-14 pt-10 border-t border-gray-100">
                   <div className="max-w-3xl mb-8">
                     <div className="flex items-center gap-2.5 mb-2">
                       <span className="w-2.5 h-2.5 rounded-full bg-[#007938]" />
                       <h3 className="font-heading text-xl sm:text-2xl font-bold text-[#0d0f14] tracking-tight">
-                        1.1.2 Guiding Values
+                        Guiding Values
                       </h3>
                     </div>
                     <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
@@ -422,7 +437,7 @@ export default function AboutPage() {
                   <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
                     {GUIDING_VALUES.map((val) => (
                       <div
-                        key={val.num}
+                        key={val.title}
                         className="bg-[#f6f4f1] rounded-2xl p-5 border border-gray-200/80 flex flex-col justify-between hover:bg-white hover:border-gray-300 hover:shadow-md transition-all hover:-translate-y-0.5 group"
                       >
                         <div>
@@ -433,12 +448,12 @@ export default function AboutPage() {
                               <val.icon className="w-4 h-4" />
                             </div>
                             <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white text-gray-500 border border-gray-200">
-                              Value {val.num}
+                              Guiding Value
                             </span>
                           </div>
 
                           <h4 className="font-heading text-base font-bold text-[#0d0f14] group-hover:text-[#e6000a] transition-colors">
-                            {val.num}. {val.title}
+                            {val.title}
                           </h4>
                           <span className="text-[11px] font-semibold text-gray-500 block mb-2">
                             ({val.bengali})
@@ -459,21 +474,17 @@ export default function AboutPage() {
               </section>
 
               {/* ========================================================= */}
-              {/* SECTION 1.2 VISION & 1.3 MISSION */}
+              {/* VISION & MISSION */}
               {/* ========================================================= */}
               <section
                 id="vision"
                 className="bg-white rounded-3xl p-6 sm:p-10 border border-gray-200 shadow-sm scroll-mt-28"
               >
-                {/* 1.2 Vision */}
+                {/* Vision */}
                 <div className="bg-gradient-to-br from-red-50/70 to-white rounded-3xl p-6 sm:p-10 border border-red-200/80 shadow-2xs relative overflow-hidden mb-12">
                   <div className="max-w-3xl">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white text-[#e6000a] text-xs font-bold uppercase tracking-wider border border-red-200 mb-4 shadow-2xs">
-                      <Eye className="w-3.5 h-3.5" />
-                      <span>Section 1.2 · Vision</span>
-                    </div>
                     <h2 className="font-heading text-2xl sm:text-3xl text-[#0d0f14] font-black tracking-tight">
-                      1.2. Vision:
+                      Vision
                     </h2>
                     <blockquote className="mt-4 text-base sm:text-lg text-[#0d0f14] font-medium leading-relaxed italic border-l-4 border-[#e6000a] pl-4 sm:pl-6 bg-white/90 p-4 rounded-r-2xl shadow-2xs">
                       {VISION.quote}
@@ -484,15 +495,11 @@ export default function AboutPage() {
                   </div>
                 </div>
 
-                {/* 1.3 Mission */}
+                {/* Mission */}
                 <div>
                   <div className="max-w-3xl mb-8">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 text-[#007938] text-xs font-bold uppercase tracking-wider border border-green-200 mb-3">
-                      <Shield className="w-3.5 h-3.5" />
-                      <span>Section 1.3 · Mission</span>
-                    </div>
                     <h2 className="font-heading text-2xl sm:text-3xl text-[#0d0f14] font-black tracking-tight">
-                      1.3. Mission:
+                      Mission
                     </h2>
                     <p className="mt-2 text-sm text-gray-600 leading-relaxed">
                       Five core operational pillars define how CRC safeguards rights, supports developmental growth, and fosters community engagement:
@@ -524,19 +531,15 @@ export default function AboutPage() {
               </section>
 
               {/* ========================================================= */}
-              {/* SECTION 1.4 OBJECTIVES */}
+              {/* OBJECTIVES */}
               {/* ========================================================= */}
               <section
                 id="objectives"
                 className="bg-white rounded-3xl p-6 sm:p-10 border border-gray-200 shadow-sm scroll-mt-28"
               >
                 <div className="max-w-3xl mb-10">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 text-[#e6000a] text-xs font-bold uppercase tracking-wider border border-red-200 mb-3">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>Section 1.4 · Objectives</span>
-                  </div>
                   <h2 className="font-heading text-2xl sm:text-4xl text-[#0d0f14] font-black tracking-tight">
-                    1.4. Objectives
+                    Objectives
                   </h2>
                   <p className="mt-3 text-sm sm:text-base text-gray-600 leading-relaxed">
                     CRC GSTU directs its volunteer programs, student mentors, and institutional resources toward achieving these five core constitutional objectives:
@@ -544,18 +547,18 @@ export default function AboutPage() {
                 </div>
 
                 <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3 items-stretch">
-                  {OBJECTIVES.map((obj) => (
+                  {OBJECTIVES.map((obj, idx) => (
                     <div
-                      key={obj.num}
+                      key={idx}
                       className="bg-[#f6f4f1] rounded-2xl p-6 border border-gray-200/80 hover:bg-white hover:border-[#e6000a] shadow-xs hover:shadow-md transition-all flex flex-col justify-between group"
                     >
                       <div>
-                        <div className="flex items-center justify-between mb-3">
-                          <span className="font-heading text-3xl font-black text-[#e6000a]/30 group-hover:text-[#e6000a] transition-colors">
-                            {obj.num}
-                          </span>
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="w-9 h-9 rounded-xl bg-red-100/80 text-[#e6000a] flex items-center justify-center shadow-xs group-hover:bg-[#e6000a] group-hover:text-white transition-colors">
+                            <Target className="w-4 h-4" />
+                          </div>
                           <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
-                            Objective {obj.num}
+                            Strategic Goal
                           </span>
                         </div>
 
@@ -596,19 +599,15 @@ export default function AboutPage() {
               </section>
 
               {/* ========================================================= */}
-              {/* SECTION 1.5 MODE OF ACTION */}
+              {/* MODE OF ACTION */}
               {/* ========================================================= */}
               <section
                 id="modes-of-action"
                 className="bg-white rounded-3xl p-6 sm:p-10 border border-gray-200 shadow-sm scroll-mt-28"
               >
                 <div className="max-w-3xl mb-10">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 text-[#e6000a] text-xs font-bold uppercase tracking-wider border border-red-200 mb-3">
-                    <BookOpen className="w-3.5 h-3.5" />
-                    <span>Section 1.5 · Operational Methodology</span>
-                  </div>
                   <h2 className="font-heading text-2xl sm:text-4xl text-[#0d0f14] font-black tracking-tight">
-                    1.5 Mode of Action
+                    Mode of Action
                   </h2>
                   <p className="mt-3 text-sm sm:text-base text-gray-600 leading-relaxed">
                     We strive to turn these values into meaningful action by working collectively and sustainably to create positive change in the lives of people and within society through seven defined operational methods:
@@ -618,7 +617,7 @@ export default function AboutPage() {
                 <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
                   {MODES_OF_ACTION.map((mode) => (
                     <div
-                      key={mode.num}
+                      key={mode.title}
                       className="p-5 sm:p-6 rounded-2xl bg-[#f6f4f1] border border-gray-200/80 hover:bg-white hover:border-[#e6000a] hover:shadow-md transition-all flex flex-col justify-between"
                     >
                       <div>
@@ -627,7 +626,7 @@ export default function AboutPage() {
                             <mode.icon className="w-4 h-4" />
                           </div>
                           <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
-                            Method {mode.num}
+                            Action Method
                           </span>
                         </div>
 
@@ -653,7 +652,7 @@ export default function AboutPage() {
                   <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-[#0d0f14] to-gray-900 text-white flex flex-col justify-between shadow-xl">
                     <div>
                       <span className="text-xs font-bold uppercase tracking-widest text-[#e6000a]">
-                        Section 4 · Our Promises
+                        Our Promises
                       </span>
                       <h3 className="font-heading text-base font-bold mt-2 text-white">
                         See a Need? Speak Up.
@@ -674,7 +673,7 @@ export default function AboutPage() {
               </section>
 
               {/* ========================================================= */}
-              {/* SECTION 1.6 ACHIEVEMENTS */}
+              {/* ACHIEVEMENTS */}
               {/* ========================================================= */}
               <section
                 id="achievements"
@@ -691,7 +690,7 @@ export default function AboutPage() {
                     </div>
 
                     <h2 className="font-heading text-2xl sm:text-3xl text-white font-black tracking-tight">
-                      1.6 Achievements: {ACHIEVEMENTS.title}
+                      Achievements: {ACHIEVEMENTS.title}
                     </h2>
 
                     <blockquote className="text-xs sm:text-sm text-gray-200 italic border-l-4 border-amber-400 pl-4 py-1 leading-relaxed">
@@ -727,265 +726,55 @@ export default function AboutPage() {
               </section>
 
               {/* ========================================================= */}
-              {/* CHAPTER 3: HISTORY & FOUNDING (3.1 & 3.2) */}
+              {/* EXPLORE MORE: OUR HISTORY, HOW WE RUN, SYMBOL & FLAG */}
               {/* ========================================================= */}
-              <section
-                id="history"
-                className="bg-white rounded-3xl p-6 sm:p-10 border border-gray-200 shadow-sm scroll-mt-28"
-              >
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                  <div className="lg:col-span-7 space-y-4">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 text-[#e6000a] text-xs font-bold uppercase tracking-wider border border-red-200">
-                      <Sparkles className="w-3.5 h-3.5" />
-                      <span>Chapter 3: History of CRC Foundation & CRC GSTU</span>
-                    </div>
-
-                    <h2 className="font-heading text-2xl sm:text-3xl text-[#0d0f14] font-black tracking-tight leading-tight">
-                      3.1 How We Founded:{" "}
-                      <span className="text-[#e6000a]">The Spark at the Railway Station</span>
-                    </h2>
-
-                    <p className="text-gray-700 leading-relaxed text-xs sm:text-sm">
-                      The journey of Come for Road Child (CRC) began with a commitment to humanity, empathy, and standing beside underprivileged children. <strong>Md. Rasel Ahmed</strong> is the Founder and Founding President of CRC foundation.
-                    </p>
-
-                    <p className="text-gray-700 leading-relaxed text-xs sm:text-sm">
-                      In <strong>2016</strong>, after receiving money to purchase clothes for Eid festival, Rasel Ahmed went shopping and saw several children at a railway station collecting discarded materials in torn clothes. Deeply moved, he and friends used their Eid shopping money to purchase clothes for those children, sparking the vision for systematic child welfare.
-                    </p>
-
-                    <div className="p-4 rounded-2xl bg-red-50/70 border border-red-200 text-gray-800 space-y-1">
-                      <p className="text-xs font-bold uppercase text-[#e6000a] tracking-wider">
-                        5 June 2016 · Simultaneous Founding
-                      </p>
-                      <p className="text-xs font-semibold">
-                        CRC foundation and the CRC GSTU branch formally launched together on <strong>5 June 2016</strong> under founding president Md. Sakib Ahmed.
-                      </p>
-                      <p className="font-heading text-sm font-bold text-[#e6000a] pt-1">
-                        “The World Will Be Free from Street Children by Connected Together”
-                      </p>
-                    </div>
+              <section id="more-chapters" className="scroll-mt-28 space-y-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#e6000a]" />
+                    <h3 className="font-heading text-2xl sm:text-3xl font-black text-[#0d0f14] tracking-tight">
+                      Explore More About CRC
+                    </h3>
                   </div>
-
-                  <div className="lg:col-span-5 space-y-3.5">
-                    <div className="bg-[#f6f4f1] p-5 rounded-2xl border border-gray-200 space-y-3">
-                      <h3 className="font-heading text-base font-bold text-[#0d0f14]">
-                        Milestone Highlights
-                      </h3>
-                      <div className="space-y-2 text-xs text-gray-700">
-                        <div className="p-2.5 bg-white rounded-xl border border-gray-200/80">
-                          <strong className="text-gray-900 block font-bold">2016 · Founding</strong>
-                          <span>Launch of first branch at GSTU campus.</span>
-                        </div>
-                        <div className="p-2.5 bg-white rounded-xl border border-gray-200/80">
-                          <strong className="text-[#007938] block font-bold">2017 · Hatekhori School</strong>
-                          <span>First institutional educational initiative of CRC.</span>
-                        </div>
-                        <div className="p-2.5 bg-white rounded-xl border border-gray-200/80">
-                          <strong className="text-blue-600 block font-bold">Expansion</strong>
-                          <span>Khulna Central, IU, Barisal, and MBSTU branches.</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="p-4 rounded-2xl bg-gray-50 border border-gray-200 flex items-center justify-between">
-                      <div>
-                        <span className="text-[10px] font-bold uppercase text-gray-400">
-                          Section 3.2
-                        </span>
-                        <h4 className="font-heading text-xs font-bold text-[#0d0f14]">
-                          Leadership Over Years
-                        </h4>
-                      </div>
-                      <Link
-                        href="/members"
-                        className="text-xs font-bold text-[#e6000a] hover:text-red-800 flex items-center gap-1"
-                      >
-                        <span>View Roster</span>
-                        <ChevronRight className="w-3.5 h-3.5" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              {/* ========================================================= */}
-              {/* CHAPTER 2: HOW WE RUN — GOVERNANCE & FINANCE (2.1 & 2.2) */}
-              {/* ========================================================= */}
-              <section
-                id="governance"
-                className="bg-white rounded-3xl p-6 sm:p-10 border border-gray-200 shadow-sm scroll-mt-28"
-              >
-                <div className="max-w-3xl mb-8">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 text-[#007938] text-xs font-bold uppercase tracking-wider border border-green-200 mb-3">
-                    <Building2 className="w-3.5 h-3.5" />
-                    <span>Chapter 2: How We Run</span>
-                  </div>
-                  <h2 className="font-heading text-2xl sm:text-3xl text-[#0d0f14] font-black tracking-tight">
-                    Governance & Financial Policy
-                  </h2>
-                  <p className="mt-2 text-xs sm:text-sm text-gray-600 leading-relaxed">
-                    CRC GSTU operates under a disciplined constitutional framework, distributing oversight across three councils and enforcing transparent financial controls:
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Governance */}
-                  <div className="bg-[#f6f4f1] p-6 rounded-2xl border border-gray-200 space-y-4">
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-8 h-8 rounded-lg bg-green-100 text-[#007938] flex items-center justify-center">
-                        <Building2 className="w-4 h-4" />
-                      </div>
-                      <h3 className="font-heading text-base font-bold text-[#0d0f14]">
-                        Three-Council Structure (2.2)
-                      </h3>
-                    </div>
-
-                    <div className="space-y-3 text-xs">
-                      <div className="p-3 bg-white rounded-xl border border-gray-200/80">
-                        <strong className="text-[#007938] block font-bold">
-                          1. Permanent Council (স্থায়ী পরিষদ)
-                        </strong>
-                        <span className="text-gray-600">
-                          Highest decision-making body for institutional continuity and constitutional oversight.
-                        </span>
-                      </div>
-                      <div className="p-3 bg-white rounded-xl border border-gray-200/80">
-                        <strong className="text-blue-800 block font-bold">
-                          2. Executive Council (নির্বাহী পরিষদ)
-                        </strong>
-                        <span className="text-gray-600">
-                          Principal body for regular administration, school operations, and program execution.
-                        </span>
-                      </div>
-                      <div className="p-3 bg-white rounded-xl border border-gray-200/80">
-                        <strong className="text-amber-800 block font-bold">
-                          3. Temporary Council (অস্থায়ী পরিষদ)
-                        </strong>
-                        <span className="text-gray-600">
-                          Specialized mandate for independent audit, discipline, and election commission.
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Finance */}
-                  <div className="bg-[#f6f4f1] p-6 rounded-2xl border border-gray-200 space-y-4">
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-8 h-8 rounded-lg bg-red-100 text-[#e6000a] flex items-center justify-center">
-                        <Scale className="w-4 h-4" />
-                      </div>
-                      <h3 className="font-heading text-base font-bold text-[#0d0f14]">
-                        Financial Discipline (2.1)
-                      </h3>
-                    </div>
-
-                    <div className="space-y-3 text-xs">
-                      <div className="p-3 bg-white rounded-xl border border-gray-200/80">
-                        <strong className="text-gray-900 block font-bold">
-                          Restricted Child Funds (2.1.1)
-                        </strong>
-                        <span className="text-gray-600">
-                          Funds collected for children are restricted strictly to child food, education, and healthcare.
-                        </span>
-                      </div>
-                      <div className="p-3 bg-white rounded-xl border border-gray-200/80">
-                        <strong className="text-gray-900 block font-bold">
-                          Independent Audit (2.1.2.2)
-                        </strong>
-                        <span className="text-gray-600">
-                          Audit Committee independently reviews income and expenditure. Any member may request review.
-                        </span>
-                      </div>
-                      <div className="p-3 bg-white rounded-xl border border-gray-200/80">
-                        <strong className="text-gray-900 block font-bold">
-                          Donor Privacy (2.1.2.3)
-                        </strong>
-                        <span className="text-gray-600">
-                          Donor details are handled with confidentiality and never disclosed without consent.
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              {/* ========================================================= */}
-              {/* SYMBOL & FLAG (1.7) */}
-              {/* ========================================================= */}
-              <section
-                id="symbol-flag"
-                className="bg-white rounded-3xl p-6 sm:p-10 border border-gray-200 shadow-sm scroll-mt-28"
-              >
-                <div className="max-w-3xl mb-8">
-                  <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#e6000a]">
-                    Section 1.7 · Visual Identity
+                  <span className="text-xs font-bold text-gray-400 hidden sm:inline-block uppercase tracking-wider">
+                    More Resources
                   </span>
-                  <h2 className="font-heading text-2xl sm:text-3xl text-[#0d0f14] font-black tracking-tight">
-                    Symbol & Flag (প্রতীক ও পতাকা)
-                  </h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
-                  <div className="md:col-span-5 bg-[#f6f4f1] rounded-2xl p-6 border border-gray-200 flex flex-col justify-between text-center">
-                    <div>
-                      <div className="w-24 h-24 mx-auto mb-4 relative flex items-center justify-center bg-white rounded-2xl p-2 border border-gray-200 shadow-2xs">
-                        <Image
-                          src="/logo/logo-navbar.png"
-                          alt="Official CRC Emblem"
-                          width={80}
-                          height={80}
-                          className="object-contain"
-                        />
-                      </div>
-                      <h3 className="font-heading text-base font-bold text-[#0d0f14]">
-                        The CRC Emblem
-                      </h3>
-                      <p className="text-xs text-gray-600 mt-1">
-                        Protective hands embracing a street child within a circle of unity.
-                      </p>
-                    </div>
+                <div className="space-y-4">
+                  {FURTHER_CHAPTER_CARDS.map((card) => (
+                    <Link
+                      key={card.id}
+                      id={card.id}
+                      href={card.href}
+                      className="block bg-white rounded-2xl py-4 sm:py-5 px-5 sm:px-7 border border-gray-200/90 hover:border-[#e6000a] hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 group scroll-mt-28 relative overflow-hidden text-left cursor-pointer"
+                    >
+                      {/* Left vertical red accent line on hover */}
+                      <div className="absolute top-0 bottom-0 left-0 w-1.5 bg-gradient-to-b from-[#e6000a] to-rose-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                    <div className="mt-4 pt-3 border-t border-gray-200/80 text-[11px] text-gray-500 space-y-1 text-left">
-                      <div>● Red: Lifelong student solidarity</div>
-                      <div>● Green: Direct field compassion</div>
-                      <div>● Black: Child protection centrality</div>
-                    </div>
-                  </div>
+                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6">
+                        <div className="space-y-1.5 max-w-3xl">
+                          {/* Title */}
+                          <h4 className="font-heading text-xl sm:text-2xl font-black text-[#0d0f14] group-hover:text-[#e6000a] transition-colors tracking-tight">
+                            {card.title}
+                          </h4>
 
-                  <div className="md:col-span-7 bg-[#f6f4f1] rounded-2xl p-6 border border-gray-200 flex flex-col justify-between">
-                    <div>
-                      <h3 className="font-heading text-base font-bold text-[#0d0f14] mb-2">
-                        Official Flag Colors
-                      </h3>
-                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
-                        <div className="p-2.5 rounded-xl bg-white border border-red-200 text-center">
-                          <div className="w-4 h-4 rounded-full bg-[#e6000a] mx-auto mb-1" />
-                          <span className="block text-[10px] font-bold text-gray-800">Crimson</span>
+                          {/* Short Details */}
+                          <p className="text-xs sm:text-[13.5px] text-gray-600 leading-relaxed font-sans font-normal">
+                            {card.description}
+                          </p>
                         </div>
-                        <div className="p-2.5 rounded-xl bg-white border border-green-200 text-center">
-                          <div className="w-4 h-4 rounded-full bg-[#007938] mx-auto mb-1" />
-                          <span className="block text-[10px] font-bold text-gray-800">Green</span>
-                        </div>
-                        <div className="p-2.5 rounded-xl bg-white border border-gray-300 text-center">
-                          <div className="w-4 h-4 rounded-full bg-[#0d0f14] mx-auto mb-1" />
-                          <span className="block text-[10px] font-bold text-gray-800">Black</span>
-                        </div>
-                        <div className="p-2.5 rounded-xl bg-white border border-gray-300 text-center">
-                          <div className="w-4 h-4 rounded-full bg-white border border-gray-300 mx-auto mb-1" />
-                          <span className="block text-[10px] font-bold text-gray-800">White</span>
+
+                        {/* Read More button on the right */}
+                        <div className="shrink-0 pt-1 md:pt-0">
+                          <span className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full bg-red-50 group-hover:bg-[#e6000a] text-[#e6000a] group-hover:text-white font-bold text-xs sm:text-sm transition-all duration-300 shadow-2xs group-hover:shadow-md border border-red-200/60 group-hover:border-transparent">
+                            <span>Read more</span>
+                            <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
+                          </span>
                         </div>
                       </div>
-                    </div>
-
-                    <div className="bg-[#0d0f14] text-white p-4 rounded-xl">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-[#e6000a] block mb-1">
-                        Official Motto
-                      </span>
-                      <p className="font-heading text-xs sm:text-sm font-bold">
-                        “The World Will Be Free from Street Children by Connected Together”
-                      </p>
-                    </div>
-                  </div>
+                    </Link>
+                  ))}
                 </div>
               </section>
             </div>

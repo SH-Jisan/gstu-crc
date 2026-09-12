@@ -948,3 +948,42 @@ Chronological registry of all file additions, edits, component implementations, 
 - **Verification**:
   - `npm run lint`: **0 errors, 0 warnings**.
   - Puppeteer measurements verified `hasVerticalScrollbar: false`, `overflowY: hidden`, smooth 350ms height transition, and `borderBottomColor: "rgb(230, 0, 10)"`.
+
+---
+
+### [ENTRY-039] 2026-09-13 — About Subpage Modularization, Vertical Full-Card Navigation & Comprehensive Numbering Clean-Up
+- **Type**: Information Architecture, Subpage Creation, UI Redesign & Content Normalization
+- **User Requests**:
+  1. Structure About page with Principles, Vision & Mission, Objectives, Mode of Action, Achievements, and bottom buttons for Our History, How We Run, and Symbol & Flag.
+  2. Redesign bottom buttons into compact, vertical cards with short descriptions and "Read more" links, making the entire card clickable.
+  3. Remove "Chapter 1", "Chapter 2", "Chapter 3", "Section 1.1", etc. and all point numbers throughout the About section.
+  4. Push all changes to GitHub.
+- **Actions Completed**:
+  1. **Scaffolded 3 Dedicated Subpages**:
+     - [`frontend/src/app/about/our-history/page.tsx`](../frontend/src/app/about/our-history/page.tsx): 10-year timeline, railway platform founding, and leadership eras.
+     - [`frontend/src/app/about/how-we-run/page.tsx`](../frontend/src/app/about/how-we-run/page.tsx): Three-council governance structure and ring-fenced financial transparency.
+     - [`frontend/src/app/about/symbol-flag/page.tsx`](../frontend/src/app/about/symbol-flag/page.tsx): Official emblem symbolism, four banner colors, and founding motto.
+  2. **Vertical Full-Card Navigation Component (`page.tsx`)**:
+     - Stacked cards vertically (`space-y-4`) with compact height (`py-4 sm:py-5 px-5 sm:px-7 rounded-2xl`).
+     - Wrapped each card in Next.js `<Link>` with hover state and crimson indicator bar.
+  3. **Purged Point Numbers & Chapter/Section Labels**:
+     - Stripped numbers from Principles (`Core Principle`), Values (`Guiding Value`), Objectives (`Target` icon + `Strategic Goal`), and Mode of Action (`Action Method`).
+     - Replaced `(Section 1.6)` in Achievements badge with `Official Recognition`.
+     - Replaced numbered badges in subpages with semantic icons and titles.
+     - Updated bottom section to `Explore More About CRC` and `More Resources`.
+- **Affected Paths**:
+  - `[NEW]` [`frontend/src/app/about/our-history/page.tsx`](../frontend/src/app/about/our-history/page.tsx)
+  - `[NEW]` [`frontend/src/app/about/how-we-run/page.tsx`](../frontend/src/app/about/how-we-run/page.tsx)
+  - `[NEW]` [`frontend/src/app/about/symbol-flag/page.tsx`](../frontend/src/app/about/symbol-flag/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/about/page.tsx`](../frontend/src/app/about/page.tsx)
+  - `[MODIFY]` [`frontend/src/data/aboutData.ts`](../frontend/src/data/aboutData.ts)
+  - `[MODIFY]` [`frontend/src/components/Navbar.tsx`](../frontend/src/components/Navbar.tsx)
+  - `[MODIFY]` [`frontend/src/data/navigation.ts`](../frontend/src/data/navigation.ts)
+  - `[MODIFY]` [`logs/session_logs.md`](./session_logs.md)
+  - `[MODIFY]` [`logs/decisions_log.md`](./decisions_log.md)
+  - `[MODIFY]` [`logs/implementation_history.md`](./implementation_history.md)
+- **Verification**:
+  - `npm run lint`: **0 errors, 0 warnings**.
+  - `npx tsc --noEmit`: **0 errors**.
+  - Puppeteer visual inspection verified clean rendering and navigation.
+
