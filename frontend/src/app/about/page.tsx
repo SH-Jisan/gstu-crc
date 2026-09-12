@@ -10,7 +10,11 @@ import {
   FileDown,
   Link2,
   ArrowRight,
+  Shield,
+  Sparkles,
+  Compass,
   Target,
+  Zap,
 } from "lucide-react";
 import AosInit from "@/components/AosInit";
 import Navbar from "@/components/Navbar";
@@ -32,9 +36,9 @@ interface NavPanelItem {
 }
 
 const NAV_PANEL_ITEMS: NavPanelItem[] = [
-  { id: "principles", label: "Principles" },
-  { id: "vision", label: "Mission & Vision" },
-  { id: "objectives", label: "Objectives" },
+  { id: "principles", label: "Our Principles" },
+  { id: "vision", label: "Vision & Mission" },
+  { id: "objectives", label: "Strategic Objectives" },
   { id: "modes-of-action", label: "Mode of Action" },
   { id: "achievements", label: "Achievements" },
   { id: "history", label: "Our History" },
@@ -52,14 +56,14 @@ const FURTHER_CHAPTER_CARDS = [
   },
   {
     id: "governance",
-    title: "How We Run",
+    title: "How We Run (Governance & Finance)",
     href: "/about/how-we-run",
     description:
       "A 3-tier constitutional governance framework ensuring democratic student leadership, strict financial governance, 100% voluntary student dues, and restricted child funds safeguarding.",
   },
   {
     id: "symbol-flag",
-    title: "Symbol & Flag",
+    title: "Symbol & Flag (Visual Identity)",
     href: "/about/symbol-flag",
     description:
       "Protective hands embracing a street child within a circle of unity, four symbolic banner colors, and our official motto uniting us to build a society free from street children.",
@@ -137,7 +141,7 @@ export default function AboutPage() {
         <PageHeader
           eyebrow="Official Constitution & Operational Framework"
           title="About Come For Road Child (CRC)"
-          intro="CRC foundation is founded upon three fundamental principles forming the foundation of its organizational identity and purpose. CRC GSTU adopts a set of Guiding Values to translate the fundamental principles into organizational practice. Together, the Fundamental Principles and Guiding Values provide the ethical and organizational framework for CRC GSTU branch."
+          intro="Founded on 5 June 2016 at Gopalganj Science and Technology University (GSTU), Come For Road Child (CRC) is a volunteer-led student humanitarian movement dedicated to securing fundamental rights, education, and healthcare for street children across Bangladesh."
           breadcrumbs={[{ label: "About Us" }]}
         />
 
@@ -365,11 +369,15 @@ export default function AboutPage() {
                 className="bg-white rounded-3xl p-6 sm:p-10 border border-gray-200 shadow-sm scroll-mt-28"
               >
                 <div className="max-w-3xl">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50 text-[#e6000a] text-xs font-bold uppercase tracking-wider mb-3 border border-red-200/60">
+                    <Shield className="w-3.5 h-3.5" />
+                    <span>Ethical & Constitutional Framework</span>
+                  </div>
                   <h2 className="font-heading text-2xl sm:text-4xl text-[#0d0f14] font-black tracking-tight leading-tight">
-                    Principles
+                    Our Principles & Values
                   </h2>
                   <p className="mt-4 text-sm sm:text-base text-gray-700 leading-relaxed bg-[#f6f4f1] p-4 sm:p-5 rounded-2xl border border-gray-200/80">
-                    CRC foundation is founded upon three fundamental principles forming the foundation of its organizational identity and purpose. CRC GSTU adopts a set of Guiding Values to translate the fundamental principles into organizational practice. Together, the Fundamental Principles and Guiding Values provide the ethical and organizational framework for CRC GSTU branch.
+                    The CRC foundation is grounded in three Fundamental Principles that define its humanitarian purpose and organizational identity. To translate these principles into responsible daily action, CRC GSTU adheres to eight Guiding Values that govern volunteer conduct, student mentorship, and community engagement.
                   </p>
                 </div>
 
@@ -430,7 +438,7 @@ export default function AboutPage() {
                       </h3>
                     </div>
                     <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
-                      CRC GSTU adopts eight specific Guiding Values to translate the three fundamental principles into everyday organizational practice, ethical interactions, and humanitarian service:
+                      CRC GSTU upholds eight Guiding Values to translate the fundamental principles into disciplined organizational practice, ethical interactions, and sustained humanitarian service:
                     </p>
                   </div>
 
@@ -483,8 +491,12 @@ export default function AboutPage() {
                 {/* Vision */}
                 <div className="bg-gradient-to-br from-red-50/70 to-white rounded-3xl p-6 sm:p-10 border border-red-200/80 shadow-2xs relative overflow-hidden mb-12">
                   <div className="max-w-3xl">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100/80 text-[#e6000a] text-xs font-bold uppercase tracking-wider mb-3 border border-red-200/80">
+                      <Sparkles className="w-3.5 h-3.5" />
+                      <span>Institutional Vision</span>
+                    </div>
                     <h2 className="font-heading text-2xl sm:text-3xl text-[#0d0f14] font-black tracking-tight">
-                      Vision
+                      Vision Statement
                     </h2>
                     <blockquote className="mt-4 text-base sm:text-lg text-[#0d0f14] font-medium leading-relaxed italic border-l-4 border-[#e6000a] pl-4 sm:pl-6 bg-white/90 p-4 rounded-r-2xl shadow-2xs">
                       {VISION.quote}
@@ -498,11 +510,15 @@ export default function AboutPage() {
                 {/* Mission */}
                 <div>
                   <div className="max-w-3xl mb-8">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-xs font-bold uppercase tracking-wider mb-3 border border-gray-200">
+                      <Compass className="w-3.5 h-3.5 text-[#e6000a]" />
+                      <span>Operational Mission</span>
+                    </div>
                     <h2 className="font-heading text-2xl sm:text-3xl text-[#0d0f14] font-black tracking-tight">
-                      Mission
+                      Mission Pillars
                     </h2>
-                    <p className="mt-2 text-sm text-gray-600 leading-relaxed">
-                      Five core operational pillars define how CRC safeguards rights, supports developmental growth, and fosters community engagement:
+                    <p className="mt-2 text-sm sm:text-base text-gray-600 leading-relaxed">
+                      CRC&apos;s mission is articulated through five core operational pillars that guide institutional efforts to safeguard rights, deliver education, and restore human dignity:
                     </p>
                   </div>
 
@@ -520,7 +536,7 @@ export default function AboutPage() {
                             {m.pillar}
                           </h3>
                           <span className="text-[11px] font-semibold text-gray-500 block mb-2">
-                            {m.bengali}
+                            ({m.bengali})
                           </span>
                           <p className="text-xs text-gray-600 leading-relaxed">{m.desc}</p>
                         </div>
@@ -538,27 +554,31 @@ export default function AboutPage() {
                 className="bg-white rounded-3xl p-6 sm:p-10 border border-gray-200 shadow-sm scroll-mt-28"
               >
                 <div className="max-w-3xl mb-10">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50 text-[#e6000a] text-xs font-bold uppercase tracking-wider mb-3 border border-red-200/60">
+                    <Target className="w-3.5 h-3.5" />
+                    <span>Constitutional Mandate</span>
+                  </div>
                   <h2 className="font-heading text-2xl sm:text-4xl text-[#0d0f14] font-black tracking-tight">
-                    Objectives
+                    Strategic Objectives
                   </h2>
                   <p className="mt-3 text-sm sm:text-base text-gray-600 leading-relaxed">
-                    CRC GSTU directs its volunteer programs, student mentors, and institutional resources toward achieving these five core constitutional objectives:
+                    To ensure focused and measurable humanitarian outcomes, CRC GSTU directs its volunteer network, university student mentors, and institutional resources toward achieving five constitutional objectives:
                   </p>
                 </div>
 
                 <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3 items-stretch">
-                  {OBJECTIVES.map((obj, idx) => (
+                  {OBJECTIVES.map((obj) => (
                     <div
-                      key={idx}
+                      key={obj.num}
                       className="bg-[#f6f4f1] rounded-2xl p-6 border border-gray-200/80 hover:bg-white hover:border-[#e6000a] shadow-xs hover:shadow-md transition-all flex flex-col justify-between group"
                     >
                       <div>
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="w-9 h-9 rounded-xl bg-red-100/80 text-[#e6000a] flex items-center justify-center shadow-xs group-hover:bg-[#e6000a] group-hover:text-white transition-colors">
-                            <Target className="w-4 h-4" />
-                          </div>
+                        <div className="flex items-center justify-between mb-3">
+                          <span className="font-heading text-3xl font-black text-[#e6000a]/30 group-hover:text-[#e6000a] transition-colors">
+                            {obj.num}
+                          </span>
                           <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
-                            Strategic Goal
+                            Objective {obj.num}
                           </span>
                         </div>
 
@@ -606,11 +626,15 @@ export default function AboutPage() {
                 className="bg-white rounded-3xl p-6 sm:p-10 border border-gray-200 shadow-sm scroll-mt-28"
               >
                 <div className="max-w-3xl mb-10">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50 text-[#e6000a] text-xs font-bold uppercase tracking-wider mb-3 border border-red-200/60">
+                    <Zap className="w-3.5 h-3.5" />
+                    <span>Operational Methodology</span>
+                  </div>
                   <h2 className="font-heading text-2xl sm:text-4xl text-[#0d0f14] font-black tracking-tight">
                     Mode of Action
                   </h2>
                   <p className="mt-3 text-sm sm:text-base text-gray-600 leading-relaxed">
-                    We strive to turn these values into meaningful action by working collectively and sustainably to create positive change in the lives of people and within society through seven defined operational methods:
+                    CRC translates foundational principles and values into concrete community outcomes through seven structured operational methods designed for sustainable social impact:
                   </p>
                 </div>
 
@@ -690,8 +714,11 @@ export default function AboutPage() {
                     </div>
 
                     <h2 className="font-heading text-2xl sm:text-3xl text-white font-black tracking-tight">
-                      Achievements: {ACHIEVEMENTS.title}
+                      Key Achievements & Recognition
                     </h2>
+                    <p className="text-base font-semibold text-amber-300">
+                      {ACHIEVEMENTS.title}
+                    </p>
 
                     <blockquote className="text-xs sm:text-sm text-gray-200 italic border-l-4 border-amber-400 pl-4 py-1 leading-relaxed">
                       {ACHIEVEMENTS.nomination}
@@ -733,11 +760,11 @@ export default function AboutPage() {
                   <div className="flex items-center gap-3">
                     <span className="w-2.5 h-2.5 rounded-full bg-[#e6000a]" />
                     <h3 className="font-heading text-2xl sm:text-3xl font-black text-[#0d0f14] tracking-tight">
-                      Explore More About CRC
+                      Explore Institutional Chapters
                     </h3>
                   </div>
                   <span className="text-xs font-bold text-gray-400 hidden sm:inline-block uppercase tracking-wider">
-                    More Resources
+                    Institutional Records
                   </span>
                 </div>
 
@@ -747,10 +774,10 @@ export default function AboutPage() {
                       key={card.id}
                       id={card.id}
                       href={card.href}
-                      className="block bg-white rounded-2xl py-4 sm:py-5 px-5 sm:px-7 border border-gray-200/90 hover:border-[#e6000a] hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 group scroll-mt-28 relative overflow-hidden text-left cursor-pointer"
+                      className="block bg-white rounded-xl py-4 sm:py-5 px-5 sm:px-7 border border-gray-200/90 hover:border-[#e6000a] hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 group scroll-mt-28 relative overflow-hidden text-left cursor-pointer"
                     >
                       {/* Left vertical red accent line on hover */}
-                      <div className="absolute top-0 bottom-0 left-0 w-1.5 bg-gradient-to-b from-[#e6000a] to-rose-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="absolute top-0 bottom-0 left-0 w-1 bg-gradient-to-b from-[#e6000a] to-rose-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6">
                         <div className="space-y-1.5 max-w-3xl">
@@ -767,7 +794,7 @@ export default function AboutPage() {
 
                         {/* Read More button on the right */}
                         <div className="shrink-0 pt-1 md:pt-0">
-                          <span className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full bg-red-50 group-hover:bg-[#e6000a] text-[#e6000a] group-hover:text-white font-bold text-xs sm:text-sm transition-all duration-300 shadow-2xs group-hover:shadow-md border border-red-200/60 group-hover:border-transparent">
+                          <span className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-xl bg-red-50 group-hover:bg-[#e6000a] text-[#e6000a] group-hover:text-white font-bold text-xs sm:text-sm transition-all duration-300 shadow-2xs group-hover:shadow-md border border-red-200/60 group-hover:border-transparent">
                             <span>Read more</span>
                             <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
                           </span>
