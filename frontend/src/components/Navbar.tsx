@@ -347,7 +347,7 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
                                         />
                                         <div className="flex flex-col text-left">
                                           <span
-                                            className={`text-[12.5px] leading-tight transition-colors duration-200 ${
+                                            className={`text-[14px] leading-tight transition-colors duration-200 ${
                                               subItem.isSubItem
                                                 ? "font-medium text-gray-600 group-hover/sub:text-[#e6000a] group-hover/sub:font-semibold"
                                                 : "font-semibold text-gray-800 group-hover/sub:text-[#e6000a] group-hover/sub:font-bold"
@@ -356,7 +356,7 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
                                             {subItem.label}
                                           </span>
                                           {subItem.description && (
-                                            <span className="text-[10.5px] text-gray-500 leading-snug group-hover/sub:text-gray-700 mt-0.5 font-sans font-normal">
+                                            <span className="text-[12px] text-gray-500 leading-snug group-hover/sub:text-gray-700 mt-0.5 font-sans font-normal">
                                               {subItem.description}
                                             </span>
                                           )}
