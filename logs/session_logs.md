@@ -220,5 +220,42 @@ Chronological record of developer-agent interactions, user requirements, plannin
   - `npm run lint`: **0 errors, 0 warnings**.
   - `npx tsc --noEmit`: **0 errors**.
 
+---
 
-
+## 📅 Session 05 — Mega-Menu Typography Enrichment, Dynamic Height Animation, Scrollbar Eradication & Breadcrumb Red Border
+- **Timestamp**: 2026-09-12 (Local Time)
+- **User Intent & Chat Evolution**:
+  1. **Documentation & GitHub Push**: User initially requested updating log files and pushing recent work to GitHub.
+  2. **Sub-Option Typography Scaling**: User asked: "dropdown menu er sub option gular short details er text gular size boro korbo kivabe?" and "supoption gular text size boro korbo kivabe?".
+  3. **Constitutional Depth**: User requested making short details richer, more detailed, and meaningful ("sub option gular short details ta aro ektu detailed and meaningful koro").
+  4. **Spotlight Column Vertical Centering**: User requested vertically centering the left spotlight section inside the mega-menu drawer ("side er eyta mega dropdown er center e place koro").
+  5. **CRC Red Divider**: User asked to change the vertical divider separating the spotlight column and categories to official CRC red ("ey line tar color crc red koro").
+  6. **Height Mismatch & Side Info Misalignment**: User pointed out: "about crc er mega dropdown er content onujai height thik ache but program & activities er content onujai height to onek besi. sathe side er info gula o center placed nai".
+  7. **Smooth Height Transition**: User requested: "mega dropdown er height ta jokhn choto hosse ekoption theke onnno option e tokhn ekta smooth minimul animation daw".
+  8. **Unwanted Scrollbar Ingestion**: User asked with screenshot: "je dropdown menu er height choto sekhane erokom scroll button astese. is it necessary?".
+  9. **Breadcrumb Red Bottom Border**: User instructed with screenshot: "navbar er niche jermon red ekta border ache same color er border ta breadcrumb er niche o daw. breadcrumb er nicher border ta thin hobe." and inquired how to adjust thickness ("breadcrumb er nicher border tar thickness kivabe komabo ba barabo").
+  10. **GitHub Push**: User confirmed: "ok github e push koro".
+- **Actions Completed**:
+  - **Typography & Details Enrichment (`Navbar.tsx` & `navigation.ts`)**:
+    - Scaled sub-option title text from `text-xs` (12px) to `text-[14px] lg:text-[15px]` font-black.
+    - Scaled sub-option description text from `text-[10px]` to `text-[12px]` leading-normal.
+    - Expanded all 14 sub-options across `About`, `Our history`, `How we run`, and `Symbol & Flag` with rich, authentic, and substantive constitutional details (15–20 words each).
+  - **Left Spotlight Centering & CRC Red Divider (`Navbar.tsx`)**:
+    - Centered left spotlight vertically using `self-center my-auto` and `flex items-center`.
+    - Styled the vertical divider line to official CRC Red (`#e6000a`): `w-px bg-[#e6000a] self-stretch min-h-[140px]`.
+  - **Dynamic Content-Fitted Menu Height (`Navbar.tsx`)**:
+    - Discovered that stacking all mega-menu panes in `col-start-1 row-start-1` of a CSS Grid locked the row height to the tallest menu (`About CRC`, ~652px), artificially stretching `Programs & Activities` (~217px) with 435px of dead white space.
+    - Decoupled inactive panes into `absolute top-0 left-0 right-0 ... invisible` while rendering the active pane with `relative` flow, allowing the container to hug the exact height of the active tab.
+  - **Smooth Height Transition Physics (`Navbar.tsx` & `globals.css`)**:
+    - Added reactive DOM height measurement using `drawerHeight` state and individual pane element refs.
+    - Declared `height 0.35s cubic-bezier(0.16, 1, 0.3, 1)` on `.mega-menu-drawer` in `globals.css`.
+    - Verified smooth 350ms height expansion/contraction across tabs with zero layout jitter.
+  - **Unwanted Vertical Scrollbar Eradication (`Navbar.tsx`)**:
+    - Root cause: Inactive sibling panes inside a container with `overflow-y-auto` still expanded the scroll container's `scrollHeight` beyond `clientHeight`, prompting Windows browsers to render vertical scroll arrows.
+    - Added an `isOverflowingViewport` guard (`drawerHeight > window.innerHeight - 90`), conditionally switching between `overflow-y-auto` and `overflow-hidden`.
+  - **Breadcrumb Red Bottom Border (`Navbar.tsx`)**:
+    - Updated breadcrumb bar bottom border from generic gray `border-b border-gray-200/90` to matching **CRC Red** `border-[#e6000a]`.
+    - Documented thickness control (`border-b`, `border-b-2`, `border-b-[0.5px]`, `border-[#e6000a]/80`), with user setting thickness to `border-b-2`.
+- **Verification**:
+  - Headless Puppeteer verification confirmed `hasVerticalScrollbar: false`, `overflowY: hidden`, smooth 350ms height transition, and `borderBottomColor: "rgb(230, 0, 10)"`.
+  - `npm run lint`: **0 errors, 0 warnings**.

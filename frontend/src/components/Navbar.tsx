@@ -26,6 +26,8 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
   const [searchOpen, setSearchOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [drawerHeight, setDrawerHeight] = useState<number | null>(null);
+  const contentRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const isMegaOpen = Boolean(activeDropdown && megaMenus[activeDropdown]);
   const activeMegaKey = (activeDropdown && megaMenus[activeDropdown]) ? activeDropdown : displayedMenuKey;
@@ -33,6 +35,35 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
     ? megaMenuKeys.indexOf(activeMegaKey as (typeof megaMenuKeys)[number])
     : 0;
   const currentMegaMenu = megaMenus[activeMegaKey] || null;
+
+  // Measure content height for buttery smooth dynamic height animation between tabs
+  useEffect(() => {
+    if (activeMegaKey && contentRefs.current[activeMegaKey]) {
+      const el = contentRefs.current[activeMegaKey];
+      if (el) {
+        setDrawerHeight(el.offsetHeight);
+      }
+    }
+  }, [activeMegaKey, isMegaOpen]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (activeMegaKey && contentRefs.current[activeMegaKey]) {
+        const el = contentRefs.current[activeMegaKey];
+        if (el) {
+          setDrawerHeight(el.offsetHeight);
+        }
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [activeMegaKey]);
+
+  const isOverflowingViewport = Boolean(
+    drawerHeight &&
+    typeof window !== "undefined" &&
+    drawerHeight > window.innerHeight - 90
+  );
 
   const handleMouseEnterItem = (id: string | null) => {
     if (timeoutRef.current) {
@@ -254,25 +285,35 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
               isMegaOpen ? "is-open" : ""
             }`}
           >
-            <div className="w-full bg-white shadow-[0_25px_60px_-15px_rgba(0,0,0,0.18)] border-b border-gray-200 mega-menu-drawer max-h-[calc(100vh-90px)] overflow-y-auto overflow-x-hidden">
-              <div className="max-w-[1536px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-3.5 lg:py-4.5 grid grid-cols-1 grid-rows-1 items-start">
+            <div
+              style={{
+                height: isMegaOpen && drawerHeight ? `${drawerHeight}px` : undefined,
+              }}
+              className={`w-full bg-white shadow-[0_25px_60px_-15px_rgba(0,0,0,0.18)] border-b border-gray-200 mega-menu-drawer max-h-[calc(100vh-90px)] overflow-x-hidden ${
+                isOverflowingViewport ? "overflow-y-auto" : "overflow-hidden"
+              }`}
+            >
+              <div className="relative w-full">
                 {megaMenuKeys.map((key, index) => {
                   const menu = megaMenus[key];
                   const isCurrent = key === activeMegaKey;
                   const isBefore = index < activeIdx;
                   const translateClass = isCurrent
-                    ? "translate-x-0 opacity-100 pointer-events-auto visible"
+                    ? "relative translate-x-0 opacity-100 pointer-events-auto visible"
                     : isBefore
-                    ? "-translate-x-6 opacity-0 pointer-events-none invisible"
-                    : "translate-x-6 opacity-0 pointer-events-none invisible";
+                    ? "absolute top-0 left-0 right-0 -translate-x-6 opacity-0 pointer-events-none invisible"
+                    : "absolute top-0 left-0 right-0 translate-x-6 opacity-0 pointer-events-none invisible";
 
                   return (
                     <div
                       key={key}
-                      className={`col-start-1 row-start-1 w-full flex items-start gap-8 lg:gap-12 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${translateClass}`}
+                      ref={(el) => {
+                        contentRefs.current[key] = el;
+                      }}
+                      className={`w-full max-w-[1536px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-3.5 lg:py-4.5 flex items-center gap-8 lg:gap-12 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${translateClass}`}
                     >
-                      {/* Left Spotlight Column */}
-                      <div className="w-[280px] lg:w-[320px] shrink-0 text-left">
+                      {/* Left Spotlight Column (Vertically centered) */}
+                      <div className="w-[280px] lg:w-[320px] shrink-0 text-left self-center my-auto">
                         <h3 className="font-heading font-black text-xl lg:text-[23px] text-[#0d0f14] leading-tight tracking-tight">
                           {menu.spotlight.title}
                         </h3>
@@ -291,8 +332,8 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
                         </div>
                       </div>
 
-                      {/* Subtle Vertical Divider Line */}
-                      <div className="w-px bg-gray-200/80 self-stretch min-h-[140px]" aria-hidden="true" />
+                      {/* Vertical Divider Line (CRC Red) */}
+                      <div className="w-px bg-[#e6000a] self-stretch min-h-[140px]" aria-hidden="true" />
 
                       {/* Right Category Area */}
                       {menu.columns.some((col) => col.items && col.items.length > 0) ? (
@@ -470,7 +511,7 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
         if (!activeBreadcrumbs || activeBreadcrumbs.length === 0) return null;
 
         return (
-          <div className="relative z-10 bg-[#f4f2ee]/95 backdrop-blur-md border-b border-gray-200/90 shadow-xs transition-colors">
+          <div className="relative z-10 bg-[#f4f2ee]/95 backdrop-blur-md border-b-2 border-[#e6000a] shadow-xs transition-colors">
             <div className="max-w-[1536px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-between">
               <Breadcrumb items={activeBreadcrumbs} variant="bar" />
               <span className="hidden sm:inline-block text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">

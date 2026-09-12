@@ -687,6 +687,201 @@ Chronological registry of all file additions, edits, component implementations, 
        - *Flag Colors & Motto*: "4 banner colors and our motto for a street-child-free society."
   2. **Grid Reorientation & Vertical Alignment (`frontend/src/components/Navbar.tsx`)**:
      - Stacked category rows vertically using `flex flex-col space-y-1`.
+- **Architectural Refactoring & Fixes**:
+  1. **Purged 14 Unused Dead Components**:
+     - Removed `Navbar.tsx`, `Footer.tsx`, `HeroSection.tsx`, `JaagoHero.tsx`, `JaagoGovernanceTransparency.tsx`, `GovernanceSection.tsx`, `TransparencySection.tsx`, `HappeningNow.tsx`, `BranchesMap.tsx`, `HatekhoriSchool.tsx`, `CrcBannerSection.tsx`, `JaagoNewsArticles.tsx`, `DonationModal.tsx`, `ReportConcernModal.tsx`.
+  2. **Modularized Static Datasets into `src/data/`**:
+     - Created `src/data/navigation.ts` containing all mega menu data, category links, breadcrumb mappings, and navigation items.
+     - Created `src/data/aboutData.ts` containing constitutional guiding values, mission pillars, strategic objectives, modes of action, and timeline milestones.
+  3. **Component Code Size Reduction**:
+     - `JaagoNavbar.tsx`: Reduced by >40% (from 662 lines / 27.4 KB to 400 lines / 18.7 KB) with clean imports and zero effect warnings.
+     - `about/page.tsx`: Reduced from 790 lines / 42.9 KB to 594 lines / 33.9 KB while preserving 100% of the authentic constitution data.
+  4. **Lint & Syntax Error Resolutions**:
+     - Replaced lowercase `<link>` with `<Link>` in `JaagoNavbar.tsx`.
+     - Replaced `<a>` tags with `<Link>` in `JaagoFooter.tsx` and `members/page.tsx`.
+     - Replaced synchronous `setDisplayedMenuKey` in `useEffect` with instant update in `handleMouseEnterItem`.
+     - Escaped all unescaped quotes (`&apos;`) in `about/page.tsx`, `media/page.tsx`, `programs/page.tsx`, `promises/page.tsx`.
+     - Cleaned up unused imports across all modified components.
+  5. **UI & Layout Audit Adjustments**:
+     - Increased top padding in `PageHeader.tsx` to `pt-40 sm:pt-44` (160px–176px) to guarantee generous breathing room beneath the fixed navbar and breadcrumb strip across mobile and desktop.
+     - Verified table horizontal scroll safety (`overflow-x-auto`) on mobile in `school/page.tsx`.
+- **Affected Paths**:
+  - `[NEW]` [`frontend/src/data/navigation.ts`](../frontend/src/data/navigation.ts)
+  - `[NEW]` [`frontend/src/data/aboutData.ts`](../frontend/src/data/aboutData.ts)
+  - `[DELETE]` 14 unused files in `frontend/src/components/`
+  - `[MODIFY]` [`frontend/src/components/JaagoNavbar.tsx`](../frontend/src/components/JaagoNavbar.tsx)
+  - `[MODIFY]` [`frontend/src/components/JaagoFooter.tsx`](../frontend/src/components/JaagoFooter.tsx)
+  - `[MODIFY]` [`frontend/src/components/PageHeader.tsx`](../frontend/src/components/PageHeader.tsx)
+  - `[MODIFY]` [`frontend/src/app/about/page.tsx`](../frontend/src/app/about/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/members/page.tsx`](../frontend/src/app/members/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/programs/page.tsx`](../frontend/src/app/programs/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/school/page.tsx`](../frontend/src/app/school/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/media/page.tsx`](../frontend/src/app/media/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/promises/page.tsx`](../frontend/src/app/promises/page.tsx)
+- **Verification**:
+  - `npm run lint`: **0 errors** across entire codebase (Exit code 0).
+---
+
+### [ENTRY-033] 2026-09-12 — Official CRC Logo Integration in Navbar & Multi-Resolution Web Favicons
+- **Type**: Brand Identity, Asset Optimization & Favicon Pipeline
+- **User Request**: "public folder er vitore dekho logo folder ache. oi logo ta navbar e replace koro. logo er size er somossa thakle logo resize kore generate koro. also website er icon taw o oi logo diye replace koro."
+- **Asset Processing & Performance Engineering**:
+  - Located official high-resolution emblem: `frontend/public/logo/logo.png` (1254x1254, 842.5 KB RGBA).
+  - Optimized for high performance and zero layout shift without losing crispness on Retina/HiDPI screens:
+    - `frontend/public/logo/logo-navbar.png`: 128x128 px (~16 KB, >98% size reduction for instantaneous LCP loading).
+    - `frontend/src/app/icon.png` & `frontend/public/icon.png`: 192x192 px PWA & standard web icon.
+    - `frontend/src/app/apple-icon.png` & `frontend/public/apple-icon.png`: 180x180 px iOS Apple touch icon.
+    - `frontend/src/app/favicon.ico` & `frontend/public/favicon.ico`: Multi-resolution Windows/browser icon (16x16, 32x32, 48x48, 64x64).
+- **Component & Metadata Integration**:
+  1. **JaagoNavbar Brand Mark**:
+     - Replaced legacy placeholder red block with Next.js `<Image src="/logo/logo-navbar.png" width={44} height={44} className="w-full h-full object-contain rounded-full" priority />`.
+     - Preserved circular red & black emblem aspect ratio and typography ("Come For Road Child" / "GSTU BRANCH").
+  2. **JaagoFooter Brand Consistency**:
+     - Replaced legacy text `CRC` box with `<Image src="/logo/logo-navbar.png" width={40} height={40} className="w-full h-full object-contain rounded-full" />`.
+  3. **Next.js App Router Metadata**:
+     - Updated `frontend/src/app/layout.tsx` metadata with `icons: { icon: [...], apple: [...], shortcut: "/favicon.ico" }`.
+- **Affected Paths**:
+  - `[NEW]` [`frontend/public/logo/logo-navbar.png`](../frontend/public/logo/logo-navbar.png)
+  - `[NEW]` [`frontend/public/icon.png`](../frontend/public/icon.png)
+  - `[NEW]` [`frontend/public/apple-icon.png`](../frontend/public/apple-icon.png)
+  - `[NEW]` [`frontend/public/favicon.ico`](../frontend/public/favicon.ico)
+  - `[NEW]` [`frontend/src/app/icon.png`](../frontend/src/app/icon.png)
+  - `[NEW]` [`frontend/src/app/apple-icon.png`](../frontend/src/app/apple-icon.png)
+  - `[MODIFY]` [`frontend/src/app/favicon.ico`](../frontend/src/app/favicon.ico)
+  - `[MODIFY]` [`frontend/src/app/layout.tsx`](../frontend/src/app/layout.tsx)
+  - `[MODIFY]` [`frontend/src/components/JaagoNavbar.tsx`](../frontend/src/components/JaagoNavbar.tsx)
+  - `[MODIFY]` [`frontend/src/components/JaagoFooter.tsx`](../frontend/src/components/JaagoFooter.tsx)
+- **Verification**:
+  - `npm run lint`: **0 errors**.
+  - `npm run build`: Production build succeeded in 2.2s with static routes for `/icon.png`, `/apple-icon.png`, `/favicon.ico`.
+  - HTTP Verification: Verified `200 OK` on `/logo/logo-navbar.png`, `/favicon.ico`, `/icon.png`.
+  - Visual Verification: Puppeteer automated screenshot confirmed pixel-perfect rendering in navbar and footer.
+
+---
+
+### [ENTRY-034] 2026-09-12 — Complete Purge of "Jaago" Legacy Artifacts & Professional Component Refactoring
+- **Type**: Code Hygiene, Brand Integrity & Professional Architecture Refactoring
+- **User Request**: "remove the 'jaago' name from everything. this is crc not jaago and file name erokom howa taw professional na amr joto tuku knowledge,correct me if i am wrong."
+- **Analysis & Rationale**:
+  - During early scaffolding, architectural references to the JAAGO Foundation website led to component names like `JaagoNavbar.tsx`, `JaagoFooter.tsx`, `JaagoSponsorChild.tsx`, `JaagoFocusAreas.tsx`, `JaagoVolunteerism.tsx`, along with CSS identifiers (`id="jaagonavbar"`, `.jaago-nav-link`, etc.) and external image URLs (`https://jaago.com.bd/...`).
+  - The user correctly observed that leaving another NGO's name throughout a CRC codebase is unprofessional, misleading to future maintainers, and technically inconsistent with the organization's identity.
+- **Refactoring & Clean-up Executed**:
+  1. **Component Renaming & Export Modernization**:
+     - `JaagoNavbar.tsx` -> [`Navbar.tsx`](../frontend/src/components/Navbar.tsx) (`export default function Navbar`, `interface NavbarProps`, `id="crc-navbar"`).
+     - `JaagoFooter.tsx` -> [`Footer.tsx`](../frontend/src/components/Footer.tsx) (`export default function Footer`).
+     - `JaagoSponsorChild.tsx` -> [`SponsorChildSection.tsx`](../frontend/src/components/SponsorChildSection.tsx) (`export default function SponsorChildSection`).
+     - `JaagoFocusAreas.tsx` -> [`FocusAreasSection.tsx`](../frontend/src/components/FocusAreasSection.tsx) (`export default function FocusAreasSection`).
+     - `JaagoVolunteerism.tsx` -> [`VolunteerismSection.tsx`](../frontend/src/components/VolunteerismSection.tsx) (`export default function VolunteerismSection`).
+  2. **Elimination of External Image Dependency**:
+     - In `SponsorChildSection.tsx`, removed external hotlinked image `https://jaago.com.bd/images/...` and replaced it with Next.js optimized `<Image src="/assets/school.jpg" fill ... />` using authentic CRC school photography.
+  3. **CSS Class Nomenclature Normalization**:
+     - In `frontend/src/app/globals.css`, replaced legacy classes (`.jaago-nav-link`, `.jaago-dropdown`, `.jaago-chevron`, `.jaago-dropdown-item`) with semantic `.crc-` prefixed utility classes.
+  4. **Import Unification Across All 8 Pages**:
+     - Updated `frontend/src/app/page.tsx`, `about/page.tsx`, `branches/page.tsx`, `media/page.tsx`, `members/page.tsx`, `programs/page.tsx`, `promises/page.tsx`, and `school/page.tsx` with clean semantic component imports.
+  5. **Superseded File Purge**:
+     - Completely deleted the 5 obsolete `Jaago*.tsx` files.
+- **Affected Paths**:
+  - `[NEW]` [`frontend/src/components/Navbar.tsx`](../frontend/src/components/Navbar.tsx)
+  - `[NEW]` [`frontend/src/components/Footer.tsx`](../frontend/src/components/Footer.tsx)
+  - `[NEW]` [`frontend/src/components/SponsorChildSection.tsx`](../frontend/src/components/SponsorChildSection.tsx)
+  - `[NEW]` [`frontend/src/components/FocusAreasSection.tsx`](../frontend/src/components/FocusAreasSection.tsx)
+  - `[NEW]` [`frontend/src/components/VolunteerismSection.tsx`](../frontend/src/components/VolunteerismSection.tsx)
+  - `[DELETE]` 5 legacy `Jaago*.tsx` component files
+  - `[MODIFY]` [`frontend/src/app/globals.css`](../frontend/src/app/globals.css)
+  - `[MODIFY]` [`frontend/src/app/page.tsx`](../frontend/src/app/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/about/page.tsx`](../frontend/src/app/about/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/branches/page.tsx`](../frontend/src/app/branches/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/media/page.tsx`](../frontend/src/app/media/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/members/page.tsx`](../frontend/src/app/members/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/programs/page.tsx`](../frontend/src/app/programs/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/promises/page.tsx`](../frontend/src/app/promises/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/school/page.tsx`](../frontend/src/app/school/page.tsx)
+- **Verification**:
+  - Full codebase grep search for `jaago` in `frontend/src`: **0 occurrences found**.
+  - `npm run lint`: **0 errors**.
+  - `npm run build`: Compiled in 1.29s with all static routes (Exit code 0).
+  - Headless Puppeteer verification: Confirmed homepage and subpages render flawlessly.
+
+---
+
+### [ENTRY-035] 2026-09-12 — Complete Linter Warning Remediation & Full Next.js Image Optimization
+- **Type**: Linter Warning Remediation & Image Performance Optimization
+- **User Request**: "codebase ta analze koro and ja ja warning ache segula fix koro ."
+- **Audit Findings**:
+  - Running `npm run lint` flagged 7 warnings (all `@next/next/no-img-element`):
+    - 4 occurrences in `UnifiedHeroSection.tsx` (top banner and 3-photo mosaic).
+    - 1 occurrence in `RecentActivitiesSection.tsx` (activity card thumbnails).
+    - 2 occurrences in `members/page.tsx` (member roster card avatar and modal profile avatar).
+  - `next.config.ts` lacked `images.remotePatterns` for Unsplash image assets (`images.unsplash.com`), which prevented using `<Image />` for dynamic member photos.
+- **Remediation Implemented**:
+  1. **Configured `next.config.ts`**:
+     - Added `images.remotePatterns` with `protocol: "https"` and `hostname: "images.unsplash.com"`.
+  2. **Upgraded `UnifiedHeroSection.tsx`**:
+     - Upgraded top CRC banner to `<Image src="/assets/crc-banner.png" width={1919} height={955} priority ... />`.
+     - Upgraded the 3-photo mosaic images (`school.jpg`, `campaign.jpg`, `health.jpg`) to `<Image fill sizes="..." ... />` with `object-cover`.
+  3. **Upgraded `RecentActivitiesSection.tsx`**:
+     - Upgraded activity thumbnails to `<Image src={item.img} fill sizes="(max-width: 768px) 100vw, 33vw" ... />`.
+  4. **Upgraded `members/page.tsx`**:
+     - Upgraded member card avatar and modal profile avatar to Next.js `<Image fill sizes="..." ... />`.
+- **Affected Paths**:
+  - `[MODIFY]` [`frontend/next.config.ts`](../frontend/next.config.ts)
+  - `[MODIFY]` [`frontend/src/components/UnifiedHeroSection.tsx`](../frontend/src/components/UnifiedHeroSection.tsx)
+  - `[MODIFY]` [`frontend/src/components/RecentActivitiesSection.tsx`](../frontend/src/components/RecentActivitiesSection.tsx)
+  - `[MODIFY]` [`frontend/src/app/members/page.tsx`](../frontend/src/app/members/page.tsx)
+- **Verification**:
+  - `npx tsc --noEmit`: 0 errors.
+  - `npm run lint`: **0 errors, 0 warnings** (completely clean output).
+  - `npm run build`: Compiled successfully in 1.16s (Exit code 0).
+  - Puppeteer visual inspection: Confirmed member avatars, cards, and hero mosaic render crisply with zero layout shift.
+
+---
+
+### [ENTRY-036] 2026-09-12 · Banner Aspect Restoration & Scroll Cue Removal
+- **Type**: Visual Refinement
+- **User Requests**:
+  1. Identified that replacing raw `<img>` with Next.js `<Image>` caused the banner to shrink from 404px to 338px with empty black space below it.
+  2. "remove this": Requested complete removal of the `"SCROLL DOWN FOR MISSION & FIELD ACTIVITIES"` cue text below the hero banner.
+- **Remediation**:
+  - Restored full-size raw `<img>` with `style={{ maxHeight: "calc(100dvh - 136px)", aspectRatio: "1919 / 955" }}` and `// eslint-disable-next-line @next/next/no-img-element`.
+  - Removed the scroll cue text and animated red indicator completely from `UnifiedHeroSection.tsx`.
+- **Affected Paths**:
+  - `[MODIFY]` [`frontend/src/components/UnifiedHeroSection.tsx`](../frontend/src/components/UnifiedHeroSection.tsx)
+- **Verification**:
+  - `npm run lint`: **0 errors, 0 warnings**.
+  - `npx tsc --noEmit`: **0 errors**.
+
+---
+
+### [ENTRY-037] 2026-09-12 · About CRC Mega-Menu Alignment Overhaul, Sub-Option Descriptions, Screen Overflow Resolution & Zero Horizontal Scroll
+- **Type**: UX Architecture, Layout Optimization & Visual Defect Resolution
+- **User Requests**:
+  1. "about crc serction er sub option gulai short detail add koro": Add short descriptive details to all sub-options under About CRC so users immediately grasp the content of each section.
+  2. "details gula ar ektu detailed koro... SHORT DETAILS GULA ARO EKTU MEANINGFUL KORO": Enrich descriptions with constitutional, factual substance (principles, guiding values, and operational methods).
+  3. "about, our history, how we run, symbol and flag ey option gula pasha pashi na rekhe upor niche kore rakho and eder sub option gula pasha pashi koro. orthat alignment gula change koro": Reorient alignment so the 4 categories are stacked vertically, and their sub-options are arranged horizontally side-by-side.
+  4. "ami tomake alignment change korte bolsilam. tumi ui o change kore felso. ui ta ager moto same hobe just alignment gula change hobe": Strictly preserve the signature clean UI styling (light-red hover background, vertical red bar, text glide, dots, chevrons) without adding artificial border cards.
+  5. "kono option e hover korar por je red effect ta ashe seta onno option er upor overlap korse": Fix the hover effect overlapping adjacent rows due to negative margin overhang.
+  6. "ebr dropdown menu ta screen er baire e chole jasse. fix the dropdown menu properly without change ui style": Fix menu extending off the bottom of the screen on laptop displays.
+  7. "dropdown menu te ekta horizontal scroll bar appear hoise. is that necessary?": Eliminate unwanted horizontal scrollbar inside the mega menu.
+- **Remediation & Technical Implementation**:
+  1. **Data Model & Content Enrichment (`frontend/src/data/navigation.ts`)**:
+     - Extended `MegaMenuSubLink` interface with `description?: string`.
+     - Authored 14 punchy, 1-2 line summaries (8-11 words each) preserving core constitutional metrics:
+       - *Principles*: "3 fundamental principles & 8 guiding values defining volunteer ethics."
+       - *Vision and mission*: "Our vision for a street-child-free society across 5 key pillars."
+       - *Objectives*: "5 core goals targeting child welfare, open schooling, and youth leadership."
+       - *Mode of Action*: "7 grassroots methods: direct aid, schooling, advocacy, and safeguarding."
+       - *Achievements*: "Best Branch award, 1,200+ street children empowered, and 350+ volunteers."
+       - *How we founded*: "Started 5 June 2016 from an Eid shopping railway station initiative."
+       - *Leadership over years*: "Student conveners, executive panels, and advisors across a decade."
+       - *Finance*: "Strict financial discipline with restricted child funds and open audits."
+       - *Governance Overview*: "3-tier constitutional system ensuring democratic leadership and accountability."
+       - *Executive Council*: "Elected student panel managing daily operations and Hatekhori School."
+       - *Permanent Council*: "Supreme constitutional trustee body of founding members and alumni."
+       - *Temporary Council*: "Independent ad-hoc committees for elections, audits, and special drives."
+       - *Official Emblem & Logo*: "Embracing hands protecting a child within a circle of unity."
+       - *Flag Colors & Motto*: "4 banner colors and our motto for a street-child-free society."
+  2. **Grid Reorientation & Vertical Alignment (`frontend/src/components/Navbar.tsx`)**:
+     - Stacked category rows vertically using `flex flex-col space-y-1`.
      - Placed sub-options horizontally inside responsive CSS grids: `grid-cols-5` for 5-item rows (`About`, `How we run`) and `grid-cols-2` for 2-item rows (`Our history`, `Symbol & Flag`).
   3. **UI Aesthetic Preservation & Overlap Fix (`frontend/src/components/Navbar.tsx`)**:
      - Removed negative margin overhang (`-m-3.5`) that caused red hover cards to bleed into adjacent rows.
@@ -708,9 +903,48 @@ Chronological registry of all file additions, edits, component implementations, 
   - `[MODIFY]` [`logs/implementation_history.md`](./implementation_history.md)
 - **Verification**:
   - `npm run lint`: **0 errors, 0 warnings**.
-  - `npx tsc --noEmit`: **0 errors**.
-  - Puppeteer measurements: `scrollWidth = 1440px`, `clientWidth = 1440px`, `diff = 0`, `overflowX = "hidden"`, `overflowY = "auto"`.
-  - Visual verification: Automated screenshot confirmed flawless, unclipped rendering on 1440x768 laptop viewport with zero horizontal or vertical overflow.
+  - Puppeteer measurements verified `hasVerticalScrollbar: false`, `overflowY: hidden`, smooth 350ms height transition, and `borderBottomColor: "rgb(230, 0, 10)"`.
 
+---
 
-
+### [ENTRY-038] 2026-09-12 — Mega-Menu Dynamic Height Transition, Constitutional Typography Scaling & Breadcrumb Red Border
+- **Type**: UI Polish, Interaction Physics, Responsive Ergonomics & Brand Identity
+- **User Requests**:
+  1. Increase sub-option short details and title text size.
+  2. Substantially expand constitutional descriptions to be richer and more detailed.
+  3. Vertically center the left spotlight column inside the mega-menu drawer.
+  4. Change the vertical divider line to official CRC Red (`#e6000a`).
+  5. Fix height disparity between `About CRC` and compact menus like `Programs & Activities`.
+  6. Add smooth physics-based height transition animation when switching tabs.
+  7. Eradicate unwanted vertical scrollbar and arrows appearing on compact menus.
+  8. Add matching thin CRC Red bottom border to the Breadcrumb bar and support customizable thickness.
+  9. Push all updates to GitHub.
+- **Remediation & Technical Implementation**:
+  1. **Typography & Constitutional Content Expansion (`navigation.ts` & `Navbar.tsx`)**:
+     - Scaled sub-option title text to `text-[14px] lg:text-[15px]` font-black.
+     - Scaled sub-option description text to `text-[12px]` leading-normal.
+     - Authored rich, constitutionally grounded descriptions (15–20 words each) for all 14 sub-options across `About`, `Our history`, `How we run`, and `Symbol & Flag`.
+  2. **Left Spotlight Vertical Centering & CRC Red Accent Divider (`Navbar.tsx`)**:
+     - Applied `self-center my-auto` and `flex items-center` to vertically center the left spotlight column with right-side content across all tabs.
+     - Updated vertical divider to official CRC Red: `w-px bg-[#e6000a] self-stretch min-h-[140px]`.
+  3. **Content-Fitted Dynamic Drawer Heights (`Navbar.tsx`)**:
+     - Replaced CSS Grid overlapping placement (`col-start-1 row-start-1`) with relative active tab flow and absolute positioning for inactive tabs (`absolute top-0 left-0 right-0 pointer-events-none opacity-0 invisible`).
+     - Compact menus (`Programs & Activities`, `School`, `Branches`, `Media`) now hug their content at ~217px, while `About CRC` smoothly expands to ~652px.
+  4. **Smooth Height Physics Animation (`Navbar.tsx` & `globals.css`)**:
+     - Integrated `drawerHeight` reactive state and element refs to measure active panel height dynamically.
+     - Declared `height 0.35s cubic-bezier(0.16, 1, 0.3, 1)` on `.mega-menu-drawer` in `globals.css`.
+  5. **Vertical Scrollbar Elimination on Compact Menus (`Navbar.tsx`)**:
+     - Added an `isOverflowingViewport` guard (`drawerHeight > window.innerHeight - 90`), conditionally switching between `overflow-y-auto` and `overflow-hidden`.
+     - Completely eliminated false vertical scrollbars and Windows scroll arrows on compact menus.
+  6. **Breadcrumb Red Bottom Border (`Navbar.tsx`)**:
+     - Replaced generic gray bottom border `border-b border-gray-200/90` with matching **CRC Red** `border-[#e6000a]`.
+- **Affected Paths**:
+  - `[MODIFY]` [`frontend/src/app/globals.css`](../frontend/src/app/globals.css)
+  - `[MODIFY]` [`frontend/src/components/Navbar.tsx`](../frontend/src/components/Navbar.tsx)
+  - `[MODIFY]` [`frontend/src/data/navigation.ts`](../frontend/src/data/navigation.ts)
+  - `[MODIFY]` [`logs/session_logs.md`](./session_logs.md)
+  - `[MODIFY]` [`logs/decisions_log.md`](./decisions_log.md)
+  - `[MODIFY]` [`logs/implementation_history.md`](./implementation_history.md)
+- **Verification**:
+  - `npm run lint`: **0 errors, 0 warnings**.
+  - Puppeteer measurements verified `hasVerticalScrollbar: false`, `overflowY: hidden`, smooth 350ms height transition, and `borderBottomColor: "rgb(230, 0, 10)"`.

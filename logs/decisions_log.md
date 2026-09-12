@@ -363,6 +363,29 @@ Record of key decisions, trade-offs evaluated, and consensus reached between use
   - Verified programmatic metric equality: `scrollWidth == clientWidth` (1440px, diff: 0).
   - Established an architectural invariant: **Navigation dropdowns must never render horizontal scrollbars under any circumstance.**
 - **Status**: Accepted & Implemented.
+---
 
+### [ADL-031] Dynamic Mega-Menu Content-Hugging Height & Smooth Height Transition Physics
+- **Date**: 2026-09-12
+- **Context**: 
+  - Multiple mega-menu panels (`About CRC`, `Programs & Activities`, `CRC School`, `Branches`, `Media & Gallery`) were initially positioned using CSS Grid overlap (`col-start-1 row-start-1`).
+  - Because CSS Grid row track height is determined by the tallest occupant, the 652px height of `About CRC` forced the entire drawer to 652px even when hovering over compact tabs like `Programs & Activities` (~217px), generating 435px of vacant white space and uncentered content.
+- **Decision**:
+  - **Decoupled Grid Height**: Transformed non-active sibling tabs to `absolute top-0 left-0 right-0 pointer-events-none opacity-0 invisible`, while the active tab retains natural document flow `relative`.
+  - **Dynamic Height Measurement**: Added reactive height calculation using element refs and `drawerHeight` state on `activeMegaKey` change.
+  - **Cubic-Bezier Physics Transition**: Declared `height 0.35s cubic-bezier(0.16, 1, 0.3, 1)` directly on `.mega-menu-drawer` in `globals.css`.
+  - **Result**: Switching tabs causes the drawer to smoothly glide up or down to snugly wrap each menu's content without abrupt snapping.
+- **Status**: Accepted & Implemented.
+---
 
-
+### [ADL-032] Conditional Viewport Overflow & Vertical Scrollbar Eradication on Compact Menus
+- **Date**: 2026-09-12
+- **Context**: 
+  - In Windows Chromium environments, hovering over compact menus like `Programs & Activities` caused an unwanted vertical scrollbar and scroll arrows to appear on the right edge.
+  - Root cause: An absolute child with `visibility: hidden` (the taller `About CRC` panel at 652px) inside an `overflow-y-auto` container still expanded the scroll container's `scrollHeight` beyond its 217px `clientHeight`.
+- **Decision**:
+  - Implemented an intelligent viewport overflow guard:
+    `isOverflowingViewport = drawerHeight > window.innerHeight - 90`.
+  - Dynamically apply `isOverflowingViewport ? "overflow-y-auto" : "overflow-hidden"`.
+  - Completely prevents false vertical scrollbars from rendering on compact menus, while preserving graceful scrollability on ultra-low viewport heights or high browser zoom.
+- **Status**: Accepted & Implemented.
