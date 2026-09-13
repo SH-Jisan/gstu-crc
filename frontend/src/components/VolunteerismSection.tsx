@@ -14,8 +14,13 @@ export default function VolunteerismSection() {
           Volunteerism at CRC
         </h2>
         <p className="text-lg md:text-xl text-center mt-5 mb-10 text-gray-200 font-normal leading-relaxed">
-          With a mission to eliminate child destitution through the power of education, we have mobilized more than{" "}
-          <strong className="text-[#e6000a] font-bold">1,500+ university student changemakers</strong> from Gopalganj Science and Technology University (GSTU) and dedicated youth across the country.
+          With a mission to eliminate child destitution through the power of
+          education, we have mobilized more than{" "}
+          <strong className="text-[#e6000a] font-bold">
+            1,500+ university student changemakers
+          </strong>{" "}
+          from Gopalganj Science and Technology University (GSTU) and dedicated
+          youth across the country.
         </p>
 
         {/* Floating White Impact Metrics Card */}
@@ -59,7 +64,10 @@ export default function VolunteerismSection() {
         <div className="relative z-10">
           <h3 className="text-2xl md:text-4xl w-11/12 md:w-4/5 mx-auto font-heading text-white leading-snug">
             Do you want to stand with{" "}
-            <strong className="font-extrabold text-white underline decoration-white/40">Street Children</strong> and transform their lives through education?
+            <strong className="font-extrabold text-white underline decoration-white/40">
+              Street Children
+            </strong>{" "}
+            and transform their lives through education?
           </h3>
           <div className="mt-8">
             <a

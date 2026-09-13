@@ -33,10 +33,15 @@ export default function Footer() {
                 </div>
               </div>
               <p className="text-gray-300 text-sm leading-relaxed">
-                Come for Road Child (CRC) is a voluntary student-led humanitarian organization founded at Gopalganj Science and Technology University (GSTU). We are committed to eradicating child destitution through our flagship Hatekhori Free School, emergency child safeguarding, healthcare, and relief drives.
+                Come for Road Child (CRC) is a voluntary student-led
+                humanitarian organization founded at Gopalganj Science and
+                Technology University (GSTU). We are committed to eradicating
+                child destitution through our flagship Hatekhori Free School,
+                emergency child safeguarding, healthcare, and relief drives.
               </p>
               <p className="text-xs text-[#e6000a] font-semibold italic">
-                &ldquo;The World Will Be Free from Street Children by Connected Together.&rdquo;
+                &ldquo;The World Will Be Free from Street Children by Connected
+                Together.&rdquo;
               </p>
             </div>
 
@@ -47,32 +52,50 @@ export default function Footer() {
               </h3>
               <ul className="flex flex-col gap-2.5 text-sm font-semibold text-gray-300">
                 <li>
-                  <Link className="hover:text-[#e6000a] transition-colors" href="/#sponsor">
+                  <Link
+                    className="hover:text-[#e6000a] transition-colors"
+                    href="/#sponsor"
+                  >
                     Sponsor a Child Program
                   </Link>
                 </li>
                 <li>
-                  <Link className="hover:text-[#e6000a] transition-colors" href="/school">
+                  <Link
+                    className="hover:text-[#e6000a] transition-colors"
+                    href="/school"
+                  >
                     Hatekhori Free School (হাতেখড়ি পাঠশালা)
                   </Link>
                 </li>
                 <li>
-                  <Link className="hover:text-[#e6000a] transition-colors" href="/programs">
+                  <Link
+                    className="hover:text-[#e6000a] transition-colors"
+                    href="/programs"
+                  >
                     7 Core Welfare Programs
                   </Link>
                 </li>
                 <li>
-                  <Link className="hover:text-[#e6000a] transition-colors" href="/branches">
+                  <Link
+                    className="hover:text-[#e6000a] transition-colors"
+                    href="/branches"
+                  >
                     6 Campus Branches & Chapters
                   </Link>
                 </li>
                 <li>
-                  <Link className="hover:text-[#e6000a] transition-colors" href="/about">
+                  <Link
+                    className="hover:text-[#e6000a] transition-colors"
+                    href="/about"
+                  >
                     About CRC, Vision & Leadership
                   </Link>
                 </li>
                 <li>
-                  <Link className="hover:text-[#e6000a] transition-colors" href="/media">
+                  <Link
+                    className="hover:text-[#e6000a] transition-colors"
+                    href="/media"
+                  >
                     Media, Press & Gallery
                   </Link>
                 </li>
@@ -88,19 +111,26 @@ export default function Footer() {
                 <li className="flex items-start">
                   <MapPin className="w-5 h-5 text-[#007938] mr-2 shrink-0 mt-0.5" />
                   <span>
-                    Gopalganj Science and Technology University (GSTU),<br />
+                    Gopalganj Science and Technology University (GSTU),
+                    <br />
                     Gopalganj-8100, Dhaka Division, Bangladesh
                   </span>
                 </li>
                 <li className="flex items-center">
                   <Mail className="w-5 h-5 text-[#007938] mr-2 shrink-0" />
-                  <a className="text-gray-200 hover:text-[#e6000a] transition-colors" href="mailto:info@gstu-crc.org">
+                  <a
+                    className="text-gray-200 hover:text-[#e6000a] transition-colors"
+                    href="mailto:info@gstu-crc.org"
+                  >
                     info@gstu-crc.org
                   </a>
                 </li>
                 <li className="flex items-center">
                   <Phone className="w-5 h-5 text-[#007938] mr-2 shrink-0" />
-                  <a className="text-gray-200 hover:text-[#e6000a] transition-colors" href="tel:+8801700000000">
+                  <a
+                    className="text-gray-200 hover:text-[#e6000a] transition-colors"
+                    href="tel:+8801700000000"
+                  >
                     +880 1700-000000 (Central Helpline)
                   </a>
                 </li>
