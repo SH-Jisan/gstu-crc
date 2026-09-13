@@ -3,25 +3,20 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
-  Award,
   ChevronRight,
   Printer,
   Check,
+  CheckCircle2,
   FileDown,
   Link2,
   ArrowRight,
-  Shield,
-  Sparkles,
-  Compass,
-  Target,
-  Zap,
 } from "lucide-react";
 import AosInit from "@/components/AosInit";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageHeader from "@/components/PageHeader";
+import CareSplitPrinciples from "@/components/CareSplitPrinciples";
 import {
-  FUNDAMENTAL_PRINCIPLES,
   GUIDING_VALUES,
   VISION,
   MISSIONS,
@@ -30,9 +25,15 @@ import {
   ACHIEVEMENTS,
 } from "@/data/aboutData";
 
+interface NavSubItem {
+  id: string;
+  label: string;
+}
+
 interface NavPanelItem {
   id: string;
   label: string;
+  subItems?: NavSubItem[];
 }
 
 const NAV_PANEL_ITEMS: NavPanelItem[] = [
@@ -41,9 +42,27 @@ const NAV_PANEL_ITEMS: NavPanelItem[] = [
   { id: "objectives", label: "Strategic Objectives" },
   { id: "modes-of-action", label: "Mode of Action" },
   { id: "achievements", label: "Achievements" },
-  { id: "history", label: "Our History" },
-  { id: "governance", label: "How We Run" },
-  { id: "symbol-flag", label: "Symbol & Flag" },
+  {
+    id: "more-chapters",
+    label: "Institutional Chapters",
+    subItems: [
+      { id: "history", label: "Our History" },
+      { id: "governance", label: "How We Run" },
+      { id: "symbol-flag", label: "Symbol & Flag" },
+    ],
+  },
+];
+
+const ALL_NAV_IDS: string[] = [
+  "principles",
+  "vision",
+  "objectives",
+  "modes-of-action",
+  "achievements",
+  "more-chapters",
+  "history",
+  "governance",
+  "symbol-flag",
 ];
 
 const FURTHER_CHAPTER_CARDS = [
@@ -70,6 +89,8 @@ const FURTHER_CHAPTER_CARDS = [
   },
 ];
 
+const CANONICAL_ABOUT_URL = "https://crcgstu.org/about";
+
 export default function AboutPage() {
   const [activeSection, setActiveSection] = useState<string>("principles");
   const [copied, setCopied] = useState(false);
@@ -82,18 +103,18 @@ export default function AboutPage() {
       setIsNavVisible(currentScrollY > 200);
 
       const scrollPosition = currentScrollY + 200;
-      for (let i = NAV_PANEL_ITEMS.length - 1; i >= 0; i--) {
-        const item = NAV_PANEL_ITEMS[i];
-        const element = document.getElementById(item.id);
+      for (let i = ALL_NAV_IDS.length - 1; i >= 0; i--) {
+        const id = ALL_NAV_IDS[i];
+        const element = document.getElementById(id);
         if (element) {
           const top = element.offsetTop;
           if (scrollPosition >= top) {
-            setActiveSection(item.id);
+            setActiveSection(id);
             return;
           }
         }
       }
-      setActiveSection(NAV_PANEL_ITEMS[0].id);
+      setActiveSection(ALL_NAV_IDS[0]);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -106,7 +127,8 @@ export default function AboutPage() {
     const element = document.getElementById(id);
     if (element) {
       const offset = 110;
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const elementPosition =
+        element.getBoundingClientRect().top + window.pageYOffset;
       const offsetPosition = elementPosition - offset;
 
       window.scrollTo({
@@ -152,7 +174,11 @@ export default function AboutPage() {
               Jump to:
             </span>
             {NAV_PANEL_ITEMS.map((item) => {
-              const isActive = activeSection === item.id;
+              const isActive =
+                activeSection === item.id ||
+                Boolean(
+                  item.subItems?.some((sub) => sub.id === activeSection),
+                );
               return (
                 <button
                   key={item.id}
@@ -207,46 +233,86 @@ export default function AboutPage() {
                     </span>
                   </div>
                   <span className="text-[9.5px] font-bold text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">
-                    8 Sections
+                    6 Sections
                   </span>
                 </div>
 
                 {/* Interactive Rail Navigation List */}
-                <nav aria-label="Section Navigation" className="relative pl-3 border-l-2 border-gray-100 space-y-0.5">
+                <nav
+                  aria-label="Section Navigation"
+                  className="relative pl-3 border-l-2 border-gray-100 space-y-1"
+                >
                   {NAV_PANEL_ITEMS.map((item) => {
-                    const isActive = activeSection === item.id;
+                    const isParentActive =
+                      activeSection === item.id ||
+                      Boolean(
+                        item.subItems?.some((sub) => sub.id === activeSection),
+                      );
                     return (
-                      <a
-                        key={item.id}
-                        href={`#${item.id}`}
-                        onClick={(e) => scrollToSection(item.id, e)}
-                        className={`group flex items-center justify-between px-2.5 py-1 rounded-lg text-[11.5px] transition-all duration-200 relative ${
-                          isActive
-                            ? "bg-red-50 text-[#e6000a] font-bold shadow-2xs translate-x-0.5"
-                            : "text-gray-600 hover:text-gray-900 hover:bg-gray-50 hover:translate-x-0.5 font-medium"
-                        }`}
-                      >
-                        {/* Left Rail Dot Indicator */}
-                        <span
-                          className={`absolute -left-[18px] w-2 h-2 rounded-full transition-all duration-200 ${
-                            isActive
-                              ? "bg-[#e6000a] ring-4 ring-red-100 scale-110"
-                              : "bg-gray-300 group-hover:bg-[#e6000a] group-hover:scale-125"
+                      <div key={item.id} className="space-y-0.5">
+                        <a
+                          href={`#${item.id}`}
+                          onClick={(e) => scrollToSection(item.id, e)}
+                          className={`group flex items-center justify-between px-2.5 py-1 rounded-lg text-[11.5px] transition-all duration-200 relative ${
+                            isParentActive
+                              ? "bg-red-50 text-[#e6000a] font-bold shadow-2xs translate-x-0.5"
+                              : "text-gray-600 hover:text-gray-900 hover:bg-gray-50 hover:translate-x-0.5 font-medium"
                           }`}
-                        />
+                        >
+                          {/* Left Rail Dot Indicator */}
+                          <span
+                            className={`absolute -left-[18px] w-2 h-2 rounded-full transition-all duration-200 ${
+                              isParentActive
+                                ? "bg-[#e6000a] ring-4 ring-red-100 scale-110"
+                                : "bg-gray-300 group-hover:bg-[#e6000a] group-hover:scale-125"
+                            }`}
+                          />
 
-                        {/* Section Label */}
-                        <span className="truncate tracking-wide">{item.label}</span>
+                          {/* Section Label */}
+                          <span className="truncate tracking-wide">
+                            {item.label}
+                          </span>
 
-                        {/* Subtle Active Arrow Indicator */}
-                        <ChevronRight
-                          className={`w-3 h-3 shrink-0 transition-all duration-200 ${
-                            isActive
-                              ? "opacity-100 text-[#e6000a] translate-x-0"
-                              : "opacity-0 -translate-x-1 group-hover:opacity-60 group-hover:translate-x-0"
-                          }`}
-                        />
-                      </a>
+                          {/* Subtle Active Arrow Indicator */}
+                          <ChevronRight
+                            className={`w-3 h-3 shrink-0 transition-all duration-200 ${
+                              isParentActive
+                                ? "opacity-100 text-[#e6000a] translate-x-0"
+                                : "opacity-0 -translate-x-1 group-hover:opacity-60 group-hover:translate-x-0"
+                            }`}
+                          />
+                        </a>
+
+                        {/* Nested Sub-options */}
+                        {item.subItems && (
+                          <div className="ml-3 pl-2.5 border-l-2 border-red-100 space-y-0.5 my-1">
+                            {item.subItems.map((sub) => {
+                              const isSubActive = activeSection === sub.id;
+                              return (
+                                <a
+                                  key={sub.id}
+                                  href={`#${sub.id}`}
+                                  onClick={(e) => scrollToSection(sub.id, e)}
+                                  className={`group/sub flex items-center justify-between px-2 py-0.5 rounded-md text-[11px] transition-all duration-150 ${
+                                    isSubActive
+                                      ? "text-[#e6000a] font-bold bg-red-100/60"
+                                      : "text-gray-500 hover:text-gray-900 hover:bg-gray-100/70 font-medium"
+                                  }`}
+                                >
+                                  <span className="truncate">{sub.label}</span>
+                                  <span
+                                    className={`w-1.5 h-1.5 rounded-full transition-all ${
+                                      isSubActive
+                                        ? "bg-[#e6000a] scale-100"
+                                        : "bg-transparent group-hover/sub:bg-gray-300 scale-75"
+                                    }`}
+                                  />
+                                </a>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
                     );
                   })}
                 </nav>
@@ -261,44 +327,53 @@ export default function AboutPage() {
                     <div className="flex items-center gap-1 text-gray-500">
                       <a
                         href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                          typeof window !== "undefined" ? window.location.href : "https://crcgstu.org/about"
+                          CANONICAL_ABOUT_URL,
                         )}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-6 h-6 rounded-lg bg-gray-100 hover:bg-[#1877F2] hover:text-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-2xs"
                         title="Share on Facebook"
                       >
-                        <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24">
+                        <svg
+                          className="w-3 h-3 fill-current"
+                          viewBox="0 0 24 24"
+                        >
                           <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                         </svg>
                       </a>
 
                       <a
                         href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                          "About Come For Road Child (CRC) GSTU Branch - Official Constitution"
+                          "About Come For Road Child (CRC) GSTU Branch - Official Constitution",
                         )}&url=${encodeURIComponent(
-                          typeof window !== "undefined" ? window.location.href : "https://crcgstu.org/about"
+                          CANONICAL_ABOUT_URL,
                         )}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-6 h-6 rounded-lg bg-gray-100 hover:bg-black hover:text-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-2xs"
                         title="Share on X"
                       >
-                        <svg className="w-2.5 h-2.5 fill-current" viewBox="0 0 24 24">
+                        <svg
+                          className="w-2.5 h-2.5 fill-current"
+                          viewBox="0 0 24 24"
+                        >
                           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                         </svg>
                       </a>
 
                       <a
                         href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
-                          typeof window !== "undefined" ? window.location.href : "https://crcgstu.org/about"
+                          CANONICAL_ABOUT_URL,
                         )}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-6 h-6 rounded-lg bg-gray-100 hover:bg-[#0A66C2] hover:text-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-2xs"
                         title="Share on LinkedIn"
                       >
-                        <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24">
+                        <svg
+                          className="w-3 h-3 fill-current"
+                          viewBox="0 0 24 24"
+                        >
                           <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.78a1.64 1.64 0 1 0 0 3.28 1.64 1.64 0 0 0 0-3.28z" />
                         </svg>
                       </a>
@@ -368,77 +443,51 @@ export default function AboutPage() {
                 id="principles"
                 className="bg-white rounded-3xl p-6 sm:p-10 border border-gray-200 shadow-sm scroll-mt-28"
               >
-                <div className="max-w-3xl">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50 text-[#e6000a] text-xs font-bold uppercase tracking-wider mb-3 border border-red-200/60">
-                    <Shield className="w-3.5 h-3.5" />
-                    <span>Ethical & Constitutional Framework</span>
-                  </div>
+                <div className="max-w-3xl mb-10">
                   <h2 className="font-heading text-2xl sm:text-4xl text-[#0d0f14] font-black tracking-tight leading-tight">
                     Our Principles & Values
                   </h2>
                   <p className="mt-4 text-sm sm:text-base text-gray-700 leading-relaxed bg-[#f6f4f1] p-4 sm:p-5 rounded-2xl border border-gray-200/80">
-                    The CRC foundation is grounded in three Fundamental Principles that define its humanitarian purpose and organizational identity. To translate these principles into responsible daily action, CRC GSTU adheres to eight Guiding Values that govern volunteer conduct, student mentorship, and community engagement.
+                    The CRC foundation is grounded in three Fundamental
+                    Principles that define its humanitarian purpose and
+                    organizational identity. To translate these principles into
+                    responsible daily action, CRC GSTU adheres to eight Guiding
+                    Values that govern volunteer conduct, student mentorship,
+                    and community engagement.
                   </p>
                 </div>
 
-                {/* Fundamental Principles */}
+                {/* Fundamental Principles (CARE Bangladesh Alternating Split-Tile Parallax Style) */}
                 <div className="mt-10">
-                  <div className="flex items-center gap-2.5 mb-6">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#e6000a]" />
-                    <h3 className="font-heading text-xl sm:text-2xl font-bold text-[#0d0f14] tracking-tight">
-                      Fundamental Principles
-                    </h3>
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h3 className="font-heading text-xl sm:text-2xl font-bold text-[#0d0f14] tracking-tight">
+                        Fundamental Principles
+                      </h3>
+                    </div>
+                    <span className="text-xs font-semibold text-gray-500 hidden sm:inline-block">
+                      Humanitarian Operational Framework
+                    </span>
                   </div>
 
-                  <div className="grid gap-6 md:grid-cols-3">
-                    {FUNDAMENTAL_PRINCIPLES.map((principle) => (
-                      <div
-                        key={principle.name}
-                        className={`bg-[#f6f4f1] rounded-2xl p-6 border-l-4 ${principle.borderColor} border-t border-r border-b border-gray-200/80 shadow-xs flex flex-col justify-between transition-all hover:bg-white hover:shadow-md hover:-translate-y-0.5`}
-                      >
-                        <div>
-                          <div className="flex items-center justify-between mb-4">
-                            <div
-                              className={`w-11 h-11 rounded-xl bg-white shadow-xs ${principle.iconColor} flex items-center justify-center`}
-                            >
-                              <principle.icon className="w-5 h-5" />
-                            </div>
-                            <span className="text-[10px] font-bold tracking-widest text-gray-400 uppercase">
-                              Core Principle
-                            </span>
-                          </div>
-
-                          <h4 className="font-heading text-lg font-bold text-[#0d0f14] mb-0.5">
-                            {principle.name}
-                          </h4>
-                          <span className="text-xs font-semibold text-gray-500 block mb-3">
-                            ({principle.bengali})
-                          </span>
-
-                          <blockquote className="text-xs sm:text-[13px] text-gray-800 italic border-l-2 border-[#e6000a]/40 pl-3 leading-relaxed mb-3">
-                            {principle.quote}
-                          </blockquote>
-
-                          <p className="text-xs text-gray-600 leading-relaxed border-t border-gray-200/60 pt-3">
-                            {principle.explanation}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
+                  <div className="-mx-6 sm:-mx-10 mt-6 mb-8">
+                    <CareSplitPrinciples />
                   </div>
                 </div>
 
                 {/* Guiding Values */}
                 <div className="mt-14 pt-10 border-t border-gray-100">
                   <div className="max-w-3xl mb-8">
-                    <div className="flex items-center gap-2.5 mb-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#007938]" />
+                    <div className="mb-2">
                       <h3 className="font-heading text-xl sm:text-2xl font-bold text-[#0d0f14] tracking-tight">
                         Guiding Values
                       </h3>
                     </div>
                     <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
-                      CRC GSTU upholds eight Guiding Values to translate the fundamental principles into disciplined organizational practice, ethical interactions, and sustained humanitarian service:
+                      CRC GSTU upholds eight Guiding Values to translate the
+                      fundamental principles into disciplined organizational
+                      practice, ethical interactions, and sustained humanitarian
+                      service:
                     </p>
                   </div>
 
@@ -449,16 +498,6 @@ export default function AboutPage() {
                         className="bg-[#f6f4f1] rounded-2xl p-5 border border-gray-200/80 flex flex-col justify-between hover:bg-white hover:border-gray-300 hover:shadow-md transition-all hover:-translate-y-0.5 group"
                       >
                         <div>
-                          <div className="flex items-center justify-between mb-3">
-                            <div
-                              className={`w-9 h-9 rounded-xl flex items-center justify-center border ${val.color}`}
-                            >
-                              <val.icon className="w-4 h-4" />
-                            </div>
-                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white text-gray-500 border border-gray-200">
-                              Guiding Value
-                            </span>
-                          </div>
 
                           <h4 className="font-heading text-base font-bold text-[#0d0f14] group-hover:text-[#e6000a] transition-colors">
                             {val.title}
@@ -491,10 +530,6 @@ export default function AboutPage() {
                 {/* Vision */}
                 <div className="bg-gradient-to-br from-red-50/70 to-white rounded-3xl p-6 sm:p-10 border border-red-200/80 shadow-2xs relative overflow-hidden mb-12">
                   <div className="max-w-3xl">
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100/80 text-[#e6000a] text-xs font-bold uppercase tracking-wider mb-3 border border-red-200/80">
-                      <Sparkles className="w-3.5 h-3.5" />
-                      <span>Institutional Vision</span>
-                    </div>
                     <h2 className="font-heading text-2xl sm:text-3xl text-[#0d0f14] font-black tracking-tight">
                       Vision Statement
                     </h2>
@@ -510,15 +545,14 @@ export default function AboutPage() {
                 {/* Mission */}
                 <div>
                   <div className="max-w-3xl mb-8">
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-xs font-bold uppercase tracking-wider mb-3 border border-gray-200">
-                      <Compass className="w-3.5 h-3.5 text-[#e6000a]" />
-                      <span>Operational Mission</span>
-                    </div>
                     <h2 className="font-heading text-2xl sm:text-3xl text-[#0d0f14] font-black tracking-tight">
                       Mission Pillars
                     </h2>
                     <p className="mt-2 text-sm sm:text-base text-gray-600 leading-relaxed">
-                      CRC&apos;s mission is articulated through five core operational pillars that guide institutional efforts to safeguard rights, deliver education, and restore human dignity:
+                      CRC&apos;s mission is articulated through five core
+                      operational pillars that guide institutional efforts to
+                      safeguard rights, deliver education, and restore human
+                      dignity:
                     </p>
                   </div>
 
@@ -526,11 +560,11 @@ export default function AboutPage() {
                     {MISSIONS.map((m) => (
                       <div
                         key={m.pillar}
-                        className={`bg-[#f6f4f1] rounded-2xl p-5 shadow-2xs border-t-4 ${m.color} flex flex-col justify-between transition-all hover:-translate-y-1 hover:shadow-md hover:bg-white`}
+                        className="bg-[#f6f4f1] rounded-2xl p-5 shadow-2xs border-t-4 border-[#e6000a] flex flex-col justify-between transition-all hover:-translate-y-1 hover:shadow-md hover:bg-white"
                       >
                         <div>
                           <div className="w-9 h-9 rounded-xl bg-white flex items-center justify-center mb-3 shadow-xs">
-                            <m.icon className={`w-4 h-4 ${m.color.split(" ")[1]}`} />
+                            <CheckCircle2 className="w-4 h-4 text-[#e6000a]" />
                           </div>
                           <h3 className="font-heading text-base font-bold text-[#0d0f14]">
                             {m.pillar}
@@ -538,7 +572,9 @@ export default function AboutPage() {
                           <span className="text-[11px] font-semibold text-gray-500 block mb-2">
                             ({m.bengali})
                           </span>
-                          <p className="text-xs text-gray-600 leading-relaxed">{m.desc}</p>
+                          <p className="text-xs text-gray-600 leading-relaxed">
+                            {m.desc}
+                          </p>
                         </div>
                       </div>
                     ))}
@@ -554,15 +590,14 @@ export default function AboutPage() {
                 className="bg-white rounded-3xl p-6 sm:p-10 border border-gray-200 shadow-sm scroll-mt-28"
               >
                 <div className="max-w-3xl mb-10">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50 text-[#e6000a] text-xs font-bold uppercase tracking-wider mb-3 border border-red-200/60">
-                    <Target className="w-3.5 h-3.5" />
-                    <span>Constitutional Mandate</span>
-                  </div>
                   <h2 className="font-heading text-2xl sm:text-4xl text-[#0d0f14] font-black tracking-tight">
                     Strategic Objectives
                   </h2>
                   <p className="mt-3 text-sm sm:text-base text-gray-600 leading-relaxed">
-                    To ensure focused and measurable humanitarian outcomes, CRC GSTU directs its volunteer network, university student mentors, and institutional resources toward achieving five constitutional objectives:
+                    To ensure focused and measurable humanitarian outcomes, CRC
+                    GSTU directs its volunteer network, university student
+                    mentors, and institutional resources toward achieving five
+                    constitutional objectives:
                   </p>
                 </div>
 
@@ -601,10 +636,12 @@ export default function AboutPage() {
                         Collective Responsibility
                       </span>
                       <h3 className="font-heading text-base font-bold mt-2 text-white">
-                        Not Merely an Activity — A Responsibility We Choose to Carry
+                        Not Merely an Activity — A Responsibility We Choose to
+                        Carry
                       </h3>
                       <p className="mt-2 text-xs text-gray-300 leading-relaxed">
-                        We turn concern into collective action for underprivileged children who have no other safety net.
+                        We turn concern into collective action for
+                        underprivileged children who have no other safety net.
                       </p>
                     </div>
                     <Link
@@ -626,15 +663,13 @@ export default function AboutPage() {
                 className="bg-white rounded-3xl p-6 sm:p-10 border border-gray-200 shadow-sm scroll-mt-28"
               >
                 <div className="max-w-3xl mb-10">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50 text-[#e6000a] text-xs font-bold uppercase tracking-wider mb-3 border border-red-200/60">
-                    <Zap className="w-3.5 h-3.5" />
-                    <span>Operational Methodology</span>
-                  </div>
                   <h2 className="font-heading text-2xl sm:text-4xl text-[#0d0f14] font-black tracking-tight">
                     Mode of Action
                   </h2>
                   <p className="mt-3 text-sm sm:text-base text-gray-600 leading-relaxed">
-                    CRC translates foundational principles and values into concrete community outcomes through seven structured operational methods designed for sustainable social impact:
+                    CRC translates foundational principles and values into
+                    concrete community outcomes through seven structured
+                    operational methods designed for sustainable social impact:
                   </p>
                 </div>
 
@@ -647,7 +682,7 @@ export default function AboutPage() {
                       <div>
                         <div className="flex items-center justify-between mb-3">
                           <div className="w-9 h-9 rounded-xl bg-red-100/80 text-[#e6000a] flex items-center justify-center shadow-xs">
-                            <mode.icon className="w-4 h-4" />
+                            <CheckCircle2 className="w-4 h-4" />
                           </div>
                           <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
                             Action Method
@@ -682,7 +717,9 @@ export default function AboutPage() {
                         See a Need? Speak Up.
                       </h3>
                       <p className="mt-2 text-xs text-gray-300 leading-relaxed">
-                        Do you know a child who needs help or have a concern regarding child safeguarding, misconduct, or financial ethics?
+                        Do you know a child who needs help or have a concern
+                        regarding child safeguarding, misconduct, or financial
+                        ethics?
                       </p>
                     </div>
                     <Link
@@ -708,11 +745,6 @@ export default function AboutPage() {
 
                 <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                   <div className="lg:col-span-7 space-y-4">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-amber-300 text-xs font-bold uppercase tracking-wider">
-                      <Award className="w-4 h-4" />
-                      <span>{ACHIEVEMENTS.badge}</span>
-                    </div>
-
                     <h2 className="font-heading text-2xl sm:text-3xl text-white font-black tracking-tight">
                       Key Achievements & Recognition
                     </h2>
@@ -725,7 +757,11 @@ export default function AboutPage() {
                     </blockquote>
 
                     <p className="text-xs text-gray-400 leading-relaxed">
-                      CRC GSTU has pioneered campus-led child welfare initiatives in Bangladesh, demonstrating continuous commitment to street children since 5 June 2016 through free schooling, winter survival drives, medical camps, and transparent institutional governance.
+                      CRC GSTU has pioneered campus-led child welfare
+                      initiatives in Bangladesh, demonstrating continuous
+                      commitment to street children since 5 June 2016 through
+                      free schooling, winter survival drives, medical camps, and
+                      transparent institutional governance.
                     </p>
                   </div>
 
@@ -757,8 +793,7 @@ export default function AboutPage() {
               {/* ========================================================= */}
               <section id="more-chapters" className="scroll-mt-28 space-y-6">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#e6000a]" />
+                  <div>
                     <h3 className="font-heading text-2xl sm:text-3xl font-black text-[#0d0f14] tracking-tight">
                       Explore Institutional Chapters
                     </h3>
