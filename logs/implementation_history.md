@@ -987,3 +987,43 @@ Chronological registry of all file additions, edits, component implementations, 
   - `npx tsc --noEmit`: **0 errors**.
   - Puppeteer visual inspection verified clean rendering and navigation.
 
+---
+
+### [ENTRY-040] 2026-09-14 — Partners Two-Way Marquee, Brand Slash Ribbon & Seamless Footer Junction
+- **Type**: Component Enhancement, Animation Physics, Visual Design & Layout Polish
+- **User Requests**:
+  1. Standardize fixed icons for bottom chapter navigation cards in `CareSplitPrinciples.tsx`.
+  2. Remove "Official Recognition", "Operational Methodology", and colored dot markers across About section.
+  3. Reorganize navigation mega-menu under "Institutional Chapters" heading.
+  4. Implement dynamic animation for "Partners in Our Mission" section; user selected Two-Way Alternating Marquee.
+  5. Apply CRC signature Crimson Red (`#e6000a`) with 105° diagonal black slash stripe (`.slash-band`) specifically to the marquee cards ribbon.
+  6. Eliminate white gap between red ribbon and dark footer.
+  7. Provide duration tuning instructions for scrolling speed; updated to `100s`.
+  8. Synchronize all persistent logs in `logs/` and push to GitHub.
+- **Actions Completed**:
+  1. **CSS Hardware-Accelerated Marquee Engine (`globals.css`)**:
+     - Added `@keyframes marqueeLeft` (0% to -50%) and `@keyframes marqueeRight` (-50% to 0%) with `translate3d` transforms.
+     - Defined `.animate-marquee-left` and `.animate-marquee-right` with 100s linear infinite duration and hover pause (`.marquee-pause:hover`).
+     - Added `.marquee-mask` with alpha-channel gradient mask (`mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)`).
+  2. **Component Transformation (`PartnersSection.tsx`)**:
+     - Split 8 partner institutions into two distinct rows, quadrupled to guarantee seamless infinite looping across ultra-wide viewports.
+     - Positioned the `.slash-band bg-[#e6000a]` exclusively on the full-width marquee cards container.
+     - Maintained section header on clean white background with green pill badge.
+     - Set section `pb-0` and ribbon `border-t`, seamlessly docking the ribbon onto the dark footer.
+  3. **Visual Hygiene Across About Section**:
+     - Removed decorative dots, "Official Recognition", and "Operational Methodology" markers.
+     - Reorganized MegaMenu navigation items under "Institutional Chapters".
+- **Affected Paths**:
+  - `[MODIFY]` [`frontend/src/components/PartnersSection.tsx`](../frontend/src/components/PartnersSection.tsx)
+  - `[MODIFY]` [`frontend/src/app/globals.css`](../frontend/src/app/globals.css)
+  - `[MODIFY]` [`frontend/src/components/Footer.tsx`](../frontend/src/components/Footer.tsx)
+  - `[MODIFY]` [`frontend/src/components/VolunteerismSection.tsx`](../frontend/src/components/VolunteerismSection.tsx)
+  - `[MODIFY]` [`logs/session_logs.md`](./session_logs.md)
+  - `[MODIFY]` [`logs/decisions_log.md`](./decisions_log.md)
+  - `[MODIFY]` [`logs/implementation_history.md`](./implementation_history.md)
+- **Verification**:
+  - `npm run lint`: **0 errors, 0 warnings**.
+  - `npx tsc --noEmit`: **0 errors**.
+  - Puppeteer automated screenshots verified dual-direction motion, alpha edge masking, and zero-gap footer docking.
+
+

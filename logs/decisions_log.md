@@ -403,4 +403,33 @@ Record of key decisions, trade-offs evaluated, and consensus reached between use
   - **Global Point Number Purge**: Eradicated all numerical indices (`1.`, `2.`, `01`, `Method 1`, `Value 1`, etc.) across all cards, replacing them with semantic Lucide icons (`Target`, `Shield`, `Sparkles`, `Users`) and elegant categorization pills (`Core Principle`, `Guiding Value`, `Strategic Goal`, `Action Method`).
   - **Removal of Chapter & Section Nomenclature**: Purged all "Chapter X", "Section Y" text from headings, badges, and breadcrumbs in favor of clean, contemporary typography.
 - **Status**: Accepted & Implemented.
+---
+
+### [ADL-034] Two-Way Alternating Infinite Marquee for Institutional Collaborations
+- **Date**: 2026-09-14
+- **Context**: 
+  - The "Partners in Our Mission" section previously used a static 8-card CSS grid.
+  - User requested modern, dynamic animation options to give life to institutional collaborations without clutter.
+- **Decision**:
+  - **Two-Way Marquee Architecture**: Implemented dual opposite-scrolling horizontal tracks (Track 1 moving left, Track 2 moving right).
+  - **Hardware Acceleration**: Built with pure CSS `@keyframes` using `translate3d(-50%, 0, 0)` and `will-change: transform` for 60fps jitter-free GPU acceleration.
+  - **Seamless Array Quadrupling**: Duplicated partner datasets four times (`[...row, ...row, ...row, ...row]`) ensuring no gaps or resets across ultra-wide displays.
+  - **Interaction Boundary**: Enforced `animation-play-state: paused` on hover via `.marquee-pause:hover`, giving users complete agency to read names.
+- **Status**: Accepted & Implemented.
+---
+
+### [ADL-035] Scoped Brand Slash Ribbon & Pure Alpha Masking (`marquee-mask`)
+- **Date**: 2026-09-14
+- **Context**: 
+  - User requested applying CRC's signature Crimson Red (`#e6000a`) with 105° diagonal black slash stripe (`.slash-band`) to the animation.
+  - Applying it to the entire section overwhelmed the layout. The user instructed scoping the background specifically to the card area while keeping the header white.
+  - Additionally, solid-color gradient overlays caused red haze over the dark diagonal stripe at the edges.
+  - Finally, a 60-80px white bottom padding between the ribbon and footer broke visual immersion.
+- **Decision**:
+  - **Scoped Ribbon Band**: Positioned the `.slash-band bg-[#e6000a]` exclusively on the full-width marquee cards container, preserving the section title and badges on a clean white canvas.
+  - **Alpha Transparency Masking**: Developed `.marquee-mask` utilizing CSS `mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)`. This fades the cards themselves via alpha channel, leaving the underlying red and black slash band completely pristine.
+  - **Zero-Gap Footer Docking**: Removed section bottom padding (`pb-0`), allowing the red ribbon band to connect directly and seamlessly to the dark footer (`bg-[#0d0f14]`).
+  - **Calm Velocity**: Tuned animation duration to `100s` for elegant, legible movement.
+- **Status**: Accepted & Implemented.
+
 
