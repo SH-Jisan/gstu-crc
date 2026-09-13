@@ -53,7 +53,7 @@ export default function FocusAreasSection() {
   ];
 
   return (
-    <section id="focus" className="relative focus-areas bg-white z-10 py-[80px]">
+    <section id="focus" className="relative focus-areas bg-white z-10 py-[80px] scroll-mt-24 sm:scroll-mt-28">
       <div className="max-w-7xl 2xl:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Card 1: Title Card with subtle ambient accent and fade-up */}
         <div

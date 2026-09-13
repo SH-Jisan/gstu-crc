@@ -369,6 +369,8 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
                                 className={`grid gap-x-4 gap-y-0.5 pl-2 pt-0.5 group-hover/col:translate-x-1 transition-all duration-300 ease-out ${
                                   col.items && col.items.length === 5
                                     ? "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5"
+                                    : col.items && col.items.length === 3
+                                    ? "grid-cols-1 md:grid-cols-3 max-w-5xl"
                                     : "grid-cols-1 sm:grid-cols-2 max-w-3xl"
                                 }`}
                               >

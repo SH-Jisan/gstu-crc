@@ -1,10 +1,11 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 
 export default function VolunteerismSection() {
   return (
-    <section id="volunteer" className="max-w-full bg-[#0d0f14]">
+    <section id="volunteer" className="max-w-full bg-[#0d0f14] scroll-mt-24 sm:scroll-mt-28">
       {/* 1. Top Section */}
       <div className="w-11/12 md:w-3/5 mx-auto text-center relative z-20 pt-12 md:pt-16">
         <span className="text-xs font-bold uppercase tracking-wider text-[#e6000a] block mb-2">
@@ -70,12 +71,12 @@ export default function VolunteerismSection() {
             and transform their lives through education?
           </h3>
           <div className="mt-8">
-            <a
+            <Link
               className="btn btn-secondary font-heading text-lg md:text-xl capitalize px-8 py-4 text-white bg-[#0d0f14] hover:bg-[#1f2937] inline-block shadow-2xl hover:scale-105 transition-transform rounded"
-              href="#join"
+              href="/members"
             >
               Join as a CRC Volunteer
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -115,7 +115,7 @@ export default function CareSplitPrinciples() {
                       : 'text-white/80'
                   }`}
                 >
-                  Core Principle {item.num}
+                  Core Principle
                 </span>
 
                 <div>

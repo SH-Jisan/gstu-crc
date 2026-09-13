@@ -432,4 +432,30 @@ Record of key decisions, trade-offs evaluated, and consensus reached between use
   - **Calm Velocity**: Tuned animation duration to `100s` for elegant, legible movement.
 - **Status**: Accepted & Implemented.
 
+---
+
+### [ADL-036] Direct Child Sponsorship Modal Architecture & Root Portal Stacking
+- **Date**: 2026-09-14
+- **Context**: 
+  - Landing page CTA buttons ("Sponsor a Child Today", "Become a Child Sponsor") routed to `#donate`, a dead anchor without matching target element.
+  - Furthermore, modals mounted within section DOM trees were intercepted by the fixed navbar's stacking context (`z-[1000]`), allowing the header to render visibly across the top of modal content.
+- **Decision**:
+  - **React Portal Mounting**: Rendered modal into `document.body` via `createPortal`, fully bypassing parent layout containers and CSS isolation boundaries.
+  - **Super-Header Stacking Layer**: Set modal wrapper to `z-[2000]`, definitively establishing priority over the fixed header (`z-[1000]`) and mobile drawers.
+  - **Frictionless Direct Mobile & Bank Information**: Integrated interactive copy-to-clipboard actions with visual feedback for bKash, Nagad, and DBBL bank account details, providing immediate sponsorship conversion without external redirection.
+- **Status**: Accepted & Implemented.
+
+---
+
+### [ADL-037] Systematic Purge of Bureaucratic Numbering & Section Codes
+- **Date**: 2026-09-14
+- **Context**: 
+  - Several subpages contained rigid constitutional numbering ("Section 4", "Section 4.1", "Programs 04 & 05", "Core Principle 01").
+  - This clinical numbering alienated public donors and youth volunteers seeking warmth, inspiration, and clarity.
+- **Decision**:
+  - Completely purged numeric section identifiers across all public headings, badges, and image overlays.
+  - Replaced with human-centered semantic titles: "Foundational Education", "Healthcare & Nutrition", "Seasonal Relief Drives", "Speak Up Protocol", and "Child Dignity".
+- **Status**: Accepted & Implemented.
+
+
 

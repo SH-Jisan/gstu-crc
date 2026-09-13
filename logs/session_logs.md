@@ -337,4 +337,38 @@ Chronological record of developer-agent interactions, user requirements, plannin
   - `npm run lint`: **0 errors, 0 warnings**.
   - Puppeteer headless visual verification confirmed two-way scrolling in opposite directions, pause on hover, flawless alpha edge masking, and zero gap before the footer.
 
+---
+
+## 📅 Session 08 — Comprehensive Frontend Codebase Audit, UI Overlap Fixes, Dead Anchor Resolution & Direct Sponsorship Modal
+- **Timestamp**: 2026-09-14 (Local Time)
+- **User Intent & Chat Evolution**:
+  1. **Comprehensive Audit Instruction**: User commanded: *"frontend er full codebase ta deeply analyze koro and bugs/missmatch/errors/ui overlapping etc. fix koro. overall ui fix koro"*.
+  2. **GitHub Push Command**: User commanded: *"github e push koro"*.
+- **Actions Completed**:
+  - **Mega-Menu Structural Balance ([`navigation.ts`](../frontend/src/data/navigation.ts) & [`Navbar.tsx`](../frontend/src/components/Navbar.tsx))**:
+    - Consolidated 4 disparate rows into 2 balanced rows: **About CRC** (5 items) and **Institutional Chapters** (3 items).
+    - Added responsive 3-column grid support (`grid-cols-1 md:grid-cols-3 max-w-5xl`) in `Navbar.tsx` for clean column distribution.
+  - **Mobile Sticky Quick-Jump Bar Overlap Elimination ([`about/page.tsx`](../frontend/src/app/about/page.tsx))**:
+    - Fixed offset collision where the quick-jump bar (`top-16`, 64px) slid behind the combined fixed Navbar (~65px) and fixed Breadcrumb bar (~38px) totaling ~103px.
+    - Updated offset to `top-[103px] sm:top-[108px]`, providing flawless clearance on mobile viewports.
+  - **Eradication of Bureaucratic Numbering & Codes**:
+    - [`CareSplitPrinciples.tsx`](../frontend/src/components/CareSplitPrinciples.tsx): Removed `01`, `02`, `03` from `Core Principle {item.num}`.
+    - [`promises/page.tsx`](../frontend/src/app/promises/page.tsx): Purged constitutional section indices (`Section 4`, `Section 4.1`, `Section 4.2`, `Sections 4.3–4.5`, and badges `Section 4.3/4.4/4.5`), replacing with semantic titles (`Speak Up Protocol`, `Volunteer Code`, `Child Dignity`).
+    - [`programs/page.tsx`](../frontend/src/app/programs/page.tsx): Replaced image badges `Program 01`, `Program 02`, `Programs 04 & 05` with human-centered titles (`Foundational Education`, `Healthcare & Nutrition`, `Seasonal Relief Drives`).
+  - **Counter Bar Mobile Grid Divider Symmetry ([`StatsCounterBar.tsx`](../frontend/src/components/StatsCounterBar.tsx))**:
+    - Replaced Tailwind `divide-y` (which generated an asymmetric top border on item 2 in 2-col mobile layout) with symmetrical glassmorphic translucent cards (`bg-white/10 backdrop-blur-sm border border-white/15`).
+  - **Interactive Direct Child Sponsorship & Donation Modal ([`SponsorChildSection.tsx`](../frontend/src/components/SponsorChildSection.tsx))**:
+    - Replaced dangling `#donate` links with an interactive, fully accessible sponsorship modal rendered at document root via React `createPortal` with `z-[2000]` to overlay the fixed navbar (`z-[1000]`).
+    - Integrated sponsorship plan selector (৳1,500/mo, ৳3,000/mo, Custom).
+    - Integrated tabbed payment channels: Mobile Banking (bKash, Nagad, Rocket with 1-click clipboard copy and toast feedback) and Bank Transfer (DBBL Gopalganj Branch account & routing details with 1-click copy).
+    - Included transaction reference guidance (`CRC-SPONSOR`) and hotline verification.
+  - **Volunteerism & Focus Areas Anchor Fixes ([`VolunteerismSection.tsx`](../frontend/src/components/VolunteerismSection.tsx) & [`FocusAreasSection.tsx`](../frontend/src/components/FocusAreasSection.tsx))**:
+    - Replaced dead `#join` anchor with Next.js `<Link href="/members">`.
+    - Added `scroll-mt-24 sm:scroll-mt-28` to `#sponsor`, `#volunteer`, and `#focus` to prevent fixed header occlusion.
+- **Verification**:
+  - `npx tsc --noEmit`: **0 errors**.
+  - `npm run lint`: **0 errors, 0 warnings**.
+  - Puppeteer browser automation verified desktop & mobile rendering, sticky offsets, modal trigger and z-index overlay.
+
+
 

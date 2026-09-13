@@ -1026,4 +1026,53 @@ Chronological registry of all file additions, edits, component implementations, 
   - `npx tsc --noEmit`: **0 errors**.
   - Puppeteer automated screenshots verified dual-direction motion, alpha edge masking, and zero-gap footer docking.
 
+---
+
+### [ENTRY-041] 2026-09-14 — Comprehensive Frontend Audit, UI Overlap Resolution, and Interactive Sponsorship Modal
+- **Type**: Codebase Audit, Defect Resolution, Layout Ergonomics, Design Polish & Modal Integration
+- **User Requests**:
+  1. Deeply analyze frontend codebase for bugs, visual mismatches, overlaps, and layout errors.
+  2. Eliminate dead anchor links and fix sticky header collisions.
+  3. Purge all remaining point numbers and section indices.
+  4. Push changes to GitHub.
+- **Actions Completed**:
+  1. **MegaMenu Structural Balance (`navigation.ts` & `Navbar.tsx`)**:
+     - Consolidated disparate rows into 2 balanced rows: "About CRC" (5 items) and "Institutional Chapters" (3 items).
+     - Enabled 3-column responsive grid distribution for 3-item rows.
+  2. **Mobile Sticky Quick-Jump Bar Clearance (`about/page.tsx`)**:
+     - Recalculated sticky offset from `top-16` (64px) to `top-[103px] sm:top-[108px]`, matching the combined height of fixed Navbar and fixed Breadcrumb bar.
+  3. **Constitutional Numbering & Section Code Purge**:
+     - Purged "01, 02, 03" from `CareSplitPrinciples.tsx`.
+     - Replaced "Section 4", "Section 4.1", "Sections 4.3–4.5" with semantic titles in `promises/page.tsx`.
+     - Replaced "Program 01", "Program 02", "Programs 04 & 05" with semantic titles in `programs/page.tsx`.
+  4. **Counter Bar Mobile Grid Divider Symmetry (`StatsCounterBar.tsx`)**:
+     - Removed asymmetric `divide-y` on 2-col mobile grid.
+     - Implemented symmetrical translucent glass cards (`bg-white/10 backdrop-blur-sm border border-white/15`).
+  5. **Interactive Direct Sponsorship & Donation Modal (`SponsorChildSection.tsx`)**:
+     - Built accessible modal rendered via `createPortal` with `z-[2000]` over the navbar.
+     - Added monthly sponsorship plan selection (৳1,500/mo, ৳3,000/mo, Custom).
+     - Added tabbed mobile banking (bKash, Nagad, Rocket) and DBBL bank account details with 1-click clipboard copy.
+  6. **Anchor Fixes & Scroll Margins (`VolunteerismSection.tsx` & `FocusAreasSection.tsx`)**:
+     - Connected volunteer CTA button to `/members`.
+     - Added `scroll-mt-24 sm:scroll-mt-28` to `#sponsor`, `#volunteer`, and `#focus`.
+- **Affected Paths**:
+  - `[MODIFY]` [`frontend/src/app/about/page.tsx`](../frontend/src/app/about/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/programs/page.tsx`](../frontend/src/app/programs/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/promises/page.tsx`](../frontend/src/app/promises/page.tsx)
+  - `[MODIFY]` [`frontend/src/components/CareSplitPrinciples.tsx`](../frontend/src/components/CareSplitPrinciples.tsx)
+  - `[MODIFY]` [`frontend/src/components/FocusAreasSection.tsx`](../frontend/src/components/FocusAreasSection.tsx)
+  - `[MODIFY]` [`frontend/src/components/Navbar.tsx`](../frontend/src/components/Navbar.tsx)
+  - `[MODIFY]` [`frontend/src/components/SponsorChildSection.tsx`](../frontend/src/components/SponsorChildSection.tsx)
+  - `[MODIFY]` [`frontend/src/components/StatsCounterBar.tsx`](../frontend/src/components/StatsCounterBar.tsx)
+  - `[MODIFY]` [`frontend/src/components/VolunteerismSection.tsx`](../frontend/src/components/VolunteerismSection.tsx)
+  - `[MODIFY]` [`frontend/src/data/navigation.ts`](../frontend/src/data/navigation.ts)
+  - `[MODIFY]` [`logs/session_logs.md`](./session_logs.md)
+  - `[MODIFY]` [`logs/decisions_log.md`](./decisions_log.md)
+  - `[MODIFY]` [`logs/implementation_history.md`](./implementation_history.md)
+- **Verification**:
+  - `npx tsc --noEmit`: **0 errors**.
+  - `npm run lint`: **0 errors, 0 warnings**.
+  - Puppeteer automated tests verified full desktop and mobile viewport rendering, modal overlay, and zero layout overlap.
+
+
 

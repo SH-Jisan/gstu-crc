@@ -48,7 +48,7 @@ export const megaMenus: Record<string, MegaMenuSection> = {
     },
     columns: [
       {
-        title: "About",
+        title: "About CRC",
         href: "/about",
         items: [
           {
@@ -57,7 +57,7 @@ export const megaMenus: Record<string, MegaMenuSection> = {
             description: "Three fundamental principles (Brotherhood, Commitment, Trust) and 8 guiding values forming our ethical volunteer code.",
           },
           {
-            label: "Vision and mission",
+            label: "Vision & Mission",
             href: "/about#vision",
             description: "Our vision for a street-child-free society, guided by 5 pillars ensuring protection, education, and dignity.",
           },
@@ -79,68 +79,23 @@ export const megaMenus: Record<string, MegaMenuSection> = {
         ],
       },
       {
-        title: "Our history",
-        href: "/about/our-history",
+        title: "Institutional Chapters",
+        href: "/about#more-chapters",
         items: [
           {
-            label: "How we founded",
-            href: "/about/our-history#founding",
-            description: "Originated on 5 June 2016 from a railway station Eid initiative by university students dedicating themselves to street children.",
+            label: "Our History",
+            href: "/about/our-history",
+            description: "Originated on 5 June 2016 from an Eid initiative at a railway platform. Explore our 10-year journey and leadership eras.",
           },
           {
-            label: "Leadership over years",
-            href: "/about/our-history#leadership",
-            description: "The student conveners, executive panels, and university faculty advisors who guided our decade-long journey since 2016.",
-          },
-        ],
-      },
-      {
-        title: "How we run",
-        href: "/about/how-we-run",
-        items: [
-          {
-            label: "Finance",
-            href: "/about/how-we-run#finance",
-            description: "Strict financial governance with restricted child funds, voluntary student dues, and 100% open independent audits.",
+            label: "How We Run",
+            href: "/about/how-we-run",
+            description: "3-tier constitutional governance (Permanent, Executive, Temporary) and ring-fenced financial transparency.",
           },
           {
-            label: "Governance Overview",
-            href: "/about/how-we-run#governance",
-            description: "A 3-tier constitutional framework ensuring democratic leadership, transparent field operations, and institutional continuity.",
-          },
-          {
-            label: "Executive Council",
-            href: "/about/how-we-run#executive-council",
-            isSubItem: true,
-            description: "The elected student leadership team actively managing day-to-day operations, Hatekhori School, and field campaigns.",
-          },
-          {
-            label: "Permanent Council",
-            href: "/about/how-we-run#permanent-council",
-            isSubItem: true,
-            description: "Supreme constitutional trustee body of founding members and alumni ensuring institutional ethics and policy continuity.",
-          },
-          {
-            label: "Temporary Council",
-            href: "/about/how-we-run#temporary-council",
-            isSubItem: true,
-            description: "Specialized independent ad-hoc committees appointed for election conduction, annual audits, and emergency mandates.",
-          },
-        ],
-      },
-      {
-        title: "Symbol & Flag",
-        href: "/about/symbol-flag",
-        items: [
-          {
-            label: "Official Emblem & Logo",
-            href: "/about/symbol-flag#emblem",
-            description: "Protective hands embracing a street child within a circle of unity, symbolizing collective compassion, shelter, and hope.",
-          },
-          {
-            label: "Flag Colors & Motto",
-            href: "/about/symbol-flag#flag",
-            description: "Four symbolic banner colors and our official motto uniting us to build a society free from street children.",
+            label: "Symbol & Flag",
+            href: "/about/symbol-flag",
+            description: "Protective hands emblem, four symbolic banner colors, and official founding motto.",
           },
         ],
       },

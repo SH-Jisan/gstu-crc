@@ -168,7 +168,7 @@ export default function AboutPage() {
         />
 
         {/* Mobile / Tablet Horizontal Sticky Quick Jump Bar (< lg) */}
-        <div className="lg:hidden sticky top-16 sm:top-20 z-20 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-xs">
+        <div className="lg:hidden sticky top-[103px] sm:top-[108px] z-20 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-xs">
           <div className="max-w-7xl mx-auto px-4 py-2.5 overflow-x-auto scrollbar-none flex items-center gap-2">
             <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 shrink-0 pr-2 border-r border-gray-200">
               Jump to:

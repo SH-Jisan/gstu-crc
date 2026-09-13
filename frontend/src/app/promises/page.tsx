@@ -51,7 +51,7 @@ export default function PromisesPage() {
 
       <main className="flex-grow">
         <PageHeader
-          eyebrow="Section 4 · Constitutional Commitments"
+          eyebrow="Constitutional Commitments"
           title="Our Promises"
           intro="Child Protection, Safeguarding Ethics, Whistleblower Integrity, and our Unwavering Commitment to the Welfare of Underprivileged Children and Society."
           breadcrumbs={[{ label: "Our Promises" }]}
@@ -62,7 +62,7 @@ export default function PromisesPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mb-10">
               <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#e6000a]">
-                Section 4.1 · Speak Up Protocol
+                Speak Up Protocol
               </span>
               <h2 className="mt-2 font-heading text-2xl sm:text-4xl text-[#0d0f14] font-black tracking-tight leading-tight">
                 See a Need? Speak Up.
@@ -245,7 +245,7 @@ export default function PromisesPage() {
                 {/* Multiple Reporting Channels */}
                 <div className="p-6 rounded-3xl bg-white border border-gray-200 space-y-4">
                   <h4 className="font-heading text-sm font-bold text-[#0d0f14] uppercase tracking-wider">
-                    Official Reporting Channels (4.1)
+                    Official Reporting Channels
                   </h4>
                   <ul className="space-y-3 text-xs text-gray-700">
                     <li className="flex items-start gap-2.5">
@@ -278,12 +278,12 @@ export default function PromisesPage() {
           </div>
         </section>
 
-        {/* 2. Social Welfare Manifesto (Section 4.2) */}
+        {/* 2. Social Welfare Manifesto */}
         <section className="py-14 sm:py-20 bg-[#f6f4f1] border-b border-gray-200/60">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mb-10">
               <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#007938]">
-                Section 4.2 · Social Welfare Responsibility
+                Social Welfare Responsibility
               </span>
               <h2 className="mt-2 font-heading text-2xl sm:text-4xl text-[#0d0f14] font-black tracking-tight leading-tight">
                 A Commitment to the Welfare of Society
@@ -330,12 +330,12 @@ export default function PromisesPage() {
           </div>
         </section>
 
-        {/* 3. Ethical Code, Trust, & Data Protection (4.3 - 4.5) */}
+        {/* 3. Ethical Code, Trust, & Data Protection */}
         <section className="py-14 sm:py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mb-10">
               <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#e6000a]">
-                Sections 4.3 – 4.5 · Institutional Standards
+                Institutional Standards
               </span>
               <h2 className="mt-2 font-heading text-2xl sm:text-4xl text-[#0d0f14] font-black tracking-tight">
                 Code of Conduct & Data Protection
@@ -344,7 +344,7 @@ export default function PromisesPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               <div className="p-6 rounded-2xl bg-[#f6f4f1] border border-gray-200 space-y-2.5">
-                <span className="text-xs font-bold uppercase text-[#e6000a]">Section 4.3</span>
+                <span className="text-xs font-bold uppercase text-[#e6000a]">Volunteer Code</span>
                 <h3 className="font-heading text-base font-bold text-[#0d0f14]">
                   Code of Conduct for Volunteers
                 </h3>
@@ -354,7 +354,7 @@ export default function PromisesPage() {
               </div>
 
               <div className="p-6 rounded-2xl bg-[#f6f4f1] border border-gray-200 space-y-2.5">
-                <span className="text-xs font-bold uppercase text-[#007938]">Section 4.4</span>
+                <span className="text-xs font-bold uppercase text-[#007938]">Accountability</span>
                 <h3 className="font-heading text-base font-bold text-[#0d0f14]">
                   Trust & Accountability
                 </h3>
@@ -364,7 +364,7 @@ export default function PromisesPage() {
               </div>
 
               <div className="p-6 rounded-2xl bg-[#f6f4f1] border border-gray-200 space-y-2.5">
-                <span className="text-xs font-bold uppercase text-blue-600">Section 4.5</span>
+                <span className="text-xs font-bold uppercase text-blue-600">Child Dignity</span>
                 <h3 className="font-heading text-base font-bold text-[#0d0f14]">
                   Child Dignity & Data Protection
                 </h3>

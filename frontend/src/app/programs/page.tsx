@@ -35,7 +35,7 @@ export default function ProgramsPage() {
                   className="object-cover"
                 />
                 <div className="absolute top-4 left-4 bg-[#e6000a] text-white text-xs font-black uppercase px-3 py-1.5 rounded-full shadow">
-                  Program 01
+                  Foundational Education
                 </div>
               </div>
 
@@ -113,7 +113,7 @@ export default function ProgramsPage() {
                   className="object-cover"
                 />
                 <div className="absolute top-4 left-4 bg-[#007938] text-white text-xs font-black uppercase px-3 py-1.5 rounded-full shadow">
-                  Program 02
+                  Healthcare & Nutrition
                 </div>
               </div>
             </div>
@@ -181,7 +181,7 @@ export default function ProgramsPage() {
                   className="object-cover"
                 />
                 <div className="absolute top-4 left-4 bg-[#e6000a] text-white text-xs font-black uppercase px-3 py-1.5 rounded-full shadow">
-                  Programs 04 & 05
+                  Seasonal Relief Drives
                 </div>
               </div>
 
