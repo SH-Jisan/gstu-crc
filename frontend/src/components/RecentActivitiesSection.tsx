@@ -18,7 +18,7 @@ export default function RecentActivitiesSection() {
     {
       img: "/assets/school.jpg",
       tag: "Hatekhori School",
-      tagColor: "bg-[#007938] text-white",
+      tagColor: "bg-[#e6000a] text-white",
       title: "Moral Storytelling & Alphabet Lessons",
       text: "Weekly interactive sessions where volunteer university mentors teach Bengali alphabet tracing, moral courage, and basic arithmetic through songs and games.",
       date: "Every Thursday",
@@ -26,7 +26,7 @@ export default function RecentActivitiesSection() {
     {
       img: "/assets/health.jpg",
       tag: "Health & Nutrition",
-      tagColor: "bg-[#0d0f14] text-white",
+      tagColor: "bg-[#e6000a] text-white",
       title: "Nutrition & Hygiene Awareness for Mothers",
       text: "Community healthcare counseling sessions providing mothers with essential guidance on pediatric nutrition, safe water, and emergency medical referrals.",
       date: "Monthly Drive",

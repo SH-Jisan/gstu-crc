@@ -372,3 +372,49 @@ Chronological record of developer-agent interactions, user requirements, plannin
 
 
 
+
+
+## [2026-11-13 00:46] - Session: Landing Page Design Fidelity, Spacing Optimization & Animation Synchronization
+
+- **User Intent**: 
+  1. Refine landing page sections (Hero, Counter bar, Sponsor child, Focus areas, Stories, Volunteerism, Activities, Footer) to match visual reference screenshots with pixel-level precision.
+  2. Compress excessive vertical heights across sections for balanced compact layout.
+  3. Perfect scroll animations and bidirectional entrance synchronization.
+  4. Standardize color themes (amber badges in Stories, red badges in Activities, red accent in CareSplitPrinciples).
+  5. Push validated codebase to GitHub repository.
+- **Actions Completed**:
+  - **Hero Split & Photo Mosaic ([`UnifiedHeroSection.tsx`](../frontend/src/components/UnifiedHeroSection.tsx))**:
+    - Re-architected 2-column split hero with sharp rectangular CTAs and 3-photo mosaic (`school.jpg`, `campaign.jpg`, `health.jpg`).
+    - Implemented bidirectional slide animation via React `IntersectionObserver`: left column slides in with `fade-right` (`-translate-x-12` $\to$ `translate-x-0`), right 3-photo mosaic slides in with `fade-left` (`translate-x-12` $\to$ `translate-x-0`) in 100% unison (700ms duration, 0ms start delay).
+    - Solved AOS scroll issue where scrolling down past the section prevented re-animation when scrolling back up.
+  - **Minimalist Red Stats Strip ([`StatsCounterBar.tsx`](../frontend/src/components/StatsCounterBar.tsx))**:
+    - Transformed counter bar into a solid signature red strip (`#e6000a`) with white stroke icons, large bold numbers, and uppercase tracking-spaced labels (`CHILDREN SUPPORTED`, `ACTIVE VOLUNTEERS`, `ACTIVE BRANCHES`, `EVENTS & PROJECTS`).
+  - **Sponsor Child Card & Counter Spacing ([`SponsorChildSection.tsx`](../frontend/src/components/SponsorChildSection.tsx))**:
+    - Reduced card height by ~30%, sharpened corners to `rounded-lg` (8px).
+    - Removed `btn btn-primary` class cascade from buttons to prevent unwanted pill-capsule overrides.
+    - Set comfortable 48px breathing room between upper card shadow and the "120" unsponsored children counter block.
+    - Migrated client portal mount check to `useSyncExternalStore` to satisfy React 19 ESLint `react-hooks/set-state-in-effect` invariant.
+  - **Focus Areas Card Refinements ([`FocusAreasSection.tsx`](../frontend/src/components/FocusAreasSection.tsx) & [`globals.css`](../frontend/src/app/globals.css))**:
+    - Compressed card height to `min-h-44` with `p-6` padding and `rounded-lg` (8px) corners.
+    - Added dynamic red border above "Learn More" (`border-[#e6000a] group-hover:border-white transition-colors duration-300`).
+    - Synced `.hover-sweep-card::before` border-radius to `0.5rem` (8px).
+    - Adjusted AOS scroll offset to `-40` and tightened staggered card delays (40ms–200ms) for instant entrance.
+  - **Exact 4-Column Footer Reproduction ([`Footer.tsx`](../frontend/src/components/Footer.tsx))**:
+    - Implemented red CRC logo badge, brand title, Bengali quote, square outlined social icons (Facebook, YouTube, Mail).
+    - Columns: EXPLORE (5 links), PARTICIPATE (5 links), HEAD OFFICE (GSTU address, email, phone with green icons).
+    - Sub-footer copyright bar with motto: *Brotherhood · Commitment · Trust*.
+    - Completely eliminated top border per user instruction.
+  - **Compact Voices from the Street ([`StoriesSection.tsx`](../frontend/src/components/StoriesSection.tsx))**:
+    - Compressed section height by ~30% (from 837px to 582px) via `py-10 sm:py-14`, `mb-8 sm:mb-10`, and `p-5 sm:p-5.5`.
+    - Standardized all 3 story card badges & borders to uniform amber/gold theme (`border-amber-500`, `text-amber-500 bg-amber-500/10`).
+  - **Volunteerism Section Height Compression ([`VolunteerismSection.tsx`](../frontend/src/components/VolunteerismSection.tsx))**:
+    - Reduced overall height by ~31% (from 998px to 693px).
+    - Streamlined floating white metrics card, metric number scale, and overlapping red slash callout banner.
+  - **Recent Activities Uniform Red Badges ([`RecentActivitiesSection.tsx`](../frontend/src/components/RecentActivitiesSection.tsx))**:
+    - Standardized all 3 activity badges (`Campaign`, `Hatekhori School`, `Health & Nutrition`) to uniform brand red (`bg-[#e6000a] text-white`).
+  - **CareSplitPrinciples Commitment Accent ([`CareSplitPrinciples.tsx`](../frontend/src/components/CareSplitPrinciples.tsx))**:
+    - Updated "Commitment" core principle tag and quote border from green to signature red (`text-[#e6000a]`, `border-[#e6000a] bg-red-50/70`).
+- **Verification**:
+  - `npx tsc --noEmit`: **0 errors**.
+  - `npm run lint`: **0 errors, 0 warnings**.
+  - Headless Puppeteer automation: Verified 0 horizontal overflow, full image asset loads, bidirectional scroll animations, and measured exact section spacings.

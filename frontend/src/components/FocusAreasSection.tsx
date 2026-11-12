@@ -12,7 +12,7 @@ export default function FocusAreasSection() {
         "Providing foundational literacy, Bengali & English alphabet learning, moral education, notebooks, pencils, and daily wholesome snacks for street children in Gopalganj.",
       link: "#hatekhori",
       icon: BookOpen,
-      delay: "80",
+      delay: "40",
     },
     {
       title: "Child Safeguarding & Rescue",
@@ -21,7 +21,7 @@ export default function FocusAreasSection() {
         "Emergency intervention for children exposed to hazardous street environments, abusive child labor, and trafficking risks. Reconnecting lost children with families.",
       link: "#safeguarding",
       icon: ShieldAlert,
-      delay: "160",
+      delay: "80",
     },
     {
       title: "Health & Nutrition Camps",
@@ -30,7 +30,7 @@ export default function FocusAreasSection() {
         "Regular medical checkups by volunteer doctors, personal hygiene training, essential vitamin supplies, soap distribution, and treatment for seasonal illnesses.",
       link: "#health",
       icon: HeartPulse,
-      delay: "240",
+      delay: "120",
     },
     {
       title: "Winter Warmth & Relief",
@@ -39,7 +39,7 @@ export default function FocusAreasSection() {
         "Annual distribution of warm sweaters, blankets, and dry food rations to street children, floating homeless families, and vulnerable rural communities.",
       link: "#relief",
       icon: Sparkles,
-      delay: "320",
+      delay: "160",
     },
     {
       title: "Youth Leadership & Mentorship",
@@ -48,7 +48,7 @@ export default function FocusAreasSection() {
         "Mobilizing dedicated students from Gopalganj Science and Technology University (GSTU) to serve as role models, peer mentors, and volunteer teachers.",
       link: "#youth",
       icon: Users,
-      delay: "400",
+      delay: "200",
     },
   ];
 
@@ -60,7 +60,7 @@ export default function FocusAreasSection() {
           data-aos="fade-up"
           data-aos-duration="600"
           data-aos-once="false"
-          className="group relative overflow-hidden bg-[#e6000a] text-white min-h-52 p-8 rounded-2xl flex flex-col justify-center shadow-lg transition-transform duration-300"
+          className="group relative overflow-hidden bg-[#e6000a] text-white min-h-44 p-6 sm:p-7 rounded-lg flex flex-col justify-center shadow-lg transition-transform duration-300"
         >
           {/* Subtle ambient background glow & geometric circle */}
           <div
@@ -91,26 +91,26 @@ export default function FocusAreasSection() {
               data-aos-duration="550"
               data-aos-delay={area.delay}
               data-aos-once="false"
-              className="hover-sweep-card group relative bg-white border border-gray-200 min-h-52 p-8 rounded-2xl flex flex-col justify-between shadow-sm hover:shadow-2xl transition-all duration-300"
+              className="hover-sweep-card group relative bg-white border border-gray-200 min-h-44 p-6 rounded-lg flex flex-col justify-between shadow-sm hover:shadow-2xl transition-all duration-300"
             >
               <div className="relative z-10">
                 {/* Icon Container with Micro Scale/Rotate on Hover */}
-                <div className="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center text-[#e6000a] mb-5 group-hover:bg-[#0d0f14] group-hover:text-white transition-all duration-300 group-hover:scale-105 shadow-xs">
-                  <Icon className="w-6 h-6 transition-transform duration-300 ease-out group-hover:scale-110 group-hover:rotate-3" />
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-red-50 flex items-center justify-center text-[#e6000a] mb-3.5 group-hover:bg-[#0d0f14] group-hover:text-white transition-all duration-300 group-hover:scale-105 shadow-xs">
+                  <Icon className="w-5 h-5 transition-transform duration-300 ease-out group-hover:scale-110 group-hover:rotate-3" />
                 </div>
                 <span className="text-[11px] font-bold text-[#007938] group-hover:text-emerald-200 block mb-1 transition-colors">
                   {area.subtitle}
                 </span>
-                <h3 className="font-bold text-xl font-heading text-[#0d0f14] mb-3 group-hover:text-white transition-colors">
+                <h3 className="font-bold text-lg sm:text-xl font-heading text-[#0d0f14] mb-2 group-hover:text-white transition-colors">
                   {area.title}
                 </h3>
-                <p className="text-sm text-gray-600 leading-relaxed font-normal group-hover:text-red-50 transition-colors">
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-normal group-hover:text-red-50 transition-colors">
                   {area.description}
                 </p>
               </div>
 
               {/* Learn More link with gliding arrow */}
-              <div className="relative z-10 mt-6 pt-4 border-t border-gray-100 group-hover:border-white/20 transition-colors">
+              <div className="relative z-10 mt-4 pt-3 border-t border-[#e6000a] group-hover:border-white transition-colors duration-300">
                 <a
                   href={area.link}
                   className="inline-flex items-center text-xs font-bold uppercase tracking-wider text-[#e6000a] group-hover:text-white transition-colors group/btn"

@@ -13,38 +13,39 @@ export default function StatsCounterBar() {
     {
       icon: HeartHandshake,
       value: "350+",
-      label: "Active Student Volunteers",
+      label: "Active Volunteers",
     },
     {
       icon: MapPin,
       value: "6",
-      label: "Campus Branches",
+      label: "Active Branches",
     },
     {
       icon: CalendarCheck,
       value: "180+",
-      label: "Field Events & Drives",
+      label: "Events & Projects",
     },
   ];
 
   return (
-    <section className="bg-[#e6000a] text-white overflow-hidden shadow-lg border-b border-red-700">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+    <section className="bg-[#e6000a] text-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-14">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10">
           {stats.map((stat) => {
             const Icon = stat.icon;
             return (
               <div
                 key={stat.label}
-                className="flex flex-col items-center text-center p-4 sm:p-5 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/15 transition-transform hover:-translate-y-0.5 duration-200"
+                className="flex flex-col items-center text-center"
               >
-                <div className="w-11 h-11 rounded-xl bg-white/15 flex items-center justify-center mb-3 shadow-inner">
-                  <Icon className="w-6 h-6 text-white" />
-                </div>
-                <span className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white">
+                <Icon
+                  className="w-5 h-5 sm:w-6 sm:h-6 text-white/90 mb-3"
+                  strokeWidth={1.75}
+                />
+                <span className="font-heading text-2xl sm:text-3xl lg:text-[34px] font-black tracking-tight text-white leading-none">
                   {stat.value}
                 </span>
-                <span className="mt-1.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-red-100 font-sans">
+                <span className="mt-2.5 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.18em] text-white/90 font-sans">
                   {stat.label}
                 </span>
               </div>

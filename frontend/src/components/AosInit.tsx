@@ -10,8 +10,8 @@ export default function AosInit() {
       easing: "ease-out-cubic",
       once: false,
       mirror: true,
-      offset: 60,
-      delay: 50,
+      offset: -40,
+      delay: 0,
     });
 
     const handleLoad = () => {

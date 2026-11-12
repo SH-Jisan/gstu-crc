@@ -1,16 +1,33 @@
 "use client";
 
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Sparkles, ArrowRight, Heart, ShieldCheck, Award } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export default function UnifiedHeroSection() {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    const el = heroRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      {
+        threshold: 0.05,
+      }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section className="pt-[106px] sm:pt-[114px] pb-14 sm:pb-20 bg-[#0d0f14] text-white relative overflow-hidden border-b border-gray-800">
-      {/* Subtle radial dot grid overlay */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#e6000a_1px,transparent_1px)] [background-size:24px_24px]" />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* 1. Top Official CRC Banner - Viewport-Fitted */}
         <div className="flex flex-col items-center justify-center mb-10 sm:mb-14">
@@ -35,157 +52,111 @@ export default function UnifiedHeroSection() {
           </div>
         </div>
 
-        {/* 2. Split 2-Column Hero: Message & Authentic Photo Mosaic */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          {/* Left Column (7 cols): Headline, Mission & Actions */}
-          <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-            <div
-              data-aos="fade-up"
-              data-aos-duration="600"
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#e6000a]/15 border border-[#e6000a]/30 text-[#e6000a] text-xs font-bold uppercase tracking-wider"
-            >
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Founded 5 June 2016 · GSTU Campus</span>
-            </div>
-
+        {/* 2. Split 2-Column Hero: Editorial Message & Sharp Photo Mosaic */}
+        <div
+          ref={heroRef}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center pt-2"
+        >
+          {/* Left Column (6 cols): Heavy Display Headline, Concise Intro & Sharp Rectangular CTAs */}
+          <div className="lg:col-span-6 text-left">
             <h1
-              data-aos="fade-up"
-              data-aos-duration="600"
-              data-aos-delay="100"
-              className="font-heading text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-black text-white tracking-tight leading-[1.08]"
+              className={`font-heading text-3xl sm:text-4xl lg:text-[46px] xl:text-[52px] text-white tracking-tight leading-[1.06] transition-all duration-700 ease-out ${
+                isInView
+                  ? "opacity-100 translate-x-0"
+                  : "opacity-0 -translate-x-12"
+              }`}
             >
-              Every child of the street{" "}
-              <span className="text-[#e6000a] inline-block">
-                deserves a classroom.
-              </span>
+              Every child of the<br className="hidden sm:inline" />{" "}
+              street <span className="text-[#e6000a]">deserves a<br className="hidden sm:inline" />{" "}classroom.</span>
             </h1>
 
             <p
-              data-aos="fade-up"
-              data-aos-duration="600"
-              data-aos-delay="150"
-              className="text-base sm:text-lg text-red-200/90 font-medium italic"
+              className={`mt-5 text-[14px] sm:text-[14.5px] text-gray-300/90 font-normal leading-relaxed max-w-[600px] transition-all duration-700 delay-100 ease-out ${
+                isInView
+                  ? "opacity-100 translate-x-0"
+                  : "opacity-0 -translate-x-12"
+              }`}
             >
-              “থেকে একসাথে যুক্ত করব পৃথিবী পথশিশু মুক্ত”
+              Come For Road Child (CRC) is a student-run voluntary organisation founded in 2016 at
+              Gopalganj Science &amp; Technology University. We teach, feed and protect children who
+              grow up on the road.
             </p>
 
-            <p
-              data-aos="fade-up"
-              data-aos-duration="600"
-              data-aos-delay="200"
-              className="text-sm sm:text-base text-gray-300 font-normal leading-relaxed max-w-2xl mx-auto lg:mx-0"
-            >
-              Come For Road Child (CRC) is a student-run voluntary organisation founded at
-              Gopalganj Science &amp; Technology University. We teach, feed, and safeguard children
-              who grow up on the road through daily non-formal education and university volunteer mentorship.
-            </p>
-
-            {/* Action Buttons */}
+            {/* Rectangular Action Buttons */}
             <div
-              data-aos="fade-up"
-              data-aos-duration="600"
-              data-aos-delay="250"
-              className="flex flex-wrap gap-4 justify-center lg:justify-start pt-2"
+              className={`mt-7 flex flex-wrap items-center gap-3.5 transition-all duration-700 delay-200 ease-out ${
+                isInView
+                  ? "opacity-100 translate-x-0"
+                  : "opacity-0 -translate-x-12"
+              }`}
             >
               <a
                 href="#sponsor"
-                className="btn btn-primary px-8 py-3.5 text-sm sm:text-base font-sans shadow-xl capitalize font-bold text-white bg-[#e6000a] hover:bg-[#a20002] inline-flex items-center gap-2 hover:scale-105 active:scale-95 transition-transform"
+                className="px-7 py-3.5 text-sm font-sans font-bold text-white bg-[#e6000a] hover:bg-[#c80008] inline-flex items-center gap-2 transition-colors rounded-none"
               >
-                <span>Sponsor a Child</span>
+                <span>Donate Now</span>
                 <ArrowRight className="w-4 h-4" />
               </a>
               <Link
-                href="/school"
-                className="px-6 py-3.5 text-sm sm:text-base font-sans font-bold text-white border border-gray-600 rounded-lg hover:border-[#e6000a] hover:text-[#e6000a] transition-all duration-200 inline-flex items-center active:scale-95"
+                href="/members"
+                className="px-7 py-3.5 text-sm font-sans font-bold text-white border border-white/25 hover:border-white/60 hover:bg-white/5 inline-flex items-center transition-colors rounded-none"
               >
-                Hatekhori Free School
+                Become a Volunteer
               </Link>
-            </div>
-
-            {/* 3 Core Values Pills */}
-            <div
-              data-aos="fade-up"
-              data-aos-duration="600"
-              data-aos-delay="300"
-              className="pt-4 grid grid-cols-1 sm:grid-cols-3 gap-3"
-            >
-              <div className="bg-white/5 p-3 rounded-xl border border-white/10 flex items-center justify-center lg:justify-start gap-2.5">
-                <Heart className="w-4 h-4 text-[#e6000a] shrink-0" />
-                <span className="text-xs font-semibold text-gray-200">Brotherhood (ভাতৃত্ব)</span>
-              </div>
-              <div className="bg-white/5 p-3 rounded-xl border border-white/10 flex items-center justify-center lg:justify-start gap-2.5">
-                <ShieldCheck className="w-4 h-4 text-[#007938] shrink-0" />
-                <span className="text-xs font-semibold text-gray-200">Commitment (দায়বদ্ধতা)</span>
-              </div>
-              <div className="bg-white/5 p-3 rounded-xl border border-white/10 flex items-center justify-center lg:justify-start gap-2.5">
-                <Award className="w-4 h-4 text-amber-500 shrink-0" />
-                <span className="text-xs font-semibold text-gray-200">Trust (বিশ্বাস)</span>
-              </div>
             </div>
           </div>
 
-          {/* Right Column (5 cols): Authentic CRC 3-Photo Mosaic */}
-          <div className="lg:col-span-5 grid grid-cols-2 gap-3 sm:gap-4">
-            {/* Photo 1: School outdoors */}
+          {/* Right Column (6 cols): Clean Sharp-Cornered 3-Photo Mosaic with Synchronized Slide Animations */}
+          <div className="lg:col-span-6 grid grid-cols-[1.75fr_1fr] gap-2.5">
+            {/* Photo 1 (Top-Left Wide): Hatekhori Class */}
             <div
-              data-aos="fade-left"
-              data-aos-duration="600"
-              className="col-span-2 rounded-2xl overflow-hidden border border-white/10 shadow-xl group relative aspect-[16/10]"
+              className={`relative h-[170px] sm:h-[205px] overflow-hidden bg-black/40 group transition-all duration-700 ease-out ${
+                isInView
+                  ? "opacity-100 translate-x-0"
+                  : "opacity-0 translate-x-12"
+              }`}
             >
               <Image
                 src="/assets/school.jpg"
                 alt="Volunteer teaching street children outdoors in Hatekhori school"
                 fill
-                sizes="(max-width: 1024px) 100vw, 40vw"
+                sizes="(max-width: 1024px) 65vw, 32vw"
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
-                <span className="text-xs font-bold text-white uppercase tracking-wider bg-[#e6000a] px-2.5 py-1 rounded-md">
-                  Hatekhori Class
-                </span>
-              </div>
             </div>
 
-            {/* Photo 2: Winter Campaign */}
+            {/* Photo 2 (Top-Right Narrow): Winter Campaign */}
             <div
-              data-aos="fade-left"
-              data-aos-duration="600"
-              data-aos-delay="150"
-              className="rounded-2xl overflow-hidden border border-white/10 shadow-xl group relative aspect-[4/3]"
+              className={`relative h-[170px] sm:h-[205px] overflow-hidden bg-black/40 group transition-all duration-700 ease-out ${
+                isInView
+                  ? "opacity-100 translate-x-0"
+                  : "opacity-0 translate-x-12"
+              }`}
             >
               <Image
                 src="/assets/campaign.jpg"
-                alt="Volunteers distributing winter clothes and blankets"
+                alt="Volunteers distributing winter clothes and relief packs"
                 fill
-                sizes="(max-width: 1024px) 50vw, 20vw"
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                sizes="(max-width: 1024px) 35vw, 18vw"
+                className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-3">
-                <span className="text-[10px] font-bold text-white uppercase tracking-wider bg-[#007938] px-2 py-0.5 rounded">
-                  Winter Relief
-                </span>
-              </div>
             </div>
 
-            {/* Photo 3: Mothers Health */}
+            {/* Photo 3 (Bottom Full-Width): Community Health & Mothers Session */}
             <div
-              data-aos="fade-left"
-              data-aos-duration="600"
-              data-aos-delay="250"
-              className="rounded-2xl overflow-hidden border border-white/10 shadow-xl group relative aspect-[4/3]"
+              className={`col-span-2 relative h-[155px] sm:h-[185px] overflow-hidden bg-black/40 group transition-all duration-700 ease-out ${
+                isInView
+                  ? "opacity-100 translate-x-0"
+                  : "opacity-0 translate-x-12"
+              }`}
             >
               <Image
                 src="/assets/health.jpg"
-                alt="Nutrition and health awareness session"
+                alt="Community health and nutrition awareness session"
                 fill
-                sizes="(max-width: 1024px) 50vw, 20vw"
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-3">
-                <span className="text-[10px] font-bold text-white uppercase tracking-wider bg-amber-600 px-2 py-0.5 rounded">
-                  Health & Nutrition
-                </span>
-              </div>
             </div>
           </div>
         </div>

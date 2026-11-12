@@ -459,3 +459,30 @@ Record of key decisions, trade-offs evaluated, and consensus reached between use
 
 
 
+
+
+---
+
+### [ADL-038] Native IntersectionObserver for Bidirectional Hero Animation Synchronization
+- **Date**: 2026-11-13
+- **Context**: 
+  - Standard AOS (v2.3.4) evaluates scroll positions based on `top > el.position`. When scrolling downwards past the hero section to the bottom of the page, elements are never reset because `top <= el.position` is never met on desktop screens once past the threshold.
+  - When users scrolled back up, the hero elements remained static in their final state and failed to re-animate.
+  - In addition, staggered delays on individual mosaic photos created visual fragmentation.
+- **Decision**:
+  - Implemented a native React `IntersectionObserver` directly on the 2-column split hero container.
+  - Dynamically toggles CSS transition classes: Left column (`-translate-x-12` $\to$ `translate-x-0`) and Right 3-photo mosaic (`translate-x-12` $\to$ `translate-x-0`) in complete lockstep (700ms duration, 0ms start delay).
+  - Automatically resets elements when scrolled off-screen in either direction, guaranteeing fresh re-animation on return.
+- **Status**: Accepted & Implemented.
+
+---
+
+### [ADL-039] Landing Page Proportional Vertical Rhythm & Spacing Harmonization
+- **Date**: 2026-11-13
+- **Context**: 
+  - Several landing page sections (`VolunteerismSection`, `StoriesSection`, `SponsorChildSection`) exceeded 850px-1000px each, causing excessive scrolling and sparse information density.
+  - Conversely, the gap between the sponsor card and the "120" unsponsored counter block had been compressed too tightly (~16px-20px).
+- **Decision**:
+  - Reduced section paddings (`py-16 sm:py-24` $\to$ `py-10 sm:py-14`) and card inner paddings (`p-7` $\to$ `p-5`) across `StoriesSection` and `VolunteerismSection`, yielding ~250px-305px height reduction per section (~30-31%).
+  - Calibrated the gap between the upper sponsor card and the community counter block to exactly 48px, restoring optimal visual separation.
+- **Status**: Accepted & Implemented.

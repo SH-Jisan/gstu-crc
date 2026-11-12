@@ -108,11 +108,9 @@ export default function CareSplitPrinciples() {
               <div className="max-w-lg w-full space-y-4 text-left">
                 <span
                   className={`text-xs uppercase tracking-[0.2em] font-bold ${
-                    item.theme === 'crimson'
-                      ? 'text-[#e6000a]'
-                      : item.theme === 'cream'
-                      ? 'text-[#007938]'
-                      : 'text-white/80'
+                    item.theme === 'green'
+                      ? 'text-white/80'
+                      : 'text-[#e6000a]'
                   }`}
                 >
                   Core Principle
@@ -133,11 +131,9 @@ export default function CareSplitPrinciples() {
 
                 <blockquote
                   className={`text-xs md:text-sm italic pl-3 py-1.5 border-l-4 leading-relaxed ${
-                    item.theme === 'crimson'
-                      ? 'border-[#e6000a] bg-red-50/70 text-gray-800'
-                      : item.theme === 'cream'
-                      ? 'border-[#007938] bg-black/5 text-gray-800'
-                      : 'border-amber-400 bg-white/10 text-white/95'
+                    item.theme === 'green'
+                      ? 'border-amber-400 bg-white/10 text-white/95'
+                      : 'border-[#e6000a] bg-red-50/70 text-gray-800'
                   }`}
                 >
                   {item.quote}
