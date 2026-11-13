@@ -1302,6 +1302,57 @@ Chronological registry of all file additions, edits, component implementations, 
     - Off-screen sections: 5 `.content-visibility-auto` wrappers correctly isolated.
     - Scrollspy: rAF-throttled scrollspy smoothly updated active section without frame drops.
 
+---
+
+## [2026-11-13 14:30] - Automated Build Versioning & Address Bar URL Synchronization System
+- **Scope**:
+  - Engineered an automated build-time version generation script (`scripts/generate-version.mjs`) executing on every `npm run build` and `npm run dev`.
+  - Automatically captures Semantic Version + Git commit short hash (via Netlify `COMMIT_REF` or local `git rev-parse --short HEAD`) + ISO build date.
+  - Generates `frontend/src/version.json` and `frontend/public/version.json`.
+  - Implemented `VersionTracker.tsx` in `RootLayout`: smoothly synchronizes the browser address bar URL with `?v=v1.0.0-<hash>` via `window.history.replaceState` without page reloads.
+  - Implemented visible live version badge in `Footer.tsx` (`v1.0.0-<hash>`) with pulsing emerald deployment indicator.
+  - Exposes `NEXT_PUBLIC_APP_VERSION` via `next.config.ts` and `<meta name="application-version" />` in `<head>`.
+- **Files Touched**:
+  - `[NEW]` [`frontend/scripts/generate-version.mjs`](../frontend/scripts/generate-version.mjs)
+  - `[NEW]` [`frontend/src/components/VersionTracker.tsx`](../frontend/src/components/VersionTracker.tsx)
+  - `[NEW]` `frontend/src/version.json`
+  - `[NEW]` `frontend/public/version.json`
+  - `[MODIFY]` [`frontend/package.json`](../frontend/package.json)
+  - `[MODIFY]` [`frontend/next.config.ts`](../frontend/next.config.ts)
+  - `[MODIFY]` [`frontend/src/app/layout.tsx`](../frontend/src/app/layout.tsx)
+  - `[MODIFY]` [`frontend/src/components/Footer.tsx`](../frontend/src/components/Footer.tsx)
+- **Verification Matrix**:
+  - `npm --prefix frontend run lint`: **0 errors, 0 warnings**.
+  - `npm --prefix frontend run build`: **Compiled successfully in 1488ms, 16/16 routes pre-rendered statically in 707ms, 0 errors**.
+  - **Puppeteer Headless Verification**:
+    - Navigating to `http://localhost:3000` automatically updated address bar to `http://localhost:3000/?v=v1.0.0-f53268f`.
+    - Navigating to `/about` automatically updated address bar to `http://localhost:3000/about?v=v1.0.0-f53268f`.
+    - Footer rendered badge `v1.0.0-f53268f` with green pulsing dot.
+
+---
+
+## [2026-11-13 14:36] - Elimination of Mobile Parallax Image Jumping on About CRC Page
+- **Root Cause Isolated**:
+  - In `CareSplitPrinciples.tsx`, the `jarallax` library was initialized unconditionally on all screen sizes.
+  - On mobile touch devices, touch scroll is handled asynchronously by the browser's C++ compositor thread (120Hz/60Hz).
+  - Jarallax continuously recalculated dynamic CSS `transform: translate3d(0, -693px, 0)` on the main thread during scroll with 1-2 frame latency, causing images to visibly jump, stutter, and snap against the viewport.
+- **Solution & Architecture**:
+  - Disabled `jarallax` initialization on mobile and touch devices (`window.innerWidth < 1024 || 'ontouchstart' in window`).
+  - Switched mobile image rendering to pure CSS (`w-full h-full object-cover` within a stable `h-[260px] sm:h-[340px] md:h-auto md:min-h-[500px]` container).
+  - Retained smooth Jarallax mousewheel parallax on desktop screens (`>= 1024px`).
+  - Audited full `/about` page on mobile viewport: verified zero horizontal overflow (`docWidth: 374px <= winWidth: 390px`).
+- **Files Touched**:
+  - `[MODIFY]` [`frontend/src/components/CareSplitPrinciples.tsx`](../frontend/src/components/CareSplitPrinciples.tsx)
+- **Verification Matrix**:
+  - `npm --prefix frontend run lint`: **0 errors, 0 warnings**.
+  - `npm --prefix frontend run build`: **Compiled successfully in 890ms, 16/16 routes pre-rendered statically in 653ms, 0 errors**.
+  - **Puppeteer Headless Verification (Mobile 390x844)**:
+    - Before: `hasInlineTransform: true`, `transform: translate3d(0px, -693.521px, 0px)`, `parentHasJarallaxContainer: true`.
+    - After: `hasInlineTransform: false`, `transform: ""`, `parentHasJarallaxContainer: false`, `offsetHeight: 260px`.
+    - Scrolling 600px down: `transform: ""` stayed completely empty. Zero image jumping, 100% rock-solid scrolling.
+
+
+
 
 
 

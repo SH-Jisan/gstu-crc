@@ -719,6 +719,50 @@ Chronological record of developer-agent interactions, user requirements, plannin
     - Off-screen sections: 5 `.content-visibility-auto` wrappers correctly isolated.
     - Scrollspy: rAF-throttled scrollspy smoothly updated active section without frame drops.
 
+---
+
+## 📅 Session 15 — Automated Build Versioning & Address Bar URL Synchronization
+- **Timestamp**: 2026-11-13 14:30 (Local Time)
+- **User Intent**:
+  - Automatically generate and update the website version on every code edit/deploy, displaying it in the browser Address Bar (URL `?v=...`) and in the footer address badge.
+- **Actions Completed**:
+  - Created automated build-time version generation script `scripts/generate-version.mjs` extracting package version, commit hash (Netlify `COMMIT_REF` or local git), and build date.
+  - Generates `frontend/src/version.json` and `frontend/public/version.json`.
+  - Created `VersionTracker.tsx` in `RootLayout`: smoothly updates the browser address bar with `?v=v1.0.0-<hash>` without page reloads.
+  - Added live deployment badge in `Footer.tsx` with pulsing green indicator.
+  - Exposes `NEXT_PUBLIC_APP_VERSION` via `next.config.ts`.
+- **Verification Matrix**:
+  - `npm --prefix frontend run lint`: **0 errors, 0 warnings**.
+  - `npm --prefix frontend run build`: **Compiled successfully in 1488ms, 16/16 routes pre-rendered statically in 707ms, 0 errors**.
+  - Headless Puppeteer verification:
+    - Root page automatically showed `?v=v1.0.0-f53268f` in address bar.
+    - Subpage `/about` automatically showed `/about?v=v1.0.0-f53268f` in address bar.
+    - Footer showed live badge `v1.0.0-f53268f` with green pulsing dot.
+
+---
+
+## 📅 Session 16 — Elimination of Mobile Parallax Image Jumping on About CRC Page
+- **Timestamp**: 2026-11-13 14:36 (Local Time)
+- **User Intent**:
+  - Fix image jumping on mobile screen during scroll on the About CRC page ("mobile e About CRC page scrolling er somoy image gula ektu jump kore. mobile er jnno ui ta recheck koro again valo vabe").
+- **Root Cause Isolated**:
+  - `CareSplitPrinciples.tsx` was running the JavaScript parallax engine (`jarallax`) on all mobile touch devices.
+  - On mobile, native touch scrolling runs asynchronously on the GPU compositor at 120Hz/60Hz.
+  - Jarallax recalculated inline `translate3d(0, -693px, 0)` on the main thread with scroll latency, creating visible image snaps and jumping.
+- **Actions Completed**:
+  - Disabled `jarallax` on mobile/touch devices (`window.innerWidth < 1024 || 'ontouchstart' in window`).
+  - Set static responsive image container `h-[260px] sm:h-[340px] md:h-auto md:min-h-[500px]` with `w-full h-full object-cover`.
+  - Retained mousewheel parallax strictly for desktop screens.
+  - Comprehensive mobile UI audit of About page: verified zero horizontal overflow (`docWidth: 374px <= winWidth: 390px`).
+- **Verification Matrix**:
+  - `npm --prefix frontend run lint`: **0 errors, 0 warnings**.
+  - `npm --prefix frontend run build`: **Compiled successfully in 890ms, 16/16 routes pre-rendered statically in 653ms, 0 errors**.
+  - Headless Puppeteer verification (Mobile 390x844):
+    - Image `transform` is completely static (`""`).
+    - Scrolling 600px down: zero image jumping, zero layout shifts.
+
+
+
 
 
 

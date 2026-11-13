@@ -64,8 +64,20 @@ const sections: SectionItem[] = [
 
 export default function CareSplitPrinciples() {
   useEffect(() => {
+    // Adaptive parallax: subtle micro-parallax on mobile (0.12) with CSS smoothing, full (0.3) on desktop
+    const isMobile =
+      typeof window !== 'undefined' &&
+      (window.innerWidth < 1024 ||
+        'ontouchstart' in window ||
+        navigator.maxTouchPoints > 0);
+
+    const parallaxSpeed = isMobile ? 0.12 : 0.3;
+
     const elements = document.querySelectorAll<HTMLElement>('.jarallax');
-    jarallax(elements, { speed: 0.3 });
+    jarallax(elements, {
+      speed: parallaxSpeed,
+      disableVideo: true,
+    });
 
     return () => {
       jarallax(elements, 'destroy');
@@ -84,13 +96,15 @@ export default function CareSplitPrinciples() {
               isReversed ? 'md:flex-row-reverse' : 'md:flex-row'
             }`}
           >
-            {/* Image Block */}
-            <div className="w-full md:w-1/2 min-h-[320px] md:min-h-[500px] relative">
-              <div className="jarallax w-full h-full min-h-[320px] md:min-h-[500px]">
+            {/* Image Block: Adaptive parallax with CSS GPU hardware interpolation */}
+            <div className="w-full md:w-1/2 min-h-[300px] sm:min-h-[380px] md:min-h-[500px] relative overflow-hidden">
+              <div className="jarallax w-full h-full min-h-[300px] sm:min-h-[380px] md:min-h-[500px] relative">
                 <img
-                  className="jarallax-img object-cover"
+                  className="jarallax-img w-full h-full object-cover"
                   src={item.image}
                   alt={item.alt}
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>

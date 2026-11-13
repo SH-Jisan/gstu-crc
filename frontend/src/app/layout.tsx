@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import AosInit from "@/components/AosInit";
+import VersionTracker from "@/components/VersionTracker";
+import versionData from "@/version.json";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -61,6 +63,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <meta name="application-version" content={versionData.tag} />
         <link rel="icon" type="image/png" sizes="32x32" href="/icon.png?v=2" />
         <link rel="icon" type="image/png" sizes="192x192" href="/icon.png?v=2" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2" />
@@ -72,6 +75,7 @@ export default function RootLayout({
       >
         <AosInit />
         <SmoothScroll />
+        <VersionTracker />
         {children}
       </body>
     </html>

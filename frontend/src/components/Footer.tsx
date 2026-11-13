@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { Mail, Phone, MapPin } from "lucide-react";
+import versionData from "@/version.json";
 
 export default function Footer() {
   return (
@@ -168,7 +169,14 @@ export default function Footer() {
 
         {/* Bottom Sub-Footer Bar */}
         <div className="border-t border-gray-800/80 pt-6 mt-12 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">
-          <p>© 2026 Come For Road Child (CRC), GSTU Branch.</p>
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 text-center sm:text-left">
+            <p>© 2026 Come For Road Child (CRC), GSTU Branch.</p>
+            <span className="hidden sm:inline text-gray-700">·</span>
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-gray-900/90 border border-gray-800 text-[11px] font-mono text-gray-300 shadow-2xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>{versionData.tag}</span>
+            </span>
+          </div>
           <p>Brotherhood · Commitment · Trust</p>
         </div>
       </div>

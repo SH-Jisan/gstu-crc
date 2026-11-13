@@ -528,4 +528,15 @@ img {
   text-indent: -9999px;
 }
 
+/* Silky smooth hardware interpolation for mobile & desktop Jarallax Parallax */
+.jarallax > .jarallax-img,
+.jarallax-container img,
+.jarallax img {
+  transition: transform 0.18s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
 
