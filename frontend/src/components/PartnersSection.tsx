@@ -44,7 +44,7 @@ export default function PartnersSection() {
           data-aos="fade-up"
           data-aos-duration="650"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-green-50 border border-green-200 text-[#007938] text-xs font-bold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-50 border border-red-200 text-[#e6000a] text-xs font-bold uppercase tracking-wider mb-3">
             <Handshake className="w-3.5 h-3.5" />
             <span>Institutional Collaborations</span>
           </div>

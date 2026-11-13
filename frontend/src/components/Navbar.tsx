@@ -161,34 +161,34 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
       {/* 2. Main Navigation Bar (White background, bottom red border, logo, links, search & donate) */}
       <div
         className={`relative z-30 border-b-4 border-[#e6000a] bg-white/95 backdrop-blur-md transition-all duration-300 ${
-          isSticky ? "py-2 shadow-xl" : "py-2.5 sm:py-3 shadow-md"
+          isSticky ? "py-1.5 sm:py-2 shadow-xl" : "py-2 sm:py-3 shadow-md"
         }`}
       >
-        <div className="max-w-[1536px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-2 xl:gap-4 font-sans">
+        <div className="max-w-[1536px] 2xl:max-w-[1600px] mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-1.5 sm:gap-3 xl:gap-4 font-sans">
           {/* Brand Identity: Official CRC Logo + 2-line Text */}
-          <Link href="/" className="group flex items-center gap-2.5 sm:gap-3 shrink-0">
-            <div className="relative size-10 sm:size-11 shrink-0 transition-transform duration-300 group-hover:scale-105 active:scale-95 drop-shadow-sm">
+          <Link href="/" className="group flex items-center gap-2 sm:gap-3 shrink-0 min-w-0">
+            <div className="relative size-8 sm:size-10 shrink-0 transition-transform duration-300 group-hover:scale-105 active:scale-95 drop-shadow-sm">
               <Image
                 src="/logo/logo-navbar.png"
                 alt="Come For Road Child (CRC) Official Logo"
-                width={44}
-                height={44}
+                width={40}
+                height={40}
                 className="w-full h-full object-contain rounded-full"
                 priority
               />
             </div>
-            <span className="flex flex-col text-left leading-tight whitespace-nowrap">
-              <span className="block font-heading text-sm sm:text-base font-black text-[#0d0f14] group-hover:text-[#e6000a] transition-colors tracking-tight">
+            <span className="flex flex-col text-left leading-tight">
+              <span className="block font-heading text-xs xs:text-sm sm:text-base font-black text-[#0d0f14] group-hover:text-[#e6000a] transition-colors tracking-tight whitespace-nowrap">
                 Come For Road Child
               </span>
-              <span className="block text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-gray-500 uppercase mt-0.5">
+              <span className="block text-[9px] sm:text-[11px] font-bold tracking-[0.18em] text-gray-500 uppercase mt-0.5 whitespace-nowrap">
                 GSTU BRANCH
               </span>
             </span>
           </Link>
 
           {/* Desktop Navigation Links (Single line, strictly whitespace-nowrap) */}
-          <nav className="hidden xl:flex items-center gap-0.5 2xl:gap-1.5 shrink-0">
+          <nav className="hidden xl:flex items-center gap-0 2xl:gap-1.5 shrink-0">
             {navItems.map((item) => {
               const hasMega = Boolean(item.id && megaMenus[item.id]);
               const isCurrentRoute =
@@ -205,14 +205,14 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
                 >
                   <Link
                     href={item.href}
-                    className={`relative block whitespace-nowrap px-2 xl:px-2.5 2xl:px-3 py-1.5 text-xs xl:text-[12.5px] 2xl:text-[13.5px] font-bold transition-colors duration-200 ${
+                    className={`relative block whitespace-nowrap px-1.5 xl:px-2 2xl:px-3 py-1.5 text-xs xl:text-[12px] 2xl:text-[13.5px] font-bold transition-colors duration-200 ${
                       isActive ? "text-[#e6000a]" : "text-[#0d0f14] hover:text-[#e6000a]"
                     }`}
                   >
                     <span>{item.label}</span>
                     {/* Smooth expanding underline indicator */}
                     <span
-                      className={`absolute bottom-0 left-2 right-2 h-[2.5px] bg-[#e6000a] rounded-full transition-all duration-300 ease-out origin-left ${
+                      className={`absolute bottom-0 left-1.5 right-1.5 2xl:left-2 2xl:right-2 h-[2.5px] bg-[#e6000a] rounded-full transition-all duration-300 ease-out origin-left ${
                         isActive
                           ? "scale-x-100 opacity-100"
                           : "scale-x-0 opacity-0 group-hover/nav:scale-x-100 group-hover/nav:opacity-100"
@@ -226,31 +226,31 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
           </nav>
 
           {/* Right Controls: Search Icon + Donate Button + Hamburger */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
             {/* Search Popover Button */}
             <div className="relative">
               <button
                 onClick={() => setSearchOpen(!searchOpen)}
                 aria-label="Search CRC Website"
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 hover:text-[#e6000a] flex items-center justify-center transition-all duration-200 cursor-pointer active:scale-95"
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 hover:text-[#e6000a] flex items-center justify-center transition-all duration-200 cursor-pointer active:scale-95"
               >
-                <Search className="w-4 h-4" />
+                <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </button>
 
               {/* Search Box Popover */}
               {searchOpen && (
-                <div className="absolute right-0 top-12 sm:top-14 w-64 sm:w-72 bg-white rounded-xl shadow-2xl p-3 border border-gray-200 z-50 animate-popover-in">
+                <div className="absolute right-0 top-11 sm:top-14 w-60 sm:w-72 max-w-[calc(100vw-24px)] bg-white rounded-xl shadow-2xl p-3 border border-gray-200 z-50 animate-popover-in">
                   <div className="flex items-center space-x-2 bg-gray-50 px-3 py-2 rounded-lg border border-gray-200">
-                    <Search className="w-4 h-4 text-gray-400" />
+                    <Search className="w-4 h-4 text-gray-400 shrink-0" />
                     <input
                       type="text"
-                      placeholder="Search CRC programs, school..."
+                      placeholder="Search CRC programs..."
                       className="bg-transparent border-none text-xs text-gray-800 focus:outline-none w-full"
                       autoFocus
                     />
                     <button
                       onClick={() => setSearchOpen(false)}
-                      className="text-gray-400 hover:text-gray-600 cursor-pointer"
+                      className="text-gray-400 hover:text-gray-600 cursor-pointer shrink-0"
                     >
                       <X className="w-3.5 h-3.5" />
                     </button>
@@ -262,19 +262,23 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
             {/* Donate Button (Matches screenshot: red box with bold white text) */}
             <Link
               href="/#sponsor"
-              className="bg-[#e6000a] hover:bg-[#a20002] text-white font-heading font-bold text-sm tracking-wide px-5 sm:px-6 py-2.5 rounded shadow-md hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 shrink-0"
+              className="hidden min-[360px]:inline-flex bg-[#e6000a] hover:bg-[#a20002] text-white font-heading font-bold text-xs sm:text-sm tracking-wide px-3 sm:px-5 2xl:px-6 py-1.5 sm:py-2.5 rounded shadow-md hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 shrink-0 whitespace-nowrap"
             >
               Donate
             </Link>
 
             {/* Mobile Drawer Trigger (Visible below XL) */}
-            <div className="xl:hidden">
+            <div className="xl:hidden shrink-0">
               <button
                 onClick={() => setMobileDrawerOpen(!mobileDrawerOpen)}
-                className="p-2 text-gray-800 hover:text-[#e6000a] hover:bg-gray-100 rounded-lg transition-colors"
+                className="p-1.5 sm:p-2 text-gray-800 hover:text-[#e6000a] hover:bg-gray-100 rounded-lg transition-colors flex items-center justify-center"
                 aria-label="Toggle navigation menu"
               >
-                {mobileDrawerOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                {mobileDrawerOpen ? (
+                  <X className="w-5 h-5 sm:w-6 sm:h-6" />
+                ) : (
+                  <Menu className="w-5 h-5 sm:w-6 sm:h-6" />
+                )}
               </button>
             </div>
           </div>

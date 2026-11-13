@@ -1117,3 +1117,35 @@ Chronological registry of all file additions, edits, component implementations, 
   - `npx tsc --noEmit`: **0 errors**.
   - `npm run lint`: **0 errors, 0 warnings**.
   - Puppeteer headless testing confirmed 0 horizontal scroll overflow and responsive layout.
+
+
+---
+
+## [2026-11-13 08:08] - Comprehensive Multi-Breakpoint Responsive Audit & Layout Stabilization
+- **Scope**: Responsive Layout Across All Aspect Ratios (320px–1920px), Mobile Drawer Visibility, and Color Palette Harmonization.
+- **Files Touched**:
+  - `[MODIFY]` [`frontend/src/components/Navbar.tsx`](../frontend/src/components/Navbar.tsx):
+    - Resolved mobile hamburger button clipping bug on screens < 430px (e.g. 320px, 360px, 375px, 390px, 412px) by making Donate button compact/responsive, shrinking search/menu padding, and fluid typography.
+    - Resolved desktop navigation overflow at 1280px (`xl` breakpoint) by tightening nav item padding and horizontal spacing.
+    - Anchored search popover to stay within viewport bounds on narrow screens (`max-w-[calc(100vw-24px)]`).
+  - `[MODIFY]` [`frontend/src/components/PartnersSection.tsx`](../frontend/src/components/PartnersSection.tsx):
+    - Removed remaining green badge artifacts (`bg-green-50 border-green-200 text-[#007938]`), standardizing to crimson red `#e6000a`.
+  - `[MODIFY]` [`frontend/src/components/SponsorChildSection.tsx`](../frontend/src/components/SponsorChildSection.tsx):
+    - Standardized subheaders, impact counters, and modal headers from green `#007938` to crimson red `#e6000a`.
+    - Made donation modal and payment switcher tabs fully responsive with fluid wrapping for narrow mobile screens.
+  - `[MODIFY]` [`frontend/src/components/VolunteerismSection.tsx`](../frontend/src/components/VolunteerismSection.tsx):
+    - Harmonized Metric 2 counter color from `#007938` to high-contrast `#0d0f14`.
+  - `[MODIFY]` [`frontend/src/components/Footer.tsx`](../frontend/src/components/Footer.tsx):
+    - Standardized contact icon colors (MapPin, Mail, Phone) from green `#007938` to brand red `#e6000a`.
+- **Verification Matrix**:
+  - Tested across 8 standard breakpoints:
+    1. **320x640 (Mobile XS)**: 0 overflow, `scrollWidth: 303px === clientWidth: 303px`.
+    2. **375x812 (Mobile Standard - iPhone)**: 0 overflow, `scrollWidth: 358px === clientWidth: 358px`.
+    3. **412x915 (Android / Pixel)**: 0 overflow, `scrollWidth: 395px === clientWidth: 395px`.
+    4. **768x1024 (Tablet Portrait - iPad)**: 0 overflow, `scrollWidth: 751px === clientWidth: 751px`.
+    5. **1024x768 (Tablet Landscape / Netbook)**: 0 overflow, `scrollWidth: 1007px === clientWidth: 1007px`.
+    6. **1280x800 (13" Laptop Screen)**: 0 overflow, `scrollWidth: 1263px === clientWidth: 1263px`.
+    7. **1440x900 (Desktop Standard)**: 0 overflow, `scrollWidth: 1423px === clientWidth: 1423px`.
+    8. **1920x1080 (FHD 16:9 Desktop)**: 0 overflow, `scrollWidth: 1903px === clientWidth: 1903px`.
+  - `npm run lint`: **0 errors, 0 warnings**.
+  - `npm run build`: **Compiled successfully in 6.4s, 16/16 pages static, 0 errors**.

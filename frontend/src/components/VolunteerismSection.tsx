@@ -39,7 +39,7 @@ export default function VolunteerismSection() {
 
             {/* Metric 2 */}
             <div className="w-full py-2.5 md:py-0 flex flex-col items-center">
-              <span className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading text-[#007938] tracking-tight">
+              <span className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading text-[#0d0f14] tracking-tight">
                 10+
               </span>
               <p className="mt-1 text-xs sm:text-sm font-semibold text-gray-600 font-sans">

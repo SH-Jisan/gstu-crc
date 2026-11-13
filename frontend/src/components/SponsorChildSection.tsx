@@ -107,7 +107,7 @@ export default function SponsorChildSection() {
 
       {/* 2. Number of Unsponsored Children Static Counter Block */}
       <div className="max-w-5xl mx-auto px-6 relative z-10 pt-2 sm:pt-4 pb-1">
-        <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#007938] block text-center mb-1">
+        <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#e6000a] block text-center mb-1">
           COMMUNITY IMPACT · HATEKHORI CAMPUS
         </span>
         <h2 className="font-heading text-xl sm:text-2xl lg:text-3xl text-[#0d0f14] text-center font-extrabold uppercase tracking-tight">
@@ -116,7 +116,7 @@ export default function SponsorChildSection() {
         <p className="font-heading text-4xl sm:text-5xl lg:text-6xl text-center text-[#e6000a] font-black my-1 tracking-tight">
           120
         </p>
-        <p className="text-center text-xs sm:text-sm font-semibold text-[#007938] mb-2.5">
+        <p className="text-center text-xs sm:text-sm font-semibold text-gray-600 mb-2.5">
           Every BDT 1,500/month guarantees a child&apos;s complete schooling, learning supplies, and daily food.
         </p>
         <div className="text-center mt-1.5">
@@ -143,14 +143,14 @@ export default function SponsorChildSection() {
             onClick={() => setIsModalOpen(false)}
           >
           <div
-            className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto bg-white rounded-3xl shadow-2xl border border-gray-100 p-6 sm:p-8"
+            className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-gray-100 p-5 sm:p-8"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <button
               type="button"
               onClick={() => setIsModalOpen(false)}
-              className="absolute top-5 right-5 p-2 rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors"
+              className="absolute top-4 right-4 sm:top-5 sm:right-5 p-2 rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />
@@ -158,16 +158,16 @@ export default function SponsorChildSection() {
 
             {/* Modal Header */}
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-2xl bg-red-50 flex items-center justify-center text-[#e6000a] shrink-0">
-                <Heart className="w-6 h-6 fill-current" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-red-50 flex items-center justify-center text-[#e6000a] shrink-0">
+                <Heart className="w-5 h-5 sm:w-6 sm:h-6 fill-current" />
               </div>
               <div>
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#007938]">
+                <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#e6000a]">
                   Come for Road Child (CRC) · GSTU
                 </span>
                 <h3
                   id="sponsor-modal-title"
-                  className="font-heading text-xl sm:text-2xl font-bold text-[#0d0f14]"
+                  className="font-heading text-lg sm:text-2xl font-bold text-[#0d0f14]"
                 >
                   Direct Sponsorship & Donation
                 </h3>
@@ -207,30 +207,30 @@ export default function SponsorChildSection() {
             </div>
 
             {/* Payment Method Switcher Tabs */}
-            <div className="flex border-b border-gray-200 mb-5">
+            <div className="flex flex-wrap border-b border-gray-200 mb-5 gap-1">
               <button
                 type="button"
                 onClick={() => setActiveTab("mobile")}
-                className={`pb-3 px-4 font-bold text-xs sm:text-sm flex items-center gap-2 border-b-2 transition-colors cursor-pointer ${
+                className={`pb-2.5 sm:pb-3 px-2.5 sm:px-4 font-bold text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2 border-b-2 transition-colors cursor-pointer ${
                   activeTab === "mobile"
                     ? "border-[#e6000a] text-[#e6000a]"
                     : "border-transparent text-gray-500 hover:text-gray-800"
                 }`}
               >
-                <Smartphone className="w-4 h-4" />
-                Mobile Banking (bKash / Nagad)
+                <Smartphone className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                <span>Mobile Banking</span>
               </button>
               <button
                 type="button"
                 onClick={() => setActiveTab("bank")}
-                className={`pb-3 px-4 font-bold text-xs sm:text-sm flex items-center gap-2 border-b-2 transition-colors cursor-pointer ${
+                className={`pb-2.5 sm:pb-3 px-2.5 sm:px-4 font-bold text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2 border-b-2 transition-colors cursor-pointer ${
                   activeTab === "bank"
                     ? "border-[#e6000a] text-[#e6000a]"
                     : "border-transparent text-gray-500 hover:text-gray-800"
                 }`}
               >
-                <Building2 className="w-4 h-4" />
-                Bank Account (DBBL)
+                <Building2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                <span>Bank Transfer</span>
               </button>
             </div>
 

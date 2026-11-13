@@ -137,14 +137,14 @@ export default function Footer() {
             </span>
             <div className="space-y-3 text-xs sm:text-[13px] text-gray-300">
               <div className="flex items-start gap-2.5 leading-snug">
-                <MapPin className="w-4 h-4 text-[#007938] shrink-0 mt-0.5" />
+                <MapPin className="w-4 h-4 text-[#e6000a] shrink-0 mt-0.5" />
                 <span>
                   Gopalganj Science &amp; Technology University, Gopalganj 8100, Bangladesh
                 </span>
               </div>
 
               <div className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-[#007938] shrink-0" />
+                <Mail className="w-4 h-4 text-[#e6000a] shrink-0" />
                 <a
                   href="mailto:crcgstu@gmail.com"
                   className="hover:text-white transition-colors"
@@ -154,7 +154,7 @@ export default function Footer() {
               </div>
 
               <div className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-[#007938] shrink-0" />
+                <Phone className="w-4 h-4 text-[#e6000a] shrink-0" />
                 <a
                   href="tel:+8801711000001"
                   className="hover:text-white transition-colors"
