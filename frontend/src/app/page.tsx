@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import AosInit from "@/components/AosInit";
 import Navbar from "@/components/Navbar";
 import UnifiedHeroSection from "@/components/UnifiedHeroSection";
 import StatsCounterBar from "@/components/StatsCounterBar";
@@ -16,9 +15,6 @@ import Footer from "@/components/Footer";
 export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen bg-[#f6f4f1] text-[#0d0f14] font-sans antialiased">
-      {/* 0. AOS (Animate On Scroll) Initializer */}
-      <AosInit />
-
       {/* 1. Official CRC Navigation Bar with Mega Dropdowns & Search */}
       <Navbar />
 

@@ -31,12 +31,15 @@ export default function StatsCounterBar() {
     <section className="bg-[#e6000a] text-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-14">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10">
-          {stats.map((stat) => {
+          {stats.map((stat, idx) => {
             const Icon = stat.icon;
             return (
               <div
                 key={stat.label}
-                className="flex flex-col items-center text-center"
+                data-aos="fade-up"
+                data-aos-duration="600"
+                data-aos-delay={idx * 70}
+                className="flex flex-col items-center text-center active:scale-95 transition-transform"
               >
                 <Icon
                   className="w-5 h-5 sm:w-6 sm:h-6 text-white/90 mb-3"

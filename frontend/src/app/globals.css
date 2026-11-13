@@ -16,6 +16,7 @@
   --accent: #007938;
   --paragraph: #4b5563;
   --base-100: #ffffff;
+  --navbar-height: 94px;
 }
 
 @theme inline {
@@ -196,8 +197,82 @@ html {
 }
 
 .animate-mobile-drawer {
-  animation: mobileDrawerSlide 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: mobileDrawerSlide 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
   will-change: transform, opacity;
+}
+
+/* Mobile Navigation Drawer Open & Closing Transitions (Smooth Curtain Effect) */
+.mobile-drawer-wrapper {
+  position: relative;
+  z-index: 40;
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: grid-template-rows 0.34s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.26s ease-in-out,
+              visibility 0.34s;
+  will-change: grid-template-rows, opacity;
+}
+
+.mobile-drawer-wrapper.is-open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: grid-template-rows 0.34s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.26s ease-in-out;
+}
+
+.mobile-drawer-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.mobile-drawer-content {
+  transform: translate3d(0, -10px, 0);
+  transition: transform 0.34s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.mobile-drawer-wrapper.is-open .mobile-drawer-content {
+  transform: translate3d(0, 0, 0);
+}
+
+/* Responsive Accordion Dropdown Sub-Menu Transitions */
+.accordion-dropdown {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.24s ease-out;
+  pointer-events: none;
+  will-change: grid-template-rows, opacity;
+}
+
+.accordion-dropdown.is-expanded {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.accordion-dropdown-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.accordion-dropdown-content {
+  transform: translate3d(0, -6px, 0);
+  opacity: 0.75;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.24s ease-out;
+  will-change: transform, opacity;
+}
+
+.accordion-dropdown.is-expanded .accordion-dropdown-content {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
 }
 
 /* Smooth Mega Dropdown Slide Down & Slide Up (Curtain Effect) */
@@ -382,4 +457,40 @@ html {
   mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
 }
+
+/* Responsive AOS on mobile screens: smoother, lighter vertical displacement */
+[data-aos] {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+@media (max-width: 768px) {
+  [data-aos="fade-up"] {
+    transform: translate3d(0, 26px, 0) !important;
+  }
+  [data-aos="fade-up"].aos-animate {
+    transform: translate3d(0, 0, 0) !important;
+  }
+  [data-aos="zoom-out"] {
+    transform: scale(1.03) !important;
+  }
+  [data-aos="zoom-out"].aos-animate {
+    transform: scale(1) !important;
+  }
+  [data-aos="zoom-in"] {
+    transform: scale(0.96) !important;
+  }
+  [data-aos="zoom-in"].aos-animate {
+    transform: scale(1) !important;
+  }
+}
+
+/* Touch tactile active state for mobile devices */
+@media (hover: none) and (pointer: coarse) {
+  .hover-sweep-card:active {
+    transform: scale(0.985);
+  }
+}
+
 

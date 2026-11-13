@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Search, ChevronRight, Menu, X } from "lucide-react";
+import { Search, ChevronRight, Menu, X, ChevronDown } from "lucide-react";
 import Breadcrumb, { BreadcrumbItem } from "@/components/Breadcrumb";
 import {
   megaMenus,
@@ -23,7 +23,17 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [displayedMenuKey, setDisplayedMenuKey] = useState<string>("about");
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+  const [expandedMobileItem, setExpandedMobileItem] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [prevPathname, setPrevPathname] = useState(pathname);
+
+  // Automatically reset open drawers and dropdowns when navigating between routes
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    setMobileDrawerOpen(false);
+    setExpandedMobileItem(null);
+    setActiveDropdown(null);
+  }
   const navRef = useRef<HTMLElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [drawerHeight, setDrawerHeight] = useState<number | null>(null);
@@ -59,6 +69,18 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
     return () => window.removeEventListener("resize", handleResize);
   }, [activeMegaKey]);
 
+  // Prevent background scroll on mobile when drawer is open
+  useEffect(() => {
+    if (mobileDrawerOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileDrawerOpen]);
+
   const isOverflowingViewport = Boolean(
     drawerHeight &&
     typeof window !== "undefined" &&
@@ -74,6 +96,21 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
     if (id && megaMenus[id]) {
       setDisplayedMenuKey(id);
     }
+  };
+
+  const handleDesktopNavClick = (e: React.MouseEvent, id?: string) => {
+    const hasMega = Boolean(id && megaMenus[id]);
+    if (hasMega) {
+      // Toggle dropdown on click/touch for laptops and hybrid devices
+      if (activeDropdown !== id) {
+        e.preventDefault();
+        handleMouseEnterItem(id || null);
+      }
+    }
+  };
+
+  const toggleMobileAccordion = (label: string) => {
+    setExpandedMobileItem((prev) => (prev === label ? null : label));
   };
 
   const handleMouseLeaveItem = () => {
@@ -97,6 +134,23 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
     }, 180);
   };
 
+  // Dynamically synchronize the fixed navbar stack height to CSS variable --navbar-height
+  useEffect(() => {
+    const updateNavbarHeight = () => {
+      if (navRef.current) {
+        const height = navRef.current.offsetHeight;
+        document.documentElement.style.setProperty("--navbar-height", `${height}px`);
+      }
+    };
+    updateNavbarHeight();
+    const t1 = setTimeout(updateNavbarHeight, 150);
+    const t2 = setTimeout(updateNavbarHeight, 350);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
+  }, [isSticky]);
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollPos =
@@ -113,8 +167,18 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
       }
     };
 
+    const handleResize = () => {
+      if (navRef.current) {
+        document.documentElement.style.setProperty(
+          "--navbar-height",
+          `${navRef.current.offsetHeight}px`
+        );
+      }
+    };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
     document.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleResize);
     document.addEventListener("click", handleClickOutside);
     handleScroll();
 
@@ -122,6 +186,7 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       window.removeEventListener("scroll", handleScroll);
       document.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
@@ -205,6 +270,7 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
                 >
                   <Link
                     href={item.href}
+                    onClick={(e) => handleDesktopNavClick(e, item.id)}
                     className={`relative block whitespace-nowrap px-1.5 xl:px-2 2xl:px-3 py-1.5 text-xs xl:text-[12px] 2xl:text-[13.5px] font-bold transition-colors duration-200 ${
                       isActive ? "text-[#e6000a]" : "text-[#0d0f14] hover:text-[#e6000a]"
                     }`}
@@ -267,18 +333,30 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
               Donate
             </Link>
 
-            {/* Mobile Drawer Trigger (Visible below XL) */}
+            {/* Mobile Drawer Trigger (Visible below XL) with Smooth Icon Morph */}
             <div className="xl:hidden shrink-0">
               <button
-                onClick={() => setMobileDrawerOpen(!mobileDrawerOpen)}
-                className="p-1.5 sm:p-2 text-gray-800 hover:text-[#e6000a] hover:bg-gray-100 rounded-lg transition-colors flex items-center justify-center"
+                onClick={() => {
+                  setMobileDrawerOpen(!mobileDrawerOpen);
+                  if (!mobileDrawerOpen && searchOpen) setSearchOpen(false);
+                }}
+                className="relative w-9 h-9 sm:w-10 sm:h-10 text-gray-800 hover:text-[#e6000a] hover:bg-gray-100 rounded-lg transition-colors flex items-center justify-center cursor-pointer active:scale-95"
                 aria-label="Toggle navigation menu"
               >
-                {mobileDrawerOpen ? (
-                  <X className="w-5 h-5 sm:w-6 sm:h-6" />
-                ) : (
-                  <Menu className="w-5 h-5 sm:w-6 sm:h-6" />
-                )}
+                <Menu
+                  className={`w-5 h-5 sm:w-6 sm:h-6 absolute transition-all duration-300 ease-out ${
+                    mobileDrawerOpen
+                      ? "opacity-0 rotate-90 scale-75 pointer-events-none"
+                      : "opacity-100 rotate-0 scale-100"
+                  }`}
+                />
+                <X
+                  className={`w-5 h-5 sm:w-6 sm:h-6 absolute transition-all duration-300 ease-out ${
+                    mobileDrawerOpen
+                      ? "opacity-100 rotate-0 scale-100"
+                      : "opacity-0 -rotate-90 scale-75 pointer-events-none"
+                  }`}
+                />
               </button>
             </div>
           </div>
@@ -462,45 +540,163 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
           </div>
         )}
 
-        {/* Mobile Drawer Menu with Smooth Slide Animation */}
-        {mobileDrawerOpen && (
-          <div className="xl:hidden bg-white px-6 py-5 border-t border-gray-200 text-[#0d0f14] text-sm font-bold space-y-2 animate-mobile-drawer shadow-xl max-h-[80vh] overflow-y-auto">
-            {navItems.map((item) => (
-              <div key={item.label} className="border-b border-gray-100 pb-2">
-                <Link
-                  href={item.href}
-                  onClick={() => setMobileDrawerOpen(false)}
-                  className="block py-1.5 text-gray-900 hover:text-[#e6000a] hover:translate-x-1 transition-all font-heading text-sm"
-                >
-                  {item.label}
-                </Link>
-                {item.dropdown && (
-                  <div className="pl-3 py-1 space-y-1">
-                    {item.dropdown.map((sub) => (
-                      <Link
-                        key={sub.label}
-                        href={sub.href}
-                        onClick={() => setMobileDrawerOpen(false)}
-                        className="block py-1 text-xs text-gray-600 hover:text-[#e6000a] transition-colors"
-                      >
-                        • {sub.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
+        {/* Soft Backdrop Overlay for Mobile Drawer with Smooth Fade Transitions */}
+        <div
+          className={`xl:hidden fixed inset-0 top-[var(--navbar-height,94px)] bg-black/40 backdrop-blur-xs z-30 transition-all duration-300 ease-out ${
+            mobileDrawerOpen
+              ? "opacity-100 pointer-events-auto visible"
+              : "opacity-0 pointer-events-none invisible"
+          }`}
+          onClick={() => {
+            setMobileDrawerOpen(false);
+            setExpandedMobileItem(null);
+          }}
+          aria-hidden="true"
+        />
+
+        {/* Mobile Drawer Menu with Smooth Open & Closing Curtain Transitions */}
+        <div
+          className={`xl:hidden mobile-drawer-wrapper ${
+            mobileDrawerOpen ? "is-open" : ""
+          }`}
+        >
+          <div className="mobile-drawer-inner">
+            <div className="mobile-drawer-content bg-white px-4 sm:px-6 py-4 sm:py-5 border-t border-gray-200 text-[#0d0f14] text-sm font-bold shadow-2xl max-h-[calc(100vh-80px)] overflow-y-auto divide-y divide-gray-100">
+              <div className="space-y-1 pb-3">
+                {navItems.map((item) => {
+                  const hasDropdown = Boolean(item.dropdown && item.dropdown.length > 0);
+                  const isExpanded = expandedMobileItem === item.label;
+                  const isCurrentRoute =
+                    item.href === "/"
+                      ? pathname === "/"
+                      : pathname?.startsWith(item.href);
+
+                  return (
+                    <div key={item.label} className="py-1">
+                      {hasDropdown ? (
+                        <div>
+                          {/* Header Row with Label + Animated Chevron Toggle Button */}
+                          <div className="flex items-center justify-between py-1 px-2 rounded-lg hover:bg-gray-50 transition-colors">
+                            <Link
+                              href={item.href}
+                              onClick={() => {
+                                setMobileDrawerOpen(false);
+                                setExpandedMobileItem(null);
+                              }}
+                              className={`font-heading text-sm sm:text-base font-bold tracking-tight transition-colors hover:text-[#e6000a] ${
+                                isCurrentRoute ? "text-[#e6000a]" : "text-gray-900"
+                              }`}
+                            >
+                              {item.label}
+                            </Link>
+                            <button
+                              type="button"
+                              onClick={() => toggleMobileAccordion(item.label)}
+                              aria-expanded={isExpanded}
+                              aria-label={`Toggle ${item.label} dropdown`}
+                              className={`p-2.5 rounded-lg text-gray-500 hover:text-[#e6000a] hover:bg-red-50/70 active:scale-90 transition-all duration-200 cursor-pointer min-w-[38px] min-h-[38px] flex items-center justify-center ${
+                                isExpanded ? "text-[#e6000a] bg-red-50/80" : ""
+                              }`}
+                            >
+                              <ChevronDown
+                                className={`w-4 h-4 sm:w-4.5 sm:h-4.5 transition-transform duration-300 ease-out ${
+                                  isExpanded ? "rotate-180 text-[#e6000a]" : "rotate-0"
+                                }`}
+                              />
+                            </button>
+                          </div>
+
+                          {/* Smooth Animated Accordion Dropdown (CSS Grid 0fr to 1fr with inner glide) */}
+                          <div
+                            className={`accordion-dropdown ${
+                              isExpanded ? "is-expanded" : ""
+                            }`}
+                          >
+                            <div className="accordion-dropdown-inner">
+                              <div className="pt-1.5 pb-0.5">
+                                <div className="accordion-dropdown-content pl-2.5 pr-2 py-2 space-y-1 bg-red-50/30 rounded-xl border border-red-100/60">
+                                  {/* Overview Main Link */}
+                                  <Link
+                                    href={item.href}
+                                    onClick={() => {
+                                      setMobileDrawerOpen(false);
+                                      setExpandedMobileItem(null);
+                                    }}
+                                    className="flex items-center justify-between px-3 py-1.5 rounded-lg text-xs font-bold text-[#e6000a] bg-white border border-red-200/80 hover:bg-red-50 shadow-xs transition-colors"
+                                  >
+                                    <span>Explore {item.label} Overview</span>
+                                    <ChevronRight className="w-3.5 h-3.5" />
+                                  </Link>
+
+                                  {/* Sub-items in responsive 1-col (mobile) or 2-col (tablet) */}
+                                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 pt-1">
+                                    {item.dropdown?.map((sub) => {
+                                      const isSubActive = pathname === sub.href;
+                                      return (
+                                        <Link
+                                          key={sub.label}
+                                          href={sub.href}
+                                          onClick={() => {
+                                            setMobileDrawerOpen(false);
+                                            setExpandedMobileItem(null);
+                                          }}
+                                          className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 active:scale-[0.98] ${
+                                            isSubActive
+                                              ? "text-[#e6000a] bg-white shadow-xs font-bold"
+                                              : "text-gray-700 hover:text-[#e6000a] hover:bg-white/90"
+                                          }`}
+                                        >
+                                          <span className="flex items-center gap-2 truncate">
+                                            <span className="w-1.5 h-1.5 rounded-full bg-[#e6000a] shrink-0" />
+                                            <span className="truncate">{sub.label}</span>
+                                          </span>
+                                          <ChevronRight className="w-3 h-3 text-gray-400 shrink-0 ml-1" />
+                                        </Link>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        /* Direct link without dropdown */
+                        <Link
+                          href={item.href}
+                          onClick={() => {
+                            setMobileDrawerOpen(false);
+                            setExpandedMobileItem(null);
+                          }}
+                          className={`flex items-center justify-between py-2 px-2 rounded-lg text-sm sm:text-base font-heading font-bold transition-all hover:text-[#e6000a] hover:translate-x-1 ${
+                            isCurrentRoute ? "text-[#e6000a]" : "text-gray-900"
+                          }`}
+                        >
+                          <span>{item.label}</span>
+                          <ChevronRight className="w-4 h-4 text-gray-400" />
+                        </Link>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
-            ))}
-            <div className="pt-3">
-              <Link
-                href="/#sponsor"
-                onClick={() => setMobileDrawerOpen(false)}
-                className="block text-center py-3 bg-[#e6000a] text-white font-heading font-bold rounded shadow-lg hover:bg-[#a20002]"
-              >
-                Donate Now
-              </Link>
+
+              {/* Mobile Bottom CTA */}
+              <div className="pt-4">
+                <Link
+                  href="/#sponsor"
+                  onClick={() => {
+                    setMobileDrawerOpen(false);
+                    setExpandedMobileItem(null);
+                  }}
+                  className="block text-center py-3 bg-[#e6000a] text-white font-heading font-bold text-sm sm:text-base rounded-lg shadow-lg hover:bg-[#a20002] active:scale-[0.98] transition-all"
+                >
+                  Donate Now
+                </Link>
+              </div>
             </div>
           </div>
-        )}
+        </div>
       </div>
 
       {/* 3. Sub-Navbar Breadcrumb Strip (Fixed with Navbar, stays visible during scroll) */}

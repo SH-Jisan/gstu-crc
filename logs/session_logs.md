@@ -554,3 +554,152 @@ Chronological record of developer-agent interactions, user requirements, plannin
     - `document.title` returns `"CRC | GSTU Branch"` (17 characters, cleanly fits all tabs).
     - Fetched `/icon.png?v=2`, `/favicon.ico?v=2`, `/apple-icon.png?v=2` returning HTTP 200 with matching image content types (`image/png`, `image/x-icon`).
 
+
+---
+
+## 📅 Session 09 — Mobile Phone Responsive Scroll Animations & Lenis Touch Decoupling
+- **Timestamp**: 2026-11-13 10:31 (Local Time)
+- **User Intent**:
+  - Fix mobile phone UI where animations were not appearing (`phone er jnno ui ta thik vabe kaj korese na. animation gula asche na. phone er screen er jnno ba sob dhoroner screen er jnno responsive animation koro`).
+- **Root Causes Isolated**:
+  1. **Virtual Touch Hijacking via Lenis Smooth Scroll**: In `SmoothScroll.tsx`, `Lenis` was initialized with `touchMultiplier: 1.5`, intercepting native touch momentum scrolling on smartphones. Because Lenis ran inside a virtual RAF loop without broadcasting updates to AOS (`lenis.on("scroll", ...)` was missing), native scroll events were throttled/delayed, preventing AOS from registering viewport coordinate thresholds.
+  2. **Image Load Layout Shifts & Coordinate Desync**: In `AosInit.tsx`, AOS was initialized once synchronously on mount when Next.js dynamic images (`crc-banner.png`, `school.jpg`, etc.) were 0px tall. Once images loaded, the document stretched by thousands of pixels, but AOS retained the stale coordinates and never re-indexed elements.
+  3. **Aggressive `mirror: true` & `once: false` Behavior on Mobile**: With short smartphone viewports, momentum scrolling caused elements to immediately lose `.aos-animate`, blanking out or flickering content.
+  4. **Missing Scroll Animations Across ~80% of Homepage**: Most sections (`StatsCounterBar`, `SponsorChildSection`, `RecentActivitiesSection`, `StoriesSection`, `VolunteerismSection`) had zero scroll animation tags, making the site feel static on mobile.
+- **Actions Completed**:
+  - **Touch Decoupling & Lenis Sync ([`SmoothScroll.tsx`](../frontend/src/components/SmoothScroll.tsx))**:
+    - Guarded Lenis so it does not hijack touch scrolling on mobile devices (`window.innerWidth < 1024 || "ontouchstart" in window`), allowing phones to use native 120Hz GPU-accelerated touch momentum scrolling.
+    - Synchronized desktop Lenis RAF loops directly with `AOS.refresh()`.
+  - **AOS Multi-Stage Re-indexing & Mobile Optimization ([`AosInit.tsx`](../frontend/src/components/AosInit.tsx))**:
+    - Configured `once: true`, `mirror: false`, `offset: 35`, and `disable: false`.
+    - Added multi-stage coordinate refreshes (`AOS.refreshHard()` at 120ms, 500ms, and 1200ms) to recalculate accurate offsets after Next.js images and webfonts finish rendering.
+    - Mounted `<AosInit />` globally in [`layout.tsx`](../frontend/src/app/layout.tsx).
+  - **Mobile-Responsive Scroll Animations Rolled Out Across All Sections**:
+    - [`UnifiedHeroSection.tsx`](../frontend/src/components/UnifiedHeroSection.tsx): Replaced buggy `IntersectionObserver` with smooth `data-aos="fade-up"` (headline, subtitle, action buttons, and photo mosaic) eliminating `-translate-x-12` horizontal overflow.
+    - [`StatsCounterBar.tsx`](../frontend/src/components/StatsCounterBar.tsx): Added staggered `data-aos="fade-up"` across all 4 key metric cards.
+    - [`SponsorChildSection.tsx`](../frontend/src/components/SponsorChildSection.tsx): Added `data-aos="fade-up"` across 50/50 split card and unsponsored children counter block.
+    - [`FocusAreasSection.tsx`](../frontend/src/components/FocusAreasSection.tsx): Removed `once="false"`, tightened delays (60ms-300ms), and added mobile active touch feedback.
+    - [`RecentActivitiesSection.tsx`](../frontend/src/components/RecentActivitiesSection.tsx): Added `data-aos="fade-up"` on header and 3 activity cards.
+    - [`StoriesSection.tsx`](../frontend/src/components/StoriesSection.tsx): Added `data-aos="fade-up"` on header and 3 quote cards.
+    - [`VolunteerismSection.tsx`](../frontend/src/components/VolunteerismSection.tsx): Added `data-aos="fade-up"` across header, floating metrics card, 3 metrics items, callout bar, and CTA button.
+  - **Mobile CSS Optimizations ([`globals.css`](../frontend/src/app/globals.css))**:
+    - Under `@media (max-width: 768px)`, reduced `data-aos="fade-up"` displacement from 100px down to 26px for smooth, subtle mobile reveals without layout jumps.
+    - Added hardware acceleration (`will-change: transform, opacity; -webkit-backface-visibility: hidden;`).
+- **Verification Matrix**:
+  - `npm --prefix frontend run lint`: **0 errors, 0 warnings**.
+  - `npm --prefix frontend run build`: **Compiled successfully in 289ms, 16/16 routes pre-rendered statically, 0 errors**.
+  - Total AOS elements tracked on landing page increased from 9 to **36**.
+  - Automated Puppeteer scroll simulation across 7 progressive viewport depths verified 100% of elements (36/36) smoothly trigger and retain visibility with zero flicker and 0 horizontal overflow (`scrollWidth === clientWidth`).
+
+
+---
+
+## 📅 Session 10 — Responsive Dropdown Menu Animation Architecture Across All Devices
+- **Timestamp**: 2026-11-13 10:48 (Local Time)
+- **User Intent**:
+  - Make dropdown menu animations responsive so that dropdown menu animations trigger smoothly on any device (`dropdown menu er animation responsive koro. je kono device e jate dropdown menu er animation hoi`).
+- **Issues Identified**:
+  1. **Mobile & Tablet Drawer Static Sub-lists**: In `Navbar.tsx`, sub-links under nav items were statically displayed as plain bullet points without any interactive accordion, toggle animation, or chevron indicators. Clicking on a category like "About CRC" immediately navigated away instead of expanding sub-options.
+  2. **Desktop Touch / Hybrid Device Limitation**: On touchscreen laptops and tablets in desktop mode, dropdown menus relied solely on `:hover`, without click/touch toggle handling.
+  3. **Lack of Backdrop Overlay**: Mobile drawer had no soft dimmed backdrop, reducing visual contrast against background page content.
+- **Actions Completed**:
+  - **Mobile & Tablet Interactive Accordion Dropdown ([`Navbar.tsx`](../frontend/src/components/Navbar.tsx) & [`globals.css`](../frontend/src/app/globals.css))**:
+    - Implemented `.accordion-dropdown` with buttery smooth CSS Grid expansion (`grid-template-rows: 0fr` to `1fr` in 0.32s cubic-bezier) and opacity ease-out.
+    - Integrated rotating animated chevron (`w-4 h-4 transition-transform duration-300 ease-out rotate-180 text-[#e6000a]`).
+    - Staggered and grouped sub-items into responsive layout (single column on smartphones `< 640px`, 2-column grid on tablets `>= 640px`) with an "Explore [Category] Overview" pill and crimson bullet points.
+    - Added backdrop overlay (`bg-black/40 backdrop-blur-xs`) for enhanced focus and one-tap outside closure.
+  - **Desktop Click + Hover Hybrid Integration**:
+    - Added `onClick` toggle support for desktop navigation links so touch laptops, iPads with trackpads, and hybrid devices can tap to open the full-width mega menu curtain animation without immediately triggering page jumps.
+  - **Auto-close on Route Change**:
+    - Integrated clean route change detection (`prevPathname !== pathname`) closing open mobile drawers and active dropdowns instantly upon navigation.
+- **Verification Matrix**:
+  - `npm --prefix frontend run lint`: **0 errors, 0 warnings**.
+  - `npm --prefix frontend run build`: **Compiled successfully in 1705ms, 16/16 routes pre-rendered statically, 0 errors**.
+  - Headless Puppeteer verification:
+    - Desktop (1440px): Click & hover triggers full-width mega menu curtain slide-down (`isMegaOpen: true, opacity: 1`).
+    - Mobile (390px): Hamburger menu opens `.animate-mobile-drawer`; clicking "Toggle About CRC dropdown" expands height from 0px to 179px smoothly (`isExp: true`), rotating chevron 180°; clicking next category collapses previous and expands new one smoothly.
+
+
+---
+
+## 📅 Session 11 — Elimination of Sticky Jump Bar Gap on About Page
+- **Timestamp**: 2026-11-13 11:00 (Local Time)
+- **User Intent**:
+  - Fix visible gap between breadcrumb bottom red border line and the sticky "JUMP TO:" sub-navigation bar on the About page (`eykhane gap ache ekta`, referencing screenshot `media_1794581602957_af8b64f8.jpg` showing background tree photo leaking through).
+- **Root Cause Isolated**:
+  - In `frontend/src/app/about/page.tsx` line 171, the mobile/tablet sticky jump bar had hardcoded `top-[103px] sm:top-[108px]`.
+  - When the user scrolled past 40px, the top black strip collapsed, leaving the fixed header height at exactly `94px` (Main bar 60px + Breadcrumb bar 34px).
+  - The difference between `108px` and `94px` left a `14px` gap through which the underlying background image (`school.jpg` in `CareSplitPrinciples`) leaked through.
+- **Actions Completed**:
+  - **Dynamic Navbar Height Synchronization ([`Navbar.tsx`](../frontend/src/components/Navbar.tsx) & [`globals.css`](../frontend/src/app/globals.css))**:
+    - Added CSS custom property `--navbar-height: 94px;` in `:root`.
+    - Added an effect in `Navbar.tsx` listening to `isSticky` changes, measuring `navRef.current.offsetHeight` and publishing it directly to `--navbar-height` on `:root`.
+  - **Sticky Alignment Correction ([`about/page.tsx`](../frontend/src/app/about/page.tsx))**:
+    - Replaced hardcoded `top-[103px] sm:top-[108px]` with `top-[var(--navbar-height,94px)]`.
+    - Removed redundant local `AosInit` import.
+- **Verification Matrix**:
+  - `npm --prefix frontend run lint`: **0 errors, 0 warnings**.
+  - `npm --prefix frontend run build`: **Compiled successfully in 978ms, 16/16 routes pre-rendered statically, 0 errors**.
+  - Headless Puppeteer verification at `http://localhost:3000/about`:
+    - Scrolled to 800px: `headerBottom: 94.1px`, `jumpBarTop: 94.0px`, `gap: -0.1px` (0px gap, perfectly flush fit).
+    - Visual screenshot confirmed the red breadcrumb border touches the top of the "JUMP TO" bar with zero gap and no background leak.
+
+---
+
+## 📅 Session 12 — Jump To Navigation Red Line Accent & Page-Scroll-Driven Auto-Scrolling
+- **Timestamp**: 2026-11-13 11:18 (Local Time)
+- **User Intent**:
+  - Add thin signature red line under the "Jump to:" navigation menu on `/about`.
+  - Enable automatic horizontal scrolling of the "Jump to:" menu as the user scrolls the page vertically, keeping the currently active section centered and visible.
+- **Actions Completed**:
+  - **Signature Red Line Accent ([`about/page.tsx`](../frontend/src/app/about/page.tsx))**:
+    - Added `border-b-2 border-[#e6000a]` on the mobile/tablet sticky jump bar container.
+  - **Page-Scroll-Driven Auto-Scrolling ([`about/page.tsx`](../frontend/src/app/about/page.tsx))**:
+    - Added `jumpNavScrollRef` and `jumpNavButtonRefs`.
+    - Added reactive `useEffect([activeSection])` calculating exact center offset for active button relative to the scroll container.
+    - Uses `container.scrollTo({ left: targetScrollLeft, behavior: 'smooth' })` to smoothly glide right when scrolling down and smoothly glide left when scrolling up.
+    - Handled parent-child mapping so sub-chapters (`history`, `governance`, `symbol-flag`) keep "Institutional Chapters" centered.
+    - Added bottom-of-page scroll edge detection.
+- **Verification Matrix**:
+  - `npm --prefix frontend run lint`: **0 errors, 0 warnings**.
+  - `npm --prefix frontend run build`: **Compiled successfully in 1928ms, 16/16 routes pre-rendered statically, 0 errors**.
+  - Headless Puppeteer verification (Mobile 390x844):
+    - `borderBottom: "2px solid rgb(230, 0, 10)"` confirmed.
+    - Zero gap (`navbarRect.bottom: 82px === jumpBarRect.top: 82px`, `gap: 0px`).
+    - Scrolling down: `scrollLeft` smoothly moved `0px` -> `232px` -> `503.5px`.
+    - Scrolling up: `scrollLeft` smoothly returned to `0px`.
+
+---
+
+## 📅 Session 13 — Mobile Dropdown Open & Closing Smooth Animations
+- **Timestamp**: 2026-11-13 11:47 (Local Time)
+- **User Intent**:
+  - Implement smooth open and closing animations for dropdown menu on mobile screens ("mobile screen er jnno dropdown menu open and closing er animation daw and animation ta smooth koro").
+- **Actions Completed**:
+  - **Mobile Drawer Open & Closing Curtain Animation ([`Navbar.tsx`](../frontend/src/components/Navbar.tsx) & [`globals.css`](../frontend/src/app/globals.css))**:
+    - Replaced raw conditional mounting (`{mobileDrawerOpen && ...}`) with persistent CSS-grid-managed `.mobile-drawer-wrapper` (0fr to 1fr with 340ms cubic-bezier curve).
+    - Enabled bi-directional animation: slides down smoothly from top on open, and slides up smoothly on close.
+  - **Backdrop Overlay Transitions**:
+    - Replaced conditional unmounting with persistent fade transitions (`opacity-0 invisible` <-> `opacity-100 visible` in 300ms).
+  - **Hamburger Button Icon Morphing**:
+    - Added 90° rotation and scale morph animation between `Menu` and `X` icons.
+  - **Accordion Dropdown Sub-menu Enhancements**:
+    - Added `.accordion-dropdown-content` with -6px to 0px vertical slide and opacity glide.
+    - Eliminated margin snap on collapse by embedding spacing within `.accordion-dropdown-inner`.
+  - **Body Scroll Lock**:
+    - Added `useEffect` disabling body scroll (`overflow: hidden`) while mobile drawer is open.
+- **Verification Matrix**:
+  - `npm --prefix frontend run lint`: **0 errors, 0 warnings**.
+  - `npm --prefix frontend run build`: **Compiled successfully in 2.3s, 16/16 routes pre-rendered statically, 0 errors**.
+  - Headless Puppeteer verification (Mobile 390x844):
+    - Initial: `isOpen: false`, `visibility: "hidden"`, `offsetHeight: 0px`.
+    - Open Drawer: `isOpen: true`, `visibility: "visible"`, `offsetHeight: 584px`.
+    - Expand Accordion: `isExpanded: true`, `offsetHeight: 315px`, chevron rotated 180°.
+    - Collapse Accordion: `isExpanded: false`, `offsetHeight: 0px`, chevron rotated 0°.
+    - Close Drawer: `isOpen: false`, `visibility: "hidden"`, `offsetHeight: 0px`.
+
+
+
+
+
+

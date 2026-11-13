@@ -1200,3 +1200,113 @@ Chronological registry of all file additions, edits, component implementations, 
   - `npm --prefix frontend run build`: **Compiled successfully in 678ms, 16/16 routes pre-rendered statically, 0 errors**.
   - Headless Puppeteer inspection verified `document.title === "CRC | GSTU Branch"` and HTTP 200 for all versioned icon paths.
 
+
+---
+
+## [2026-11-13 10:31] - Universal Mobile-Responsive Scroll Animations & Lenis Touch Decoupling
+- **Scope**: Fixed animation failure on phone screens, decoupled Lenis virtual scrolling on touch devices, and implemented comprehensive scroll entrance animations across all sections.
+- **Files Touched**:
+  - `[MODIFY]` [`frontend/src/components/SmoothScroll.tsx`](../frontend/src/components/SmoothScroll.tsx):
+    - Prevented Lenis from intercepting touch scrolling on mobile devices (`window.innerWidth < 1024` or touch devices), preserving native 120Hz GPU momentum scrolling.
+    - Attached `lenis.on("scroll", () => AOS.refresh())` for seamless desktop mouse wheel sync.
+  - `[MODIFY]` [`frontend/src/components/AosInit.tsx`](../frontend/src/components/AosInit.tsx):
+    - Configured `once: true`, `mirror: false`, `offset: 35`, and `disable: false`.
+    - Added multi-stage coordinate re-indexing (`AOS.refreshHard()` at 120ms, 500ms, 1200ms) after dynamic Next.js images finish loading.
+  - `[MODIFY]` [`frontend/src/app/layout.tsx`](../frontend/src/app/layout.tsx):
+    - Mounted `<AosInit />` globally in `RootLayout`.
+  - `[MODIFY]` [`frontend/src/app/page.tsx`](../frontend/src/app/page.tsx):
+    - Cleaned up redundant local `<AosInit />` call.
+  - `[MODIFY]` [`frontend/src/app/globals.css`](../frontend/src/app/globals.css):
+    - Added mobile-specific AOS displacement overrides (26px on `<= 768px`) and hardware acceleration.
+  - `[MODIFY]` [`frontend/src/components/UnifiedHeroSection.tsx`](../frontend/src/components/UnifiedHeroSection.tsx):
+    - Replaced buggy `IntersectionObserver` with smooth vertical `data-aos="fade-up"` (headline, subtitle, CTA buttons, photo mosaic).
+  - `[MODIFY]` [`frontend/src/components/StatsCounterBar.tsx`](../frontend/src/components/StatsCounterBar.tsx):
+    - Added staggered `data-aos="fade-up"` to all 4 metrics.
+  - `[MODIFY]` [`frontend/src/components/SponsorChildSection.tsx`](../frontend/src/components/SponsorChildSection.tsx):
+    - Added `data-aos="fade-up"` on split card and counter block.
+  - `[MODIFY]` [`frontend/src/components/FocusAreasSection.tsx`](../frontend/src/components/FocusAreasSection.tsx):
+    - Removed `once="false"` and adjusted delays for responsive single-column mobile viewports.
+  - `[MODIFY]` [`frontend/src/components/RecentActivitiesSection.tsx`](../frontend/src/components/RecentActivitiesSection.tsx):
+    - Added `data-aos="fade-up"` on header and 3 activity cards.
+  - `[MODIFY]` [`frontend/src/components/StoriesSection.tsx`](../frontend/src/components/StoriesSection.tsx):
+    - Added `data-aos="fade-up"` on header and 3 quote cards.
+  - `[MODIFY]` [`frontend/src/components/VolunteerismSection.tsx`](../frontend/src/components/VolunteerismSection.tsx):
+    - Added `data-aos="fade-up"` across header, floating metrics card, 3 metrics items, callout bar, and CTA button.
+- **Verification Matrix**:
+  - `npm --prefix frontend run lint`: **0 errors, 0 warnings**.
+  - `npm --prefix frontend run build`: **Compiled successfully in 289ms, 16/16 routes pre-rendered statically, 0 errors**.
+  - Puppeteer verified 36/36 elements animate smoothly and retain visibility with 0 horizontal overflow.
+
+
+---
+
+## [2026-11-13 10:48] - Universal Responsive Dropdown Menu Animation System
+- **Scope**: Implemented interactive animated accordion dropdowns for mobile and tablets, click-to-open hybrid support for touch laptops on desktop, and backdrop overlay animations.
+- **Files Touched**:
+  - `[MODIFY]` [`frontend/src/components/Navbar.tsx`](../frontend/src/components/Navbar.tsx):
+    - Added accordion state `expandedMobileItem` and `toggleMobileAccordion` function.
+    - Integrated rotating chevron button (`rotate-180` with red color transition).
+    - Wrapped mobile sub-menus in `.accordion-dropdown` with CSS Grid 0fr-to-1fr smooth expansion.
+    - Added responsive sub-menu layout (1-column on smartphones, 2-column grid on tablets).
+    - Added backdrop overlay (`bg-black/40 backdrop-blur-xs`) for mobile drawer.
+    - Added desktop click-to-toggle support (`handleDesktopNavClick`) for touchscreen laptops.
+    - Added automatic drawer and dropdown closing on route changes (`prevPathname !== pathname`).
+  - `[MODIFY]` [`frontend/src/app/globals.css`](../frontend/src/app/globals.css):
+    - Added `.accordion-dropdown` and `.accordion-dropdown.is-expanded` CSS Grid transition rules.
+    - Refined `.animate-mobile-drawer` keyframes.
+- **Verification Matrix**:
+  - `npm --prefix frontend run lint`: **0 errors, 0 warnings**.
+  - `npm --prefix frontend run build`: **Compiled successfully in 1705ms, 16/16 routes pre-rendered statically, 0 errors**.
+  - Headless Puppeteer inspection verified desktop mega menu curtain slide-down and mobile accordion height expansion from 0px to 179px with 180° chevron rotation.
+
+
+---
+
+## [2026-11-13 11:00] - Elimination of Sticky Jump Bar Gap on About Us Page
+- **Scope**: Replaced hardcoded sticky top coordinates on `/about` horizontal jump bar with dynamic `--navbar-height` CSS variable, eliminating background image leak through.
+- **Files Touched**:
+  - `[MODIFY]` [`frontend/src/app/globals.css`](../frontend/src/app/globals.css):
+    - Added `--navbar-height: 94px;` in `:root`.
+  - `[MODIFY]` [`frontend/src/components/Navbar.tsx`](../frontend/src/components/Navbar.tsx):
+    - Added synchronization hook measuring `navRef.current.offsetHeight` and publishing it to `--navbar-height`.
+  - `[MODIFY]` [`frontend/src/app/about/page.tsx`](../frontend/src/app/about/page.tsx):
+    - Changed `top-[103px] sm:top-[108px]` to `top-[var(--navbar-height,94px)]`.
+    - Removed redundant local `AosInit` import.
+- **Verification Matrix**:
+  - `npm --prefix frontend run lint`: **0 errors, 0 warnings**.
+  - `npm --prefix frontend run build`: **Compiled successfully in 978ms, 16/16 routes pre-rendered statically, 0 errors**.
+  - Puppeteer verified `headerBottom: 94.1px === jumpBarTop: 94.0px` with 0px gap.
+
+---
+
+## [2026-11-13 11:47] - Mobile Navigation Drawer & Accordion Dropdown Open/Closing Smooth Transitions
+- **Scope**:
+  - Engineered bidirectional open and closing transitions for the mobile navigation drawer (sliding down from top on open, and sliding up smoothly on close with spring cubic-bezier).
+  - Upgraded mobile backdrop overlay with smooth 300ms fade-in and fade-out transitions without DOM unmount snapping.
+  - Implemented smooth 90° rotation and scale morph animation between hamburger `Menu` and `X` close icons.
+  - Enhanced accordion sub-menu dropdowns (`0fr` to `1fr` CSS grid) with inner `-6px` to `0px` vertical glide and opacity transition, removing abrupt margin snaps.
+  - Added background body scroll lock (`document.body.style.overflow = "hidden"`) when mobile drawer is open.
+- **Files Touched**:
+  - `[MODIFY]` [`frontend/src/app/globals.css`](../frontend/src/app/globals.css):
+    - Added `.mobile-drawer-wrapper`, `.mobile-drawer-inner`, and `.mobile-drawer-content` CSS Grid 0fr-to-1fr curtain transition rules.
+    - Added `.accordion-dropdown-content` inner transform and opacity transitions.
+  - `[MODIFY]` [`frontend/src/components/Navbar.tsx`](../frontend/src/components/Navbar.tsx):
+    - Replaced conditionally unmounted drawer with persistent CSS-transition-managed `.mobile-drawer-wrapper`.
+    - Added smooth hamburger icon morphing animation.
+    - Added body scroll lock `useEffect`.
+    - Wrapped accordion dropdown content in `.accordion-dropdown-content`.
+- **Verification Matrix**:
+  - `npm --prefix frontend run lint`: **0 errors, 0 warnings**.
+  - `npm --prefix frontend run build`: **Compiled successfully in 2.3s, 16/16 routes pre-rendered statically, 0 errors**.
+  - **Puppeteer Headless Verification (Mobile 390x844)**:
+    - Initial: `isOpen: false`, `visibility: "hidden"`, `opacity: "0"`, `offsetHeight: 0px`.
+    - Click Hamburger (Open): `isOpen: true`, `visibility: "visible"`, `opacity: "1"`, `offsetHeight: 584px`, backdrop opacity `1`.
+    - Click "About CRC" Accordion (Expand): `isExpanded: true`, `offsetHeight: 315px`, chevron rotated 180°.
+    - Click "About CRC" Accordion (Collapse): `isExpanded: false`, `offsetHeight: 0px`, chevron rotated 0°.
+    - Click Hamburger (Close): `isOpen: false`, `visibility: "hidden"`, `opacity: "0"`, `offsetHeight: 0px`, backdrop opacity `0`.
+
+
+
+
+
+

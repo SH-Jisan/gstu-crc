@@ -59,8 +59,7 @@ export default function FocusAreasSection() {
         <div
           data-aos="fade-up"
           data-aos-duration="600"
-          data-aos-once="false"
-          className="group relative overflow-hidden bg-[#e6000a] text-white min-h-44 p-6 sm:p-7 rounded-lg flex flex-col justify-center shadow-lg transition-transform duration-300"
+          className="group relative overflow-hidden bg-[#e6000a] text-white min-h-44 p-6 sm:p-7 rounded-lg flex flex-col justify-center shadow-lg transition-transform duration-300 active:scale-[0.99]"
         >
           {/* Subtle ambient background glow & geometric circle */}
           <div
@@ -90,8 +89,7 @@ export default function FocusAreasSection() {
               data-aos="fade-up"
               data-aos-duration="550"
               data-aos-delay={area.delay}
-              data-aos-once="false"
-              className="hover-sweep-card group relative bg-white border border-gray-200 min-h-44 p-6 rounded-lg flex flex-col justify-between shadow-sm hover:shadow-2xl transition-all duration-300"
+              className="hover-sweep-card group relative bg-white border border-gray-200 min-h-44 p-6 rounded-lg flex flex-col justify-between shadow-sm hover:shadow-2xl transition-all duration-300 active:scale-[0.99]"
             >
               <div className="relative z-10">
                 {/* Icon Container with Micro Scale/Rotate on Hover */}

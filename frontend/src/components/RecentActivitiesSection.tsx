@@ -37,7 +37,11 @@ export default function RecentActivitiesSection() {
     <section className="py-10 sm:py-14 bg-[#f6f4f1] border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-7 sm:mb-8">
+        <div
+          data-aos="fade-up"
+          data-aos-duration="600"
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-7 sm:mb-8"
+        >
           <div>
             <span className="text-xs font-bold uppercase tracking-wider text-[#e6000a] block mb-2">
               FIELD INITIATIVES · ONGOING ACTIONS
@@ -63,10 +67,13 @@ export default function RecentActivitiesSection() {
 
         {/* 3 Activity Cards with rounded-lg edges */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-7">
-          {activities.map((item) => (
+          {activities.map((item, idx) => (
             <article
               key={item.title}
-              className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 flex flex-col group"
+              data-aos="fade-up"
+              data-aos-duration="600"
+              data-aos-delay={idx * 90}
+              className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 active:scale-[0.99] border border-gray-100 flex flex-col group"
             >
               <div className="relative aspect-[16/9.5] overflow-hidden bg-gray-100">
                 <Image

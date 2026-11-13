@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import {
   ChevronRight,
@@ -11,7 +11,6 @@ import {
   Link2,
   ArrowRight,
 } from "lucide-react";
-import AosInit from "@/components/AosInit";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageHeader from "@/components/PageHeader";
@@ -96,11 +95,24 @@ export default function AboutPage() {
   const [copied, setCopied] = useState(false);
   const [isNavVisible, setIsNavVisible] = useState(false);
 
+  // References for mobile / tablet horizontal Jump To navigation auto-scrolling
+  const jumpNavScrollRef = useRef<HTMLDivElement>(null);
+  const jumpNavButtonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+
   // Scrollspy: automatically highlight the section in viewport and control entrance visibility
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       setIsNavVisible(currentScrollY > 200);
+
+      // Check if user has scrolled near page bottom
+      const isAtBottom =
+        window.innerHeight + currentScrollY >=
+        document.documentElement.scrollHeight - 70;
+      if (isAtBottom) {
+        setActiveSection(ALL_NAV_IDS[ALL_NAV_IDS.length - 1]);
+        return;
+      }
 
       const scrollPosition = currentScrollY + 200;
       for (let i = ALL_NAV_IDS.length - 1; i >= 0; i--) {
@@ -121,6 +133,35 @@ export default function AboutPage() {
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Synchronize mobile Jump To menu horizontal scroll position smoothly with active section
+  useEffect(() => {
+    const container = jumpNavScrollRef.current;
+    if (!container) return;
+
+    // Resolve the active button in the top-level NAV_PANEL_ITEMS (matches direct id or parent chapter)
+    const activeItem = NAV_PANEL_ITEMS.find(
+      (item) =>
+        item.id === activeSection ||
+        Boolean(item.subItems?.some((sub) => sub.id === activeSection))
+    );
+    const targetId = activeItem ? activeItem.id : activeSection;
+    const button = jumpNavButtonRefs.current[targetId];
+
+    if (button) {
+      const containerRect = container.getBoundingClientRect();
+      const buttonRect = button.getBoundingClientRect();
+      const relativeButtonLeft =
+        buttonRect.left - containerRect.left + container.scrollLeft;
+      const targetScrollLeft =
+        relativeButtonLeft - container.clientWidth / 2 + buttonRect.width / 2;
+
+      container.scrollTo({
+        left: Math.max(0, targetScrollLeft),
+        behavior: "smooth",
+      });
+    }
+  }, [activeSection]);
 
   const scrollToSection = (id: string, e: React.MouseEvent) => {
     e.preventDefault();
@@ -156,7 +197,6 @@ export default function AboutPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#f6f4f1] text-[#0d0f14] font-sans antialiased selection:bg-[#e6000a] selection:text-white">
-      <AosInit />
       <Navbar />
 
       <main className="flex-grow">
@@ -168,8 +208,11 @@ export default function AboutPage() {
         />
 
         {/* Mobile / Tablet Horizontal Sticky Quick Jump Bar (< lg) */}
-        <div className="lg:hidden sticky top-[103px] sm:top-[108px] z-20 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-xs">
-          <div className="max-w-7xl mx-auto px-4 py-2.5 overflow-x-auto scrollbar-none flex items-center gap-2">
+        <div className="lg:hidden sticky top-[var(--navbar-height,94px)] z-20 bg-white/95 backdrop-blur-md border-b-2 border-[#e6000a] shadow-xs">
+          <div
+            ref={jumpNavScrollRef}
+            className="max-w-7xl mx-auto px-4 py-2.5 overflow-x-auto scrollbar-none flex items-center gap-2 relative scroll-smooth"
+          >
             <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 shrink-0 pr-2 border-r border-gray-200">
               Jump to:
             </span>
@@ -182,6 +225,9 @@ export default function AboutPage() {
               return (
                 <button
                   key={item.id}
+                  ref={(el) => {
+                    jumpNavButtonRefs.current[item.id] = el;
+                  }}
                   onClick={(e) => scrollToSection(item.id, e)}
                   className={`px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 ${
                     isActive

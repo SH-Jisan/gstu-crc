@@ -32,7 +32,11 @@ export default function StoriesSection() {
     <section className="py-12 sm:py-16 bg-[#0d0f14] text-white relative overflow-hidden border-t border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-11">
+        <div
+          data-aos="fade-up"
+          data-aos-duration="600"
+          className="text-center max-w-2xl mx-auto mb-8 sm:mb-11"
+        >
           <span className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.2em] text-[#e6000a] block mb-2 font-sans">
             SUCCESS STORIES · REAL IMPACT
           </span>
@@ -48,10 +52,13 @@ export default function StoriesSection() {
 
         {/* 3 Hybrid Cards: Rounded-LG, Subtle Dark Surface, Signature Red Left Bar */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-7">
-          {stories.map((item) => (
+          {stories.map((item, idx) => (
             <div
               key={item.name}
-              className="bg-[#131620] p-5 sm:p-6 rounded-lg border border-gray-800/80 border-l-4 border-l-[#e6000a] flex flex-col justify-between hover:border-gray-700 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 shadow-md group"
+              data-aos="fade-up"
+              data-aos-duration="600"
+              data-aos-delay={idx * 90}
+              className="bg-[#131620] p-5 sm:p-6 rounded-lg border border-gray-800/80 border-l-4 border-l-[#e6000a] flex flex-col justify-between hover:border-gray-700 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 active:scale-[0.99] shadow-md group"
             >
               <div>
                 {/* Top Row: Category Tag + Minimal Quote Icon */}

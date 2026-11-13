@@ -61,7 +61,11 @@ export default function SponsorChildSection() {
       className="sac-section relative bg-cover bg-no-repeat centered pb-6 sm:pb-8 bg-[#f6f4f1] scroll-mt-24 sm:scroll-mt-28"
     >
       {/* 1. Main 50/50 Split Card */}
-      <div className="max-w-6xl 2xl:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-6 sm:pb-8">
+      <div
+        data-aos="fade-up"
+        data-aos-duration="650"
+        className="max-w-6xl 2xl:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-6 sm:pb-8"
+      >
         <div className="flex flex-col lg:flex-row shadow-2xl rounded-lg overflow-hidden bg-white border border-gray-100">
           {/* Left Column: Picture */}
           <div className="basis-1/2 flex-1 overflow-hidden relative min-h-[220px] sm:min-h-[260px] lg:min-h-[330px]">
@@ -106,7 +110,12 @@ export default function SponsorChildSection() {
       </div>
 
       {/* 2. Number of Unsponsored Children Static Counter Block */}
-      <div className="max-w-5xl mx-auto px-6 relative z-10 pt-2 sm:pt-4 pb-1">
+      <div
+        data-aos="fade-up"
+        data-aos-duration="650"
+        data-aos-delay="100"
+        className="max-w-5xl mx-auto px-6 relative z-10 pt-2 sm:pt-4 pb-1"
+      >
         <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#e6000a] block text-center mb-1">
           COMMUNITY IMPACT · HATEKHORI CAMPUS
         </span>
