@@ -1149,3 +1149,34 @@ Chronological registry of all file additions, edits, component implementations, 
     8. **1920x1080 (FHD 16:9 Desktop)**: 0 overflow, `scrollWidth: 1903px === clientWidth: 1903px`.
   - `npm run lint`: **0 errors, 0 warnings**.
   - `npm run build`: **Compiled successfully in 6.4s, 16/16 pages static, 0 errors**.
+
+
+---
+
+## [2026-11-13 09:50] - High-Fidelity Authentic Documentary Photography Asset Replacement
+- **Scope**: Complete Replacement of AI-looking Glitched Imagery with Real, Culturally Authentic Documentary Photography.
+- **Files Touched**:
+  - `[MODIFY]` [`frontend/public/assets/campaign.jpg`](../frontend/public/assets/campaign.jpg):
+    - Replaced glitched AI image (unreadable text, plastic skin) with authentic 35mm documentary photography of a university student volunteer distributing a warm winter blanket to a mother and child on a misty morning in Bangladesh with cycle rickshaws in the background.
+  - `[MODIFY]` [`frontend/public/assets/school.jpg`](../frontend/public/assets/school.jpg):
+    - Replaced artificial CGI image with photojournalistic capture of an open-air Hatekhori street school under a banyan tree, featuring a female volunteer teacher guiding street children sitting cross-legged on a traditional bamboo mat, writing Bengali letters in paper exercise books with pencils.
+  - `[MODIFY]` [`frontend/public/assets/health.jpg`](../frontend/public/assets/health.jpg):
+    - Replaced synthetic rendering with authentic medical documentary photograph of a kind volunteer doctor in a white coat using a stethoscope to examine a smiling young girl, with her mother in a traditional saree beside them in a community clinic with a Bengali medical camp banner.
+- **Verification Matrix**:
+  - Next.js development server verified rendering on `http://localhost:3000`.
+  - Headless Puppeteer visual verification screenshots taken across Hero mosaic, Sponsor a Child, and Recent Activities sections.
+  - `npm run lint`: **0 errors, 0 warnings**.
+
+
+---
+
+## [2026-11-13 09:56] - Netlify Zero-Configuration Production Deployment Setup
+- **Scope**: Multi-Directory Netlify Deployment Configuration, App Router Runtime Plugin Integration, and Cloud Optimization Headers.
+- **Files Touched**:
+  - `[NEW]` [`netlify.toml`](../netlify.toml): Root Netlify build descriptor targeting `base = "frontend"`, specifying build command, publish directory (`.next`), Node 20 runtime, and security/caching headers (`public, max-age=31536000, immutable`).
+  - `[NEW]` [`frontend/netlify.toml`](../frontend/netlify.toml): Subdirectory Netlify configuration handling cases where the user explicitly designates `frontend` as the base directory in the Netlify web dashboard.
+  - `[MODIFY]` [`frontend/package.json`](../frontend/package.json): Added `@netlify/plugin-nextjs` v5.16.6 to devDependencies.
+  - `[MODIFY]` [`frontend/package-lock.json`](../frontend/package-lock.json): Updated dependency tree.
+- **Verification Matrix**:
+  - `npm --prefix frontend run lint`: **0 errors, 0 warnings**.
+  - `npm --prefix frontend run build`: **Compiled successfully in 1003ms, 16/16 routes pre-rendered statically, 0 errors**.
