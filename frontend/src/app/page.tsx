@@ -33,20 +33,30 @@ export default function HomePage() {
         <FocusAreasSection />
 
         {/* 6. Recent Field Activities & Action Updates */}
-        <RecentActivitiesSection />
+        <div className="content-visibility-auto">
+          <RecentActivitiesSection />
+        </div>
 
         {/* 7. Voices from the Street: Real Transformation Stories */}
-        <StoriesSection />
+        <div className="content-visibility-auto">
+          <StoriesSection />
+        </div>
 
         {/* 8. Volunteerism at CRC & University Student Impact */}
-        <VolunteerismSection />
+        <div className="content-visibility-auto">
+          <VolunteerismSection />
+        </div>
 
         {/* 9. Institutional Collaborations & Partners */}
-        <PartnersSection />
+        <div className="content-visibility-auto">
+          <PartnersSection />
+        </div>
       </main>
 
       {/* 10. Comprehensive Footer */}
-      <Footer />
+      <div className="content-visibility-auto">
+        <Footer />
+      </div>
     </div>
   );
 }

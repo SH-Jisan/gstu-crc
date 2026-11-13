@@ -66,7 +66,7 @@ export default function Breadcrumb({
       case "banner":
       default:
         return {
-          container: "bg-black/35 backdrop-blur-md border-white/20 text-white/90 shadow-sm px-3.5 py-1.5 rounded-full border",
+          container: "bg-black/60 md:bg-black/35 md:backdrop-blur-md border-white/20 text-white/90 shadow-sm px-3.5 py-1.5 rounded-full border",
           homeIcon: "text-white/80 hover:text-white",
           link: "text-white/85 hover:text-white hover:underline underline-offset-2",
           separator: "text-white/45",

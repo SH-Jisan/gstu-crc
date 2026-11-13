@@ -493,4 +493,39 @@ html {
   }
 }
 
+/* ========================================================================= */
+/* 6 INDUSTRY GOLD STANDARDS: HIGH-PERFORMANCE MOBILE OPTIMIZATIONS          */
+/* ========================================================================= */
+
+/* Standard 3 & 5: Hardware Acceleration & Touch Optimization */
+html {
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+.transform-gpu {
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Standard 2: Off-Screen Rendering Optimization (content-visibility: auto) */
+.content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 700px;
+}
+
+/* Standard 6: Smooth Image Decoding Protection */
+img {
+  text-indent: -9999px;
+}
+
 

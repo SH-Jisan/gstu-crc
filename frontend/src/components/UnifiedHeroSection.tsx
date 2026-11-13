@@ -23,6 +23,8 @@ export default function UnifiedHeroSection() {
             <img
               src="/assets/crc-banner.png"
               alt="CRC, GSTU Official Banner — Brotherhood, Commitment, Trust"
+              fetchPriority="high"
+              decoding="async"
               className="w-auto h-auto max-w-full object-contain transition-transform duration-700 group-hover:scale-[1.015]"
               style={{
                 maxHeight: "calc(100dvh - 136px)",

@@ -1279,31 +1279,29 @@ Chronological registry of all file additions, edits, component implementations, 
 
 ---
 
-## [2026-11-13 11:47] - Mobile Navigation Drawer & Accordion Dropdown Open/Closing Smooth Transitions
+## [2026-11-13 14:20] - Integration of 6 Industry Gold Standards for High-Performance Mobile Web
 - **Scope**:
-  - Engineered bidirectional open and closing transitions for the mobile navigation drawer (sliding down from top on open, and sliding up smoothly on close with spring cubic-bezier).
-  - Upgraded mobile backdrop overlay with smooth 300ms fade-in and fade-out transitions without DOM unmount snapping.
-  - Implemented smooth 90° rotation and scale morph animation between hamburger `Menu` and `X` close icons.
-  - Enhanced accordion sub-menu dropdowns (`0fr` to `1fr` CSS grid) with inner `-6px` to `0px` vertical glide and opacity transition, removing abrupt margin snaps.
-  - Added background body scroll lock (`document.body.style.overflow = "hidden"`) when mobile drawer is open.
+  - **Standard 1 (Conditional Backdrop Degradation)**: Replaced GPU-heavy `backdrop-blur-md` on mobile sticky elements (`Navbar.tsx`, sub-breadcrumbs, and Jump To bar on `/about`) with crisp `bg-white/98` and `bg-[#f4f2ee]`, preserving blur strictly on desktop (`md:` and `lg:`).
+  - **Standard 2 (Off-Screen Render Optimization)**: Added `.content-visibility-auto` (`content-visibility: auto; contain-intrinsic-size: 1px 700px;`) to off-screen landing page sections and lower footer, dramatically reducing initial layout computation.
+  - **Standard 3 (GPU Compositor Layer Promotion)**: Added `.transform-gpu` (`transform: translate3d(0,0,0); backface-visibility: hidden;`) to sticky Navbar, sub-navbar, and Jump To bar, preventing document re-rasterization during scroll.
+  - **Standard 4 (requestAnimationFrame Scroll Throttling)**: Wrapped raw scroll event listeners in `Navbar.tsx` and `about/page.tsx` with rAF ticking flags, guaranteeing calculations fire at most once per display frame.
+  - **Standard 5 (Native Touch Momentum & Gesture Isolation)**: Added `-webkit-tap-highlight-color: transparent;` and `overscroll-behavior-y: none;` in `globals.css`.
+  - **Standard 6 (Async Image Decoding & Loading Priorities)**: Added `fetchPriority="high"` and `decoding="async"` to above-the-fold hero banner, preventing decode pauses on mobile main thread.
 - **Files Touched**:
-  - `[MODIFY]` [`frontend/src/app/globals.css`](../frontend/src/app/globals.css):
-    - Added `.mobile-drawer-wrapper`, `.mobile-drawer-inner`, and `.mobile-drawer-content` CSS Grid 0fr-to-1fr curtain transition rules.
-    - Added `.accordion-dropdown-content` inner transform and opacity transitions.
-  - `[MODIFY]` [`frontend/src/components/Navbar.tsx`](../frontend/src/components/Navbar.tsx):
-    - Replaced conditionally unmounted drawer with persistent CSS-transition-managed `.mobile-drawer-wrapper`.
-    - Added smooth hamburger icon morphing animation.
-    - Added body scroll lock `useEffect`.
-    - Wrapped accordion dropdown content in `.accordion-dropdown-content`.
+  - `[MODIFY]` [`frontend/src/app/globals.css`](../frontend/src/app/globals.css)
+  - `[MODIFY]` [`frontend/src/components/Navbar.tsx`](../frontend/src/components/Navbar.tsx)
+  - `[MODIFY]` [`frontend/src/app/about/page.tsx`](../frontend/src/app/about/page.tsx)
+  - `[MODIFY]` [`frontend/src/app/page.tsx`](../frontend/src/app/page.tsx)
+  - `[MODIFY]` [`frontend/src/components/Breadcrumb.tsx`](../frontend/src/components/Breadcrumb.tsx)
+  - `[MODIFY]` [`frontend/src/components/UnifiedHeroSection.tsx`](../frontend/src/components/UnifiedHeroSection.tsx)
 - **Verification Matrix**:
   - `npm --prefix frontend run lint`: **0 errors, 0 warnings**.
-  - `npm --prefix frontend run build`: **Compiled successfully in 2.3s, 16/16 routes pre-rendered statically, 0 errors**.
+  - `npm --prefix frontend run build`: **Compiled successfully in 1518ms, 16/16 routes pre-rendered statically in 679ms, 0 errors**.
   - **Puppeteer Headless Verification (Mobile 390x844)**:
-    - Initial: `isOpen: false`, `visibility: "hidden"`, `opacity: "0"`, `offsetHeight: 0px`.
-    - Click Hamburger (Open): `isOpen: true`, `visibility: "visible"`, `opacity: "1"`, `offsetHeight: 584px`, backdrop opacity `1`.
-    - Click "About CRC" Accordion (Expand): `isExpanded: true`, `offsetHeight: 315px`, chevron rotated 180°.
-    - Click "About CRC" Accordion (Collapse): `isExpanded: false`, `offsetHeight: 0px`, chevron rotated 0°.
-    - Click Hamburger (Close): `isOpen: false`, `visibility: "hidden"`, `opacity: "0"`, `offsetHeight: 0px`, backdrop opacity `0`.
+    - Sticky Navbar: `transform-gpu` active, mobile backdrop blur eliminated (`backdropFilter: "none"` on mobile).
+    - Off-screen sections: 5 `.content-visibility-auto` wrappers correctly isolated.
+    - Scrollspy: rAF-throttled scrollspy smoothly updated active section without frame drops.
+
 
 
 

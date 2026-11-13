@@ -698,6 +698,28 @@ Chronological record of developer-agent interactions, user requirements, plannin
     - Collapse Accordion: `isExpanded: false`, `offsetHeight: 0px`, chevron rotated 0°.
     - Close Drawer: `isOpen: false`, `visibility: "hidden"`, `offsetHeight: 0px`.
 
+---
+
+## 📅 Session 14 — Integration of 6 Industry Gold Standards for High-Performance Mobile Web
+- **Timestamp**: 2026-11-13 14:20 (Local Time)
+- **User Intent**:
+  - Integrate all 6 industry gold standards for high-performance, 60fps/120fps smooth mobile web experience.
+- **Actions Completed**:
+  - **Standard 1 (Conditional Backdrop Degradation)**: Replaced GPU-heavy `backdrop-blur-md` on mobile sticky elements (`Navbar.tsx`, sub-breadcrumbs, and Jump To bar on `/about`) with crisp `bg-white/98` and `bg-[#f4f2ee]`, preserving blur strictly on desktop (`md:` and `lg:`).
+  - **Standard 2 (Off-Screen Render Optimization)**: Added `.content-visibility-auto` (`content-visibility: auto; contain-intrinsic-size: 1px 700px;`) to off-screen landing page sections and lower footer, dramatically reducing initial layout computation.
+  - **Standard 3 (GPU Compositor Layer Promotion)**: Added `.transform-gpu` (`transform: translate3d(0,0,0); backface-visibility: hidden;`) to sticky Navbar, sub-navbar, and Jump To bar, preventing document re-rasterization during scroll.
+  - **Standard 4 (requestAnimationFrame Scroll Throttling)**: Wrapped raw scroll event listeners in `Navbar.tsx` and `about/page.tsx` with rAF ticking flags, guaranteeing calculations fire at most once per display frame.
+  - **Standard 5 (Native Touch Momentum & Gesture Isolation)**: Added `-webkit-tap-highlight-color: transparent;` and `overscroll-behavior-y: none;` in `globals.css`.
+  - **Standard 6 (Async Image Decoding & Loading Priorities)**: Added `fetchPriority="high"` and `decoding="async"` to above-the-fold hero banner, preventing decode pauses on mobile main thread.
+- **Verification Matrix**:
+  - `npm --prefix frontend run lint`: **0 errors, 0 warnings**.
+  - `npm --prefix frontend run build`: **Compiled successfully in 1518ms, 16/16 routes pre-rendered statically in 679ms, 0 errors**.
+  - **Puppeteer Headless Verification (Mobile 390x844)**:
+    - Sticky Navbar: `transform-gpu` active, mobile backdrop blur eliminated (`backdropFilter: "none"` on mobile).
+    - Off-screen sections: 5 `.content-visibility-auto` wrappers correctly isolated.
+    - Scrollspy: rAF-throttled scrollspy smoothly updated active section without frame drops.
+
+
 
 
 

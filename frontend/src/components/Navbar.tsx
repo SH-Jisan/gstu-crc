@@ -152,13 +152,20 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
   }, [isSticky]);
 
   useEffect(() => {
+    let isTicking = false;
     const handleScroll = () => {
-      const scrollPos =
-        window.scrollY ||
-        document.documentElement.scrollTop ||
-        document.body.scrollTop ||
-        0;
-      setIsSticky(scrollPos >= 40);
+      if (!isTicking) {
+        window.requestAnimationFrame(() => {
+          const scrollPos =
+            window.scrollY ||
+            document.documentElement.scrollTop ||
+            document.body.scrollTop ||
+            0;
+          setIsSticky(scrollPos >= 40);
+          isTicking = false;
+        });
+        isTicking = true;
+      }
     };
 
     const handleClickOutside = (event: MouseEvent) => {
@@ -195,7 +202,7 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
     <header
       ref={navRef}
       id="crc-navbar"
-      className="fixed top-0 left-0 z-[1000] w-full transition-all duration-300 ease-out"
+      className="fixed top-0 left-0 z-[1000] w-full transform-gpu transition-all duration-300 ease-out"
     >
       {/* 1. Top Bar (Black background with red established date, values & email) */}
       <div
@@ -225,7 +232,7 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
 
       {/* 2. Main Navigation Bar (White background, bottom red border, logo, links, search & donate) */}
       <div
-        className={`relative z-30 border-b-4 border-[#e6000a] bg-white/95 backdrop-blur-md transition-all duration-300 ${
+        className={`relative z-30 border-b-4 border-[#e6000a] bg-white/98 md:bg-white/95 md:backdrop-blur-md transform-gpu transition-all duration-300 ${
           isSticky ? "py-1.5 sm:py-2 shadow-xl" : "py-2 sm:py-3 shadow-md"
         }`}
       >
@@ -542,7 +549,7 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
 
         {/* Soft Backdrop Overlay for Mobile Drawer with Smooth Fade Transitions */}
         <div
-          className={`xl:hidden fixed inset-0 top-[var(--navbar-height,94px)] bg-black/40 backdrop-blur-xs z-30 transition-all duration-300 ease-out ${
+          className={`xl:hidden fixed inset-0 top-[var(--navbar-height,94px)] bg-black/50 z-30 transition-all duration-300 ease-out ${
             mobileDrawerOpen
               ? "opacity-100 pointer-events-auto visible"
               : "opacity-0 pointer-events-none invisible"
@@ -717,7 +724,7 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
         if (!activeBreadcrumbs || activeBreadcrumbs.length === 0) return null;
 
         return (
-          <div className="relative z-10 bg-[#f4f2ee]/95 backdrop-blur-md border-b-2 border-[#e6000a] shadow-xs transition-colors">
+          <div className="relative z-10 bg-[#f4f2ee] md:bg-[#f4f2ee]/95 md:backdrop-blur-md border-b-2 border-[#e6000a] shadow-xs transform-gpu transition-colors">
             <div className="max-w-[1536px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-between">
               <Breadcrumb items={activeBreadcrumbs} variant="bar" />
               <span className="hidden sm:inline-block text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">

@@ -99,34 +99,43 @@ export default function AboutPage() {
   const jumpNavScrollRef = useRef<HTMLDivElement>(null);
   const jumpNavButtonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
-  // Scrollspy: automatically highlight the section in viewport and control entrance visibility
+  // Scrollspy: automatically highlight the section in viewport and control entrance visibility (rAF throttled)
   useEffect(() => {
+    let isTicking = false;
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      setIsNavVisible(currentScrollY > 200);
+      if (!isTicking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          setIsNavVisible(currentScrollY > 200);
 
-      // Check if user has scrolled near page bottom
-      const isAtBottom =
-        window.innerHeight + currentScrollY >=
-        document.documentElement.scrollHeight - 70;
-      if (isAtBottom) {
-        setActiveSection(ALL_NAV_IDS[ALL_NAV_IDS.length - 1]);
-        return;
-      }
-
-      const scrollPosition = currentScrollY + 200;
-      for (let i = ALL_NAV_IDS.length - 1; i >= 0; i--) {
-        const id = ALL_NAV_IDS[i];
-        const element = document.getElementById(id);
-        if (element) {
-          const top = element.offsetTop;
-          if (scrollPosition >= top) {
-            setActiveSection(id);
+          // Check if user has scrolled near page bottom
+          const isAtBottom =
+            window.innerHeight + currentScrollY >=
+            document.documentElement.scrollHeight - 70;
+          if (isAtBottom) {
+            setActiveSection(ALL_NAV_IDS[ALL_NAV_IDS.length - 1]);
+            isTicking = false;
             return;
           }
-        }
+
+          const scrollPosition = currentScrollY + 200;
+          for (let i = ALL_NAV_IDS.length - 1; i >= 0; i--) {
+            const id = ALL_NAV_IDS[i];
+            const element = document.getElementById(id);
+            if (element) {
+              const top = element.offsetTop;
+              if (scrollPosition >= top) {
+                setActiveSection(id);
+                isTicking = false;
+                return;
+              }
+            }
+          }
+          setActiveSection(ALL_NAV_IDS[0]);
+          isTicking = false;
+        });
+        isTicking = true;
       }
-      setActiveSection(ALL_NAV_IDS[0]);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -208,7 +217,7 @@ export default function AboutPage() {
         />
 
         {/* Mobile / Tablet Horizontal Sticky Quick Jump Bar (< lg) */}
-        <div className="lg:hidden sticky top-[var(--navbar-height,94px)] z-20 bg-white/95 backdrop-blur-md border-b-2 border-[#e6000a] shadow-xs">
+        <div className="lg:hidden sticky top-[var(--navbar-height,94px)] z-20 bg-white/98 border-b-2 border-[#e6000a] shadow-xs transform-gpu">
           <div
             ref={jumpNavScrollRef}
             className="max-w-7xl mx-auto px-4 py-2.5 overflow-x-auto scrollbar-none flex items-center gap-2 relative scroll-smooth"
