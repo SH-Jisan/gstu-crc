@@ -13,6 +13,22 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
+# Favicon immediate revalidation (prevents Netlify placeholder caching)
+[[headers]]
+  for = "/favicon.ico"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/icon.png"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/apple-icon.png"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
 # Security & Optimization Headers
 [[headers]]
   for = "/*"

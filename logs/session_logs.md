@@ -525,3 +525,32 @@ Chronological record of developer-agent interactions, user requirements, plannin
 - **Verification Matrix**:
   - `npm --prefix frontend run lint`: **0 errors, 0 warnings**.
   - `npm --prefix frontend run build`: **Compiled successfully in 1003ms, 16/16 pages static, 0 errors**.
+
+
+---
+
+## 📅 Session 08 — Browser Tab Title Conciseness & Netlify Favicon Cache Busting
+- **Timestamp**: 2026-11-13 10:15 (Local Time)
+- **User Intent**:
+  - Netlify logo appears instead of CRC logo after deploying to Netlify (`netlify te deploy korar por CRC er logo na eshe netlify er logo astese`).
+  - Replace "Come for Road Child" in browser title bar with "CRC" because the long title gets truncated in browser tabs (`title bar e Come For Road Child replace kore CRC likho karon Come For Road Child eto boro lekha title bar e jaiga hoina`).
+  - Push verified updates to GitHub.
+- **Root Cause & Technical Analysis**:
+  1. **Netlify Placeholder Favicon Caching**: When a site is created or deployed on Netlify, browsers (specifically Chromium-based browsers like Chrome, Edge, and Brave) aggressively cache the default Netlify teal diamond favicon served during site creation or DNS provisioning in their internal origin-level favicon database. Because the previous `layout.tsx` referenced static unversioned `/favicon.ico` without cache-control headers, browsers refused to re-fetch the official CRC logo icon.
+  2. **Browser Tab Title Truncation**: Standard browser tabs allocate approximately 15-20 characters before truncating with an ellipsis (`...`). The previous title (`Come for Road Child (CRC) | Official Platform & Transparency Portal`, 68 characters) was truncated to `Come for Road...`, hiding the organization's identity.
+- **Actions Completed**:
+  - **Browser Tab Title Shortening ([`layout.tsx`](../frontend/src/app/layout.tsx))**:
+    - Replaced verbose title with concise branded title: `default: "CRC | GSTU Branch"`, `template: "%s | CRC"`.
+    - Updated OpenGraph title to `"CRC | GSTU Branch"` and OpenGraph site name to `"CRC"`.
+  - **Favicon Cache-Busting & Multi-Resolution Link Injection**:
+    - Appended explicit cache-busting query strings (`?v=2`) across all icon specifications in `metadata.icons` (`/icon.png?v=2`, `/apple-icon.png?v=2`, `/favicon.ico?v=2`).
+    - Added an explicit `<head>` tag in `RootLayout` injecting high-priority `<link rel="icon">`, `<link rel="shortcut icon">`, and `<link rel="apple-touch-icon">` tags with `?v=2` to override any stale browser caches.
+  - **Netlify Cache Header Invalidation ([`netlify.toml`](../netlify.toml) & [`frontend/netlify.toml`](../frontend/netlify.toml))**:
+    - Configured explicit `Cache-Control: "public, max-age=0, must-revalidate"` for `/favicon.ico`, `/icon.png`, and `/apple-icon.png` in both root and frontend Netlify configuration files, forcing CDN and browser revalidation.
+- **Verification Matrix**:
+  - `npm --prefix frontend run lint`: **0 errors, 0 warnings**.
+  - `npm --prefix frontend run build`: **Compiled successfully in 678ms, 16/16 routes pre-rendered statically, 0 errors**.
+  - Headless Puppeteer evaluation on `http://localhost:3000`:
+    - `document.title` returns `"CRC | GSTU Branch"` (17 characters, cleanly fits all tabs).
+    - Fetched `/icon.png?v=2`, `/favicon.ico?v=2`, `/apple-icon.png?v=2` returning HTTP 200 with matching image content types (`image/png`, `image/x-icon`).
+

@@ -1180,3 +1180,23 @@ Chronological registry of all file additions, edits, component implementations, 
 - **Verification Matrix**:
   - `npm --prefix frontend run lint`: **0 errors, 0 warnings**.
   - `npm --prefix frontend run build`: **Compiled successfully in 1003ms, 16/16 routes pre-rendered statically, 0 errors**.
+
+
+---
+
+## [2026-11-13 10:15] - Tab Title Streamlining to "CRC" & Netlify Favicon Cache Invalidation
+- **Scope**: Shortened browser tab title to fit without truncation, added version query strings to all favicon links, and configured Netlify zero-cache revalidation headers.
+- **Files Touched**:
+  - `[MODIFY]` [`frontend/src/app/layout.tsx`](../frontend/src/app/layout.tsx):
+    - Changed `metadata.title` to `{ default: "CRC | GSTU Branch", template: "%s | CRC" }`.
+    - Shortened `openGraph.title` to `"CRC | GSTU Branch"` and `openGraph.siteName` to `"CRC"`.
+    - Added `?v=2` version parameters to `metadata.icons` and injected explicit high-priority `<head>` links (`/icon.png?v=2`, `/favicon.ico?v=2`, `/apple-icon.png?v=2`).
+  - `[MODIFY]` [`netlify.toml`](../netlify.toml):
+    - Added `[[headers]]` blocks for `/favicon.ico`, `/icon.png`, and `/apple-icon.png` with `Cache-Control: "public, max-age=0, must-revalidate"`.
+  - `[MODIFY]` [`frontend/netlify.toml`](../frontend/netlify.toml):
+    - Mirrored favicon revalidation headers in the frontend directory configuration.
+- **Verification Matrix**:
+  - `npm --prefix frontend run lint`: **0 errors, 0 warnings**.
+  - `npm --prefix frontend run build`: **Compiled successfully in 678ms, 16/16 routes pre-rendered statically, 0 errors**.
+  - Headless Puppeteer inspection verified `document.title === "CRC | GSTU Branch"` and HTTP 200 for all versioned icon paths.
+
