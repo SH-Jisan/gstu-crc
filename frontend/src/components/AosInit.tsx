@@ -1,51 +1,69 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import AOS from "aos";
 
 export default function AosInit() {
+  const pathname = usePathname();
+
   useEffect(() => {
-    // 1. Initialize AOS with responsive, touch-friendly settings
+    let lastWidth = window.innerWidth;
+    let resizeTimer: ReturnType<typeof setTimeout>;
+
+    // 1. Initialize AOS with resilient settings
     AOS.init({
-      duration: 650,
+      duration: 550,
       easing: "ease-out-cubic",
-      once: true, // Keep elements visible once animated (prevents flickering/blank sections on mobile scroll)
-      mirror: false, // Prevents elements from disappearing when scrolling past on phone screens
-      offset: 35, // Trigger smoothly when element is 35px into viewport (ideal for short mobile viewports)
+      once: true,
+      mirror: false,
+      offset: 20,
       delay: 0,
-      disable: false, // Explicitly enable on all devices (mobile, tablet, desktop)
+      disable: false,
       anchorPlacement: "top-bottom",
     });
 
-    // 2. Multi-stage refresh to recompute coordinates as dynamic Next.js images and fonts load
+    // 2. Rescan DOM (refreshHard) after React hydration settles
     const timer1 = setTimeout(() => {
       AOS.refreshHard();
-    }, 120);
+    }, 150);
 
     const timer2 = setTimeout(() => {
       AOS.refreshHard();
-    }, 500);
+    }, 600);
 
-    const timer3 = setTimeout(() => {
-      AOS.refreshHard();
-    }, 1200);
-
-    // 3. Handle window resize and orientation change (e.g. phone portrait to landscape)
+    // 3. Ignore vertical resize from mobile URL address bar hide/show
     const handleResize = () => {
-      AOS.refresh();
+      if (window.innerWidth !== lastWidth) {
+        lastWidth = window.innerWidth;
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          AOS.refreshHard();
+        }, 150);
+      }
     };
 
-    window.addEventListener("resize", handleResize);
-    window.addEventListener("orientationchange", handleResize);
+    const handleOrientationChange = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        lastWidth = window.innerWidth;
+        AOS.refreshHard();
+      }, 200);
+    };
+
+    window.addEventListener("resize", handleResize, { passive: true });
+    window.addEventListener("orientationchange", handleOrientationChange, {
+      passive: true,
+    });
 
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
-      clearTimeout(timer3);
+      clearTimeout(resizeTimer);
       window.removeEventListener("resize", handleResize);
-      window.removeEventListener("orientationchange", handleResize);
+      window.removeEventListener("orientationchange", handleOrientationChange);
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 }

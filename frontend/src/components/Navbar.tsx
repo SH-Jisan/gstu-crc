@@ -34,20 +34,24 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
     setExpandedMobileItem(null);
     setActiveDropdown(null);
   }
+
   const navRef = useRef<HTMLElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [drawerHeight, setDrawerHeight] = useState<number | null>(null);
   const contentRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const isMegaOpen = Boolean(activeDropdown && megaMenus[activeDropdown]);
-  const activeMegaKey = (activeDropdown && megaMenus[activeDropdown]) ? activeDropdown : displayedMenuKey;
-  const activeIdx = megaMenuKeys.indexOf(activeMegaKey as (typeof megaMenuKeys)[number]) !== -1
-    ? megaMenuKeys.indexOf(activeMegaKey as (typeof megaMenuKeys)[number])
-    : 0;
+  const activeMegaKey =
+    activeDropdown && megaMenus[activeDropdown] ? activeDropdown : displayedMenuKey;
+  const activeIdx =
+    megaMenuKeys.indexOf(activeMegaKey as (typeof megaMenuKeys)[number]) !== -1
+      ? megaMenuKeys.indexOf(activeMegaKey as (typeof megaMenuKeys)[number])
+      : 0;
   const currentMegaMenu = megaMenus[activeMegaKey] || null;
 
-  // Measure content height for buttery smooth dynamic height animation between tabs
+  // Measure content height ONLY on desktop (xl >= 1280px) where mega-menu is visible
   useEffect(() => {
+    if (typeof window === "undefined" || window.innerWidth < 1280) return;
     if (activeMegaKey && contentRefs.current[activeMegaKey]) {
       const el = contentRefs.current[activeMegaKey];
       if (el) {
@@ -58,6 +62,7 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
 
   useEffect(() => {
     const handleResize = () => {
+      if (window.innerWidth < 1280) return;
       if (activeMegaKey && contentRefs.current[activeMegaKey]) {
         const el = contentRefs.current[activeMegaKey];
         if (el) {
@@ -65,17 +70,14 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
         }
       }
     };
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize, { passive: true });
     return () => window.removeEventListener("resize", handleResize);
   }, [activeMegaKey]);
 
   // Prevent background scroll on mobile when drawer is open
   useEffect(() => {
-    if (mobileDrawerOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    if (!mobileDrawerOpen) return;
+    document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "";
     };
@@ -83,8 +85,8 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
 
   const isOverflowingViewport = Boolean(
     drawerHeight &&
-    typeof window !== "undefined" &&
-    drawerHeight > window.innerHeight - 90
+      typeof window !== "undefined" &&
+      drawerHeight > window.innerHeight - 90
   );
 
   const handleMouseEnterItem = (id: string | null) => {
@@ -101,7 +103,6 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
   const handleDesktopNavClick = (e: React.MouseEvent, id?: string) => {
     const hasMega = Boolean(id && megaMenus[id]);
     if (hasMega) {
-      // Toggle dropdown on click/touch for laptops and hybrid devices
       if (activeDropdown !== id) {
         e.preventDefault();
         handleMouseEnterItem(id || null);
@@ -134,34 +135,37 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
     }, 180);
   };
 
-  // Dynamically synchronize the fixed navbar stack height to CSS variable --navbar-height
+  // Synchronize fixed navbar stack height to CSS variable --navbar-height after transition
   useEffect(() => {
     const updateNavbarHeight = () => {
       if (navRef.current) {
-        const height = navRef.current.offsetHeight;
-        document.documentElement.style.setProperty("--navbar-height", `${height}px`);
+        document.documentElement.style.setProperty(
+          "--navbar-height",
+          `${navRef.current.offsetHeight}px`
+        );
       }
     };
-    updateNavbarHeight();
-    const t1 = setTimeout(updateNavbarHeight, 150);
-    const t2 = setTimeout(updateNavbarHeight, 350);
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-    };
+    const t1 = setTimeout(updateNavbarHeight, 310);
+    return () => clearTimeout(t1);
   }, [isSticky]);
 
   useEffect(() => {
     let isTicking = false;
+    let lastWidth = window.innerWidth;
+
+    if (navRef.current) {
+      document.documentElement.style.setProperty(
+        "--navbar-height",
+        `${navRef.current.offsetHeight}px`
+      );
+    }
+
     const handleScroll = () => {
       if (!isTicking) {
         window.requestAnimationFrame(() => {
-          const scrollPos =
-            window.scrollY ||
-            document.documentElement.scrollTop ||
-            document.body.scrollTop ||
-            0;
-          setIsSticky(scrollPos >= 40);
+          const scrollPos = window.scrollY || document.documentElement.scrollTop || 0;
+          const nextSticky = scrollPos >= 40;
+          setIsSticky((prev) => (prev !== nextSticky ? nextSticky : prev));
           isTicking = false;
         });
         isTicking = true;
@@ -175,7 +179,9 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
     };
 
     const handleResize = () => {
-      if (navRef.current) {
+      // Only update navbar height when screen width actually changes
+      if (window.innerWidth !== lastWidth && navRef.current) {
+        lastWidth = window.innerWidth;
         document.documentElement.style.setProperty(
           "--navbar-height",
           `${navRef.current.offsetHeight}px`
@@ -184,15 +190,13 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    document.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize, { passive: true });
     document.addEventListener("click", handleClickOutside);
     handleScroll();
 
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       window.removeEventListener("scroll", handleScroll);
-      document.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
       document.removeEventListener("click", handleClickOutside);
     };
@@ -204,7 +208,7 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
       id="crc-navbar"
       className="fixed top-0 left-0 z-[1000] w-full transform-gpu transition-all duration-300 ease-out"
     >
-      {/* 1. Top Bar (Black background with red established date, values & email) */}
+      {/* 1. Top Bar */}
       <div
         className={`bg-[#0d0f14] text-white transition-all duration-300 ease-out ${
           isSticky
@@ -230,14 +234,14 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
         </div>
       </div>
 
-      {/* 2. Main Navigation Bar (White background, bottom red border, logo, links, search & donate) */}
+      {/* 2. Main Navigation Bar */}
       <div
         className={`relative z-30 border-b-4 border-[#e6000a] bg-white/98 md:bg-white/95 md:backdrop-blur-md transform-gpu transition-all duration-300 ${
           isSticky ? "py-1.5 sm:py-2 shadow-xl" : "py-2 sm:py-3 shadow-md"
         }`}
       >
         <div className="max-w-[1536px] 2xl:max-w-[1600px] mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-1.5 sm:gap-3 xl:gap-4 font-sans">
-          {/* Brand Identity: Official CRC Logo + 2-line Text */}
+          {/* Brand Identity */}
           <Link href="/" className="group flex items-center gap-2 sm:gap-3 shrink-0 min-w-0">
             <div className="relative size-8 sm:size-10 shrink-0 transition-transform duration-300 group-hover:scale-105 active:scale-95 drop-shadow-sm">
               <Image
@@ -259,7 +263,7 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
             </span>
           </Link>
 
-          {/* Desktop Navigation Links (Single line, strictly whitespace-nowrap) */}
+          {/* Desktop Navigation Links */}
           <nav className="hidden xl:flex items-center gap-0 2xl:gap-1.5 shrink-0">
             {navItems.map((item) => {
               const hasMega = Boolean(item.id && megaMenus[item.id]);
@@ -272,7 +276,9 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
                 <div
                   key={item.label}
                   className="group/nav relative py-2"
-                  onMouseEnter={() => (hasMega ? handleMouseEnterItem(item.id || null) : handleMouseEnterItem(null))}
+                  onMouseEnter={() =>
+                    hasMega ? handleMouseEnterItem(item.id || null) : handleMouseEnterItem(null)
+                  }
                   onMouseLeave={handleMouseLeaveItem}
                 >
                   <Link
@@ -283,7 +289,6 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
                     }`}
                   >
                     <span>{item.label}</span>
-                    {/* Smooth expanding underline indicator */}
                     <span
                       className={`absolute bottom-0 left-1.5 right-1.5 2xl:left-2 2xl:right-2 h-[2.5px] bg-[#e6000a] rounded-full transition-all duration-300 ease-out origin-left ${
                         isActive
@@ -298,7 +303,7 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
             })}
           </nav>
 
-          {/* Right Controls: Search Icon + Donate Button + Hamburger */}
+          {/* Right Controls */}
           <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
             {/* Search Popover Button */}
             <div className="relative">
@@ -310,7 +315,6 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
                 <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </button>
 
-              {/* Search Box Popover */}
               {searchOpen && (
                 <div className="absolute right-0 top-11 sm:top-14 w-60 sm:w-72 max-w-[calc(100vw-24px)] bg-white rounded-xl shadow-2xl p-3 border border-gray-200 z-50 animate-popover-in">
                   <div className="flex items-center space-x-2 bg-gray-50 px-3 py-2 rounded-lg border border-gray-200">
@@ -332,7 +336,7 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
               )}
             </div>
 
-            {/* Donate Button (Matches screenshot: red box with bold white text) */}
+            {/* Donate Button */}
             <Link
               href="/#sponsor"
               className="hidden min-[360px]:inline-flex bg-[#e6000a] hover:bg-[#a20002] text-white font-heading font-bold text-xs sm:text-sm tracking-wide px-3 sm:px-5 2xl:px-6 py-1.5 sm:py-2.5 rounded shadow-md hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 shrink-0 whitespace-nowrap"
@@ -340,7 +344,7 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
               Donate
             </Link>
 
-            {/* Mobile Drawer Trigger (Visible below XL) with Smooth Icon Morph */}
+            {/* Mobile Drawer Trigger */}
             <div className="xl:hidden shrink-0">
               <button
                 onClick={() => {
@@ -369,7 +373,7 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
           </div>
         </div>
 
-        {/* Full-Width Mega Dropdown Panel with Smooth Slide Down & Slide Up (Curtain Animation) */}
+        {/* Full-Width Desktop Mega Dropdown Panel */}
         {currentMegaMenu && (
           <div
             onMouseEnter={handleMegaMenuMouseEnter}
@@ -405,7 +409,7 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
                       }}
                       className={`w-full max-w-[1536px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-3.5 lg:py-4.5 flex items-center gap-8 lg:gap-12 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${translateClass}`}
                     >
-                      {/* Left Spotlight Column (Vertically centered) */}
+                      {/* Left Spotlight Column */}
                       <div className="w-[280px] lg:w-[320px] shrink-0 text-left self-center my-auto">
                         <h3 className="font-heading font-black text-xl lg:text-[23px] text-[#0d0f14] leading-tight tracking-tight">
                           {menu.spotlight.title}
@@ -425,25 +429,22 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
                         </div>
                       </div>
 
-                      {/* Vertical Divider Line (CRC Red) */}
+                      {/* Vertical Divider Line */}
                       <div className="w-px bg-[#e6000a] self-stretch min-h-[140px]" aria-hidden="true" />
 
                       {/* Right Category Area */}
                       {menu.columns.some((col) => col.items && col.items.length > 0) ? (
-                        /* Stacked Category Rows with Horizontal Sub-Options (Full Signature UI Preserved with Zero Overlap) */
                         <div className="flex-1 flex flex-col space-y-1 text-left">
                           {menu.columns.map((col) => (
                             <div
                               key={col.title}
                               className="group/col relative flex flex-col py-1.5 px-2.5 rounded-xl transition-all duration-300 ease-out hover:bg-red-50/40 hover:shadow-xs hover:-translate-y-0.5"
                             >
-                              {/* Signature minimalist vertical red accent line on hover */}
                               <span
                                 className="absolute left-0 top-2 bottom-2 w-1 rounded-full bg-[#e6000a] opacity-0 scale-y-0 group-hover/col:opacity-100 group-hover/col:scale-y-100 transition-all duration-300 ease-out origin-center"
                                 aria-hidden="true"
                               />
 
-                              {/* Category Header */}
                               <Link
                                 href={col.href}
                                 onClick={() => setActiveDropdown(null)}
@@ -453,7 +454,6 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
                                 <ChevronRight className="w-3.5 h-3.5 text-gray-400 group-hover/col:text-[#e6000a] group-hover/col:translate-x-1 transition-all duration-300 ease-out shrink-0" />
                               </Link>
 
-                              {/* Sub-links arranged horizontally (pasha-pashi) */}
                               <ul
                                 className={`grid gap-x-4 gap-y-0.5 pl-2 pt-0.5 group-hover/col:translate-x-1 transition-all duration-300 ease-out ${
                                   col.items && col.items.length === 5
@@ -508,7 +508,6 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
                           ))}
                         </div>
                       ) : (
-                        /* Right Category Columns for Menus without sub-items */
                         <div
                           className={`flex-1 grid gap-6 lg:gap-8 text-left ${
                             menu.columns.length === 4
@@ -547,7 +546,7 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
           </div>
         )}
 
-        {/* Soft Backdrop Overlay for Mobile Drawer with Smooth Fade Transitions */}
+        {/* Soft Backdrop Overlay for Mobile Drawer */}
         <div
           className={`xl:hidden fixed inset-0 top-[var(--navbar-height,94px)] bg-black/50 z-30 transition-all duration-300 ease-out ${
             mobileDrawerOpen
@@ -561,14 +560,14 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
           aria-hidden="true"
         />
 
-        {/* Mobile Drawer Menu with Smooth Open & Closing Curtain Transitions */}
+        {/* Mobile Drawer Menu */}
         <div
           className={`xl:hidden mobile-drawer-wrapper ${
             mobileDrawerOpen ? "is-open" : ""
           }`}
         >
           <div className="mobile-drawer-inner">
-            <div className="mobile-drawer-content bg-white px-4 sm:px-6 py-4 sm:py-5 border-t border-gray-200 text-[#0d0f14] text-sm font-bold shadow-2xl max-h-[calc(100vh-80px)] overflow-y-auto divide-y divide-gray-100">
+            <div className="mobile-drawer-content bg-white px-4 sm:px-6 py-4 sm:py-5 border-t border-gray-200 text-[#0d0f14] text-sm font-bold shadow-2xl max-h-[calc(100svh-80px)] overflow-y-auto divide-y divide-gray-100">
               <div className="space-y-1 pb-3">
                 {navItems.map((item) => {
                   const hasDropdown = Boolean(item.dropdown && item.dropdown.length > 0);
@@ -582,7 +581,6 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
                     <div key={item.label} className="py-1">
                       {hasDropdown ? (
                         <div>
-                          {/* Header Row with Label + Animated Chevron Toggle Button */}
                           <div className="flex items-center justify-between py-1 px-2 rounded-lg hover:bg-gray-50 transition-colors">
                             <Link
                               href={item.href}
@@ -613,7 +611,6 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
                             </button>
                           </div>
 
-                          {/* Smooth Animated Accordion Dropdown (CSS Grid 0fr to 1fr with inner glide) */}
                           <div
                             className={`accordion-dropdown ${
                               isExpanded ? "is-expanded" : ""
@@ -622,7 +619,6 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
                             <div className="accordion-dropdown-inner">
                               <div className="pt-1.5 pb-0.5">
                                 <div className="accordion-dropdown-content pl-2.5 pr-2 py-2 space-y-1 bg-red-50/30 rounded-xl border border-red-100/60">
-                                  {/* Overview Main Link */}
                                   <Link
                                     href={item.href}
                                     onClick={() => {
@@ -635,7 +631,6 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
                                     <ChevronRight className="w-3.5 h-3.5" />
                                   </Link>
 
-                                  {/* Sub-items in responsive 1-col (mobile) or 2-col (tablet) */}
                                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 pt-1">
                                     {item.dropdown?.map((sub) => {
                                       const isSubActive = pathname === sub.href;
@@ -668,7 +663,6 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
                           </div>
                         </div>
                       ) : (
-                        /* Direct link without dropdown */
                         <Link
                           href={item.href}
                           onClick={() => {
@@ -688,7 +682,6 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
                 })}
               </div>
 
-              {/* Mobile Bottom CTA */}
               <div className="pt-4">
                 <Link
                   href="/#sponsor"
@@ -706,7 +699,7 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
         </div>
       </div>
 
-      {/* 3. Sub-Navbar Breadcrumb Strip (Fixed with Navbar, stays visible during scroll) */}
+      {/* 3. Sub-Navbar Breadcrumb Strip */}
       {(() => {
         const activeBreadcrumbs =
           breadcrumbs !== undefined
@@ -715,8 +708,10 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
             ? defaultRouteBreadcrumbMap[pathname] || [
                 {
                   label:
-                    pathname.replace(/^\//, "").replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()) ||
-                    "Page",
+                    pathname
+                      .replace(/^\//, "")
+                      .replace(/-/g, " ")
+                      .replace(/\b\w/g, (c) => c.toUpperCase()) || "Page",
                 },
               ]
             : null;
@@ -735,7 +730,7 @@ export default function Navbar({ breadcrumbs }: NavbarProps = {}) {
         );
       })()}
 
-      {/* Soft Blurred Backdrop Overlay for the Page when Mega Menu is Open (No Grayscale, Pure Subtle Blur) */}
+      {/* Soft Blurred Backdrop Overlay for Desktop Mega Menu */}
       <div
         className={`hidden xl:block fixed inset-0 top-0 w-screen h-screen -z-10 transition-all duration-300 ease-out ${
           isMegaOpen

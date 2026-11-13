@@ -20,7 +20,6 @@ import {
   X,
   Copy,
 } from "lucide-react";
-import AosInit from "@/components/AosInit";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageHeader from "@/components/PageHeader";
@@ -45,21 +44,21 @@ export default function MembersPage() {
   const [selectedMember, setSelectedMember] = useState<CouncilMember | null>(null);
   const [copied, setCopied] = useState(false);
 
-  // Close modal on ESC key and lock body scroll
+  // Close modal on ESC key and lock body scroll safely without overriding overflow-x
   useEffect(() => {
+    if (!selectedMember) return;
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setSelectedMember(null);
       }
     };
-    if (selectedMember) {
-      document.body.style.overflow = "hidden";
-      window.addEventListener("keydown", handleKeyDown);
-    } else {
-      document.body.style.overflow = "auto";
-    }
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
     return () => {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "";
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [selectedMember]);
@@ -67,7 +66,6 @@ export default function MembersPage() {
   // Filtered members list
   const filteredMembers = useMemo(() => {
     return MOCK_COUNCILS.filter((member) => {
-      // Search match
       const query = searchQuery.toLowerCase().trim();
       const matchesSearch =
         !query ||
@@ -78,15 +76,12 @@ export default function MembersPage() {
         member.committee.toLowerCase().includes(query) ||
         member.bloodGroup.toLowerCase().includes(query);
 
-      // Category match
       const matchesCategory =
         selectedCategory === "All" || member.category === selectedCategory;
 
-      // Blood group match
       const matchesBlood =
         selectedBlood === "All" || member.bloodGroup === selectedBlood;
 
-      // Branch match
       const matchesBranch =
         selectedBranch === "All" || member.branch.includes(selectedBranch);
 
@@ -126,11 +121,9 @@ export default function MembersPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#f6f4f1] text-[#0d0f14] font-sans antialiased">
-      <AosInit />
       <Navbar />
 
       <main className="flex-grow">
-        {/* 1. Viewport-Fitted Crimson Slash Header */}
         <PageHeader
           eyebrow="CRC Volunteers & Leadership Roster"
           title="Our Members"
@@ -141,7 +134,7 @@ export default function MembersPage() {
           ]}
         />
 
-        {/* 2. Key Metrics Bar */}
+        {/* Key Metrics Bar */}
         <section className="bg-white border-b border-gray-200 shadow-xs">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-gray-100">
@@ -181,11 +174,10 @@ export default function MembersPage() {
           </div>
         </section>
 
-        {/* 3. Search & Interactive Filter Controls */}
+        {/* Search & Interactive Filter Controls */}
         <section className="py-8 bg-[#f6f4f1] border-b border-gray-200/80">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col lg:flex-row gap-4 justify-between items-stretch lg:items-center">
-              {/* Live Search Input */}
               <div className="relative flex-1 max-w-xl">
                 <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <input
@@ -205,9 +197,7 @@ export default function MembersPage() {
                 )}
               </div>
 
-              {/* Secondary Quick Selects: Blood Group & Branch */}
               <div className="flex items-center gap-3 flex-wrap">
-                {/* Blood Group Select */}
                 <div className="flex items-center gap-1.5 bg-white px-3 py-2 rounded-xl border border-gray-300 text-xs font-semibold text-gray-700 shadow-xs">
                   <Droplet className="w-3.5 h-3.5 text-red-600 fill-red-600" />
                   <span>Blood:</span>
@@ -224,7 +214,6 @@ export default function MembersPage() {
                   </select>
                 </div>
 
-                {/* Branch Select */}
                 <div className="flex items-center gap-1.5 bg-white px-3 py-2 rounded-xl border border-gray-300 text-xs font-semibold text-gray-700 shadow-xs">
                   <MapPin className="w-3.5 h-3.5 text-[#007938]" />
                   <span>Branch:</span>
@@ -241,7 +230,10 @@ export default function MembersPage() {
                   </select>
                 </div>
 
-                {(searchQuery || selectedCategory !== "All" || selectedBlood !== "All" || selectedBranch !== "All") && (
+                {(searchQuery ||
+                  selectedCategory !== "All" ||
+                  selectedBlood !== "All" ||
+                  selectedBranch !== "All") && (
                   <button
                     onClick={() => {
                       setSearchQuery("");
@@ -257,7 +249,6 @@ export default function MembersPage() {
               </div>
             </div>
 
-            {/* Category Filter Pills */}
             <div className="mt-4 flex gap-2 overflow-x-auto pb-2 scrollbar-none">
               {CATEGORIES.map((cat) => (
                 <button
@@ -274,12 +265,7 @@ export default function MembersPage() {
                     <span className="ml-1.5 opacity-60">({MOCK_COUNCILS.length})</span>
                   ) : (
                     <span className="ml-1.5 opacity-60">
-                      (
-                      {
-                        MOCK_COUNCILS.filter((m) => m.category === cat.value)
-                          .length
-                      }
-                      )
+                      ({MOCK_COUNCILS.filter((m) => m.category === cat.value).length})
                     </span>
                   )}
                 </button>
@@ -288,10 +274,9 @@ export default function MembersPage() {
           </div>
         </section>
 
-        {/* 4. Members Grid */}
+        {/* Members Grid */}
         <section className="py-12 sm:py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Header info */}
             <div className="flex justify-between items-center mb-8">
               <div>
                 <h2 className="text-xl sm:text-2xl font-black font-heading text-[#0d0f14]">
@@ -329,12 +314,11 @@ export default function MembersPage() {
                     key={member.id}
                     data-aos="fade-up"
                     data-aos-duration="500"
-                    data-aos-delay={(idx % 4) * 80}
+                    data-aos-delay={(idx % 4) * 60}
                     onClick={() => setSelectedMember(member)}
                     className="bg-white rounded-2xl p-5 border border-gray-200/90 hover:border-[#e6000a] hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer hover:-translate-y-1"
                   >
                     <div>
-                      {/* Card Header: Avatar & Badges */}
                       <div className="flex items-start gap-3.5 mb-4">
                         <div className="relative w-16 h-16 rounded-2xl overflow-hidden shadow-sm shrink-0 border-2 border-gray-100 group-hover:scale-105 transition-transform duration-300 bg-gray-100">
                           <Image
@@ -356,7 +340,6 @@ export default function MembersPage() {
                               {member.category}
                             </span>
 
-                            {/* Blood Group Badge */}
                             <span className="inline-flex items-center gap-0.5 text-[10px] font-black px-1.5 py-0.5 rounded bg-red-50 text-[#e6000a] border border-red-200">
                               <Droplet className="w-2.5 h-2.5 fill-[#e6000a]" />
                               {member.bloodGroup}
@@ -372,7 +355,6 @@ export default function MembersPage() {
                         </div>
                       </div>
 
-                      {/* Details List */}
                       <div className="space-y-1.5 text-xs text-gray-600 pt-2 border-t border-gray-100">
                         <div className="flex items-center gap-2">
                           <GraduationCap className="w-3.5 h-3.5 text-gray-400 shrink-0" />
@@ -399,13 +381,11 @@ export default function MembersPage() {
                         )}
                       </div>
 
-                      {/* Bio */}
                       <p className="mt-3 text-xs text-gray-600 leading-relaxed line-clamp-3 bg-gray-50/70 p-2.5 rounded-xl border border-gray-100">
                         {member.bio}
                       </p>
                     </div>
 
-                    {/* Card Footer: Quick Contact & Profile Trigger */}
                     <div className="mt-4 pt-3 border-t border-gray-100">
                       <div className="flex items-center justify-between gap-2">
                         <a
@@ -430,7 +410,6 @@ export default function MembersPage() {
                         )}
                       </div>
 
-                      {/* Interactive View Profile Button */}
                       <button
                         type="button"
                         onClick={(e) => {
@@ -450,7 +429,7 @@ export default function MembersPage() {
           </div>
         </section>
 
-        {/* 5. Call To Action: Join CRC as a Member */}
+        {/* Call To Action */}
         <section className="slash-band bg-[#e6000a] text-white py-16 px-4 relative overflow-hidden border-t-2 border-red-700">
           <div className="relative z-10 max-w-4xl mx-auto text-center">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-xs font-bold uppercase tracking-widest text-white mb-3">
@@ -483,7 +462,7 @@ export default function MembersPage() {
 
       <Footer />
 
-      {/* 6. Member Profile Modal View (Outside main & header with z-[99999] to float above navbar) */}
+      {/* Member Profile Modal View */}
       {selectedMember && (
         <div
           role="dialog"
@@ -492,17 +471,15 @@ export default function MembersPage() {
           onClick={() => setSelectedMember(null)}
         >
           <div
-            className="relative bg-white rounded-3xl max-w-xl sm:max-w-2xl w-full max-h-[85vh] overflow-hidden shadow-2xl border border-gray-100 flex flex-col"
+            className="relative bg-white rounded-3xl max-w-xl sm:max-w-2xl w-full max-h-[85svh] overflow-hidden shadow-2xl border border-gray-100 flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* 1. Fixed Top Banner with Crimson Slash Design & Close Button */}
             <div className="slash-band bg-[#e6000a] h-24 sm:h-28 shrink-0 relative overflow-hidden flex items-start justify-between p-4 sm:p-5">
               <span className="relative z-10 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/35 text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white">
                 <Sparkles className="w-3 h-3 text-amber-300" />
                 CRC GSTU Volunteer Profile
               </span>
 
-              {/* Close Button */}
               <button
                 onClick={() => setSelectedMember(null)}
                 className="relative z-20 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/40 hover:bg-black/80 text-white flex items-center justify-center transition-transform hover:scale-110 cursor-pointer shadow-lg"
@@ -512,9 +489,7 @@ export default function MembersPage() {
               </button>
             </div>
 
-            {/* 2. Fixed Profile Header (Avatar, Badges, Name - not clipped by scroll) */}
             <div className="shrink-0 px-6 sm:px-8 pb-4 border-b border-gray-100 bg-white">
-              {/* Avatar & Badges */}
               <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-3 -mt-12 sm:-mt-14 mb-3">
                 <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border-4 border-white shadow-xl bg-gray-100 shrink-0 z-10">
                   <Image
@@ -546,7 +521,6 @@ export default function MembersPage() {
                 </div>
               </div>
 
-              {/* Name & Designation */}
               <div>
                 <h3 className="font-heading text-xl sm:text-2xl font-black text-[#0d0f14] leading-tight">
                   {selectedMember.name}
@@ -557,9 +531,7 @@ export default function MembersPage() {
               </div>
             </div>
 
-            {/* 3. Scrollable Details Body */}
             <div className="overflow-y-auto px-6 sm:px-8 py-5 space-y-4 flex-grow">
-              {/* Institutional Details Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 p-3.5 bg-gray-50 rounded-2xl border border-gray-100 text-xs text-gray-700">
                 <div className="flex items-center gap-2.5">
                   <GraduationCap className="w-4 h-4 text-[#007938] shrink-0" />
@@ -596,7 +568,6 @@ export default function MembersPage() {
                 )}
               </div>
 
-              {/* Bio & Voluntary Contributions */}
               <div>
                 <h4 className="text-[11px] font-bold uppercase tracking-wider text-gray-500 mb-1.5">
                   Voluntary Contribution & Background
@@ -606,14 +577,12 @@ export default function MembersPage() {
                 </p>
               </div>
 
-              {/* Safeguarding & Ethics Confirmation */}
               <div className="flex items-center gap-2 text-xs text-gray-500 pt-1">
                 <ShieldCheck className="w-4 h-4 text-[#007938] shrink-0" />
                 <span>Verified Volunteer · Child Safeguarding & Ethics Trained</span>
               </div>
             </div>
 
-            {/* 3. Sticky Bottom Actions Bar */}
             <div className="shrink-0 px-6 sm:px-8 py-3.5 bg-gray-50 border-t border-gray-200 flex flex-wrap items-center justify-between gap-2.5">
               <div className="flex items-center gap-2">
                 <a
@@ -644,7 +613,7 @@ export default function MembersPage() {
                         await navigator.clipboard.writeText(info);
                       }
                     } catch {
-                      // Fallback for environments where clipboard write permissions are restricted
+                      // Fallback for restricted clipboard environments
                     }
                     setCopied(true);
                     setTimeout(() => setCopied(false), 2000);

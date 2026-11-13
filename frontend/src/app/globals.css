@@ -86,6 +86,16 @@
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+  overflow-x: clip;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
 }
 
 .font-heading {
@@ -109,7 +119,6 @@ html {
 
 .animate-float {
   animation: floatBubble 4.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
-  will-change: transform;
 }
 
 /* CRC Navbar Navigation & Dropdown Animations */
@@ -130,7 +139,6 @@ html {
   opacity: 0;
   transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s ease-out;
   pointer-events: none;
-  will-change: transform, opacity;
 }
 
 .group:hover > .crc-dropdown,
@@ -188,17 +196,14 @@ html {
 
 .animate-mega-content {
   animation: megaContentFade 0.24s cubic-bezier(0.16, 1, 0.3, 1) both;
-  will-change: transform, opacity;
 }
 
 .animate-popover-in {
   animation: popoverScaleFade 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
-  will-change: transform, opacity;
 }
 
 .animate-mobile-drawer {
   animation: mobileDrawerSlide 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
-  will-change: transform, opacity;
 }
 
 /* Mobile Navigation Drawer Open & Closing Transitions (Smooth Curtain Effect) */
@@ -210,10 +215,9 @@ html {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: grid-template-rows 0.34s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.26s ease-in-out,
-              visibility 0.34s;
-  will-change: grid-template-rows, opacity;
+  transition: grid-template-rows 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.24s ease-in-out,
+              visibility 0.32s;
 }
 
 .mobile-drawer-wrapper.is-open {
@@ -221,8 +225,8 @@ html {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: grid-template-rows 0.34s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.26s ease-in-out;
+  transition: grid-template-rows 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.24s ease-in-out;
 }
 
 .mobile-drawer-inner {
@@ -232,8 +236,7 @@ html {
 
 .mobile-drawer-content {
   transform: translate3d(0, -10px, 0);
-  transition: transform 0.34s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform;
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .mobile-drawer-wrapper.is-open .mobile-drawer-content {
@@ -245,10 +248,9 @@ html {
   display: grid;
   grid-template-rows: 0fr;
   opacity: 0;
-  transition: grid-template-rows 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.24s ease-out;
+  transition: grid-template-rows 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.22s ease-out;
   pointer-events: none;
-  will-change: grid-template-rows, opacity;
 }
 
 .accordion-dropdown.is-expanded {
@@ -265,9 +267,8 @@ html {
 .accordion-dropdown-content {
   transform: translate3d(0, -6px, 0);
   opacity: 0.75;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.24s ease-out;
-  will-change: transform, opacity;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.22s ease-out;
 }
 
 .accordion-dropdown.is-expanded .accordion-dropdown-content {
@@ -293,7 +294,6 @@ html {
   transform: translate3d(0, -100%, 0);
   opacity: 0;
   transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease-in, height 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity, height;
 }
 
 .mega-menu-wrapper.is-open .mega-menu-drawer {
@@ -345,35 +345,34 @@ html {
   transform: scaleX(1);
 }
 
-/* Card hover sweep with lift and synchronized sweep */
+/* GPU-accelerated Card hover sweep (scaleX instead of width to prevent layout thrashing) */
 .hover-sweep-card {
   position: relative;
   overflow: hidden;
   z-index: 1;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, box-shadow;
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.32s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.hover-sweep-card:hover {
-  transform: translate3d(0, -5px, 0);
+@media (hover: hover) and (pointer: fine) {
+  .hover-sweep-card:hover {
+    transform: translate3d(0, -5px, 0);
+  }
 }
 
 .hover-sweep-card::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 100%;
+  inset: 0;
   background-color: #e6000a;
   border-radius: 0.5rem;
-  transition: width 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: -1;
-  will-change: width;
 }
 
 .hover-sweep-card:hover::before {
-  width: 100%;
+  transform: scaleX(1);
 }
 
 /* Angular brand slash used across headers and callout blocks */
@@ -438,14 +437,12 @@ html {
   display: flex;
   width: max-content;
   animation: marqueeLeft 100s linear infinite;
-  will-change: transform;
 }
 
 .animate-marquee-right {
   display: flex;
   width: max-content;
   animation: marqueeRight 100s linear infinite;
-  will-change: transform;
 }
 
 .marquee-pause:hover .animate-marquee-left,
@@ -458,28 +455,39 @@ html {
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
 }
 
-/* Responsive AOS on mobile screens: smoother, lighter vertical displacement */
-[data-aos] {
+/* Immediate Visibility Protection for Above-The-Fold Hero Section */
+.hero-section,
+.hero-banner,
+.hero-content {
+  opacity: 1 !important;
+}
+
+/* Fail-safe: Elements that are not yet initialized by AOS must NEVER be hidden with opacity 0 (SSR & network delay resilience) */
+[data-aos]:not(.aos-init) {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Only allocate GPU will-change prior to animation completion to save mobile VRAM */
+[data-aos]:not(.aos-animate) {
   will-change: transform, opacity;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
 }
 
 @media (max-width: 768px) {
   [data-aos="fade-up"] {
-    transform: translate3d(0, 26px, 0) !important;
+    transform: translate3d(0, 20px, 0) !important;
   }
   [data-aos="fade-up"].aos-animate {
     transform: translate3d(0, 0, 0) !important;
   }
   [data-aos="zoom-out"] {
-    transform: scale(1.03) !important;
+    transform: scale(1.02) !important;
   }
   [data-aos="zoom-out"].aos-animate {
     transform: scale(1) !important;
   }
   [data-aos="zoom-in"] {
-    transform: scale(0.96) !important;
+    transform: scale(0.97) !important;
   }
   [data-aos="zoom-in"].aos-animate {
     transform: scale(1) !important;
@@ -493,23 +501,6 @@ html {
   }
 }
 
-/* ========================================================================= */
-/* 6 INDUSTRY GOLD STANDARDS: HIGH-PERFORMANCE MOBILE OPTIMIZATIONS          */
-/* ========================================================================= */
-
-/* Standard 3 & 5: Hardware Acceleration & Touch Optimization */
-html {
-  -webkit-tap-highlight-color: transparent;
-  overscroll-behavior-y: none;
-}
-
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  overflow-x: hidden;
-}
-
 .transform-gpu {
   transform: translate3d(0, 0, 0);
   -webkit-transform: translate3d(0, 0, 0);
@@ -517,13 +508,13 @@ body {
   -webkit-backface-visibility: hidden;
 }
 
-/* Standard 2: Off-Screen Rendering Optimization (content-visibility: auto) */
+/* Off-Screen Rendering Optimization (content-visibility: auto) */
 .content-visibility-auto {
   content-visibility: auto;
   contain-intrinsic-size: 1px 700px;
 }
 
-/* Standard 6: Smooth Image Decoding Protection */
+/* Smooth Image Decoding Protection */
 img {
   text-indent: -9999px;
 }
@@ -538,5 +529,3 @@ img {
   backface-visibility: hidden;
   transform-style: preserve-3d;
 }
-
-

@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "predev": "node scripts/generate-version.mjs",
-    "dev": "next dev",
+    "dev": "next dev -H 0.0.0.0",
     "prebuild": "node scripts/generate-version.mjs",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -H 0.0.0.0",
     "lint": "eslint"
   },
   "dependencies": {
