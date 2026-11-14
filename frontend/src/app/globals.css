@@ -302,6 +302,30 @@ body {
   transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease-out, height 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Smooth Search Dropdown Slide Down & Slide Up */
+.search-dropdown-wrapper {
+  pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0.2s ease-out;
+}
+
+.search-dropdown-wrapper.is-open {
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.search-dropdown-drawer {
+  transform: translate3d(0, -8px, 0);
+  opacity: 0;
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease-out;
+  will-change: transform, opacity;
+}
+
+.search-dropdown-wrapper.is-open .search-dropdown-drawer {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+}
+
 /* Hover bridge so mouse never loses contact between pill and dropdown */
 .crc-dropdown::before {
   content: "";
@@ -367,12 +391,45 @@ body {
   border-radius: 0.5rem;
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: -1;
 }
 
-.hover-sweep-card:hover::before {
+.hover-sweep-card:hover::before,
+.hover-sweep-card.is-active::before {
   transform: scaleX(1);
+}
+
+/* 100% Guaranteed color parity between laptop hover and mobile selection */
+.hover-sweep-card:hover .focus-title,
+.hover-sweep-card.is-active .focus-title {
+  color: #ffffff !important;
+}
+
+.hover-sweep-card:hover .focus-subtitle,
+.hover-sweep-card.is-active .focus-subtitle {
+  color: #a7f3d0 !important; /* emerald-200 */
+}
+
+.hover-sweep-card:hover .focus-desc,
+.hover-sweep-card.is-active .focus-desc {
+  color: #fef2f2 !important; /* red-50 */
+}
+
+.hover-sweep-card:hover .focus-icon-box,
+.hover-sweep-card.is-active .focus-icon-box {
+  background-color: #0d0f14 !important;
+  color: #ffffff !important;
+}
+
+.hover-sweep-card:hover .focus-learn-bar,
+.hover-sweep-card.is-active .focus-learn-bar {
+  border-color: #ffffff !important;
+}
+
+.hover-sweep-card:hover .focus-learn-bar a,
+.hover-sweep-card.is-active .focus-learn-bar a {
+  color: #ffffff !important;
 }
 
 /* Angular brand slash used across headers and callout blocks */

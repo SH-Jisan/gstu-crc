@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { BookOpen, ShieldAlert, HeartPulse, Sparkles, Users, ArrowRight } from "lucide-react";
 
 export default function FocusAreasSection() {
+  const [activeCardIndex, setActiveCardIndex] = useState<number | null>(null);
   const areas = [
     {
       title: "Hatekhori Free School",
@@ -80,41 +81,78 @@ export default function FocusAreasSection() {
           </p>
         </div>
 
-        {/* 5 Focus Cards with Staggered Fade-Up and Refined Hover Micro-Interactions */}
+        {/* 5 Focus Cards with Staggered Fade-Up and Refined Hover/Touch Micro-Interactions */}
         {areas.map((area, idx) => {
           const Icon = area.icon;
+          const isActive = activeCardIndex === idx;
           return (
             <div
               key={idx}
               data-aos="fade-up"
               data-aos-duration="550"
               data-aos-delay={area.delay}
-              className="hover-sweep-card group relative bg-white border border-gray-200 min-h-44 p-6 rounded-lg flex flex-col justify-between shadow-sm hover:shadow-2xl transition-all duration-300 active:scale-[0.99]"
+              onClick={() => setActiveCardIndex((prev) => (prev === idx ? null : idx))}
+              className={`hover-sweep-card group relative bg-white border border-gray-200 min-h-44 p-6 rounded-lg flex flex-col justify-between shadow-sm hover:shadow-2xl transition-all duration-300 active:scale-[0.99] cursor-pointer touch-manipulation select-none ${
+                isActive ? "is-active shadow-2xl" : ""
+              }`}
             >
               <div className="relative z-10">
-                {/* Icon Container with Micro Scale/Rotate on Hover */}
-                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-red-50 flex items-center justify-center text-[#e6000a] mb-3.5 group-hover:bg-[#0d0f14] group-hover:text-white transition-all duration-300 group-hover:scale-105 shadow-xs">
-                  <Icon className="w-5 h-5 transition-transform duration-300 ease-out group-hover:scale-110 group-hover:rotate-3" />
+                {/* Icon Container with Micro Scale/Rotate on Hover & Selection */}
+                <div
+                  className={`focus-icon-box w-10 h-10 sm:w-11 sm:h-11 rounded-lg flex items-center justify-center mb-3.5 transition-all duration-300 shadow-xs ${
+                    isActive
+                      ? "bg-[#0d0f14] text-white scale-105"
+                      : "bg-red-50 text-[#e6000a] group-hover:bg-[#0d0f14] group-hover:text-white group-hover:scale-105"
+                  }`}
+                >
+                  <Icon
+                    className={`w-5 h-5 transition-transform duration-300 ease-out ${
+                      isActive ? "scale-110 rotate-3" : "group-hover:scale-110 group-hover:rotate-3"
+                    }`}
+                  />
                 </div>
-                <span className="text-[11px] font-bold text-[#007938] group-hover:text-emerald-200 block mb-1 transition-colors">
+                <span
+                  className={`focus-subtitle text-[11px] font-bold block mb-1 transition-colors ${
+                    isActive ? "text-emerald-200" : "text-[#007938] group-hover:text-emerald-200"
+                  }`}
+                >
                   {area.subtitle}
                 </span>
-                <h3 className="font-bold text-lg sm:text-xl font-heading text-[#0d0f14] mb-2 group-hover:text-white transition-colors">
+                <h3
+                  className={`focus-title font-bold text-lg sm:text-xl font-heading mb-2 transition-colors ${
+                    isActive ? "text-white" : "text-[#0d0f14] group-hover:text-white"
+                  }`}
+                >
                   {area.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-normal group-hover:text-red-50 transition-colors">
+                <p
+                  className={`focus-desc text-xs sm:text-sm leading-relaxed font-normal transition-colors ${
+                    isActive ? "text-red-50" : "text-gray-600 group-hover:text-red-50"
+                  }`}
+                >
                   {area.description}
                 </p>
               </div>
 
               {/* Learn More link with gliding arrow */}
-              <div className="relative z-10 mt-4 pt-3 border-t border-[#e6000a] group-hover:border-white transition-colors duration-300">
+              <div
+                className={`focus-learn-bar relative z-10 mt-4 pt-3 border-t transition-colors duration-300 ${
+                  isActive ? "border-white" : "border-[#e6000a] group-hover:border-white"
+                }`}
+              >
                 <a
                   href={area.link}
-                  className="inline-flex items-center text-xs font-bold uppercase tracking-wider text-[#e6000a] group-hover:text-white transition-colors group/btn"
+                  onClick={(e) => e.stopPropagation()}
+                  className={`inline-flex items-center text-xs font-bold uppercase tracking-wider transition-colors group/btn ${
+                    isActive ? "text-white" : "text-[#e6000a] group-hover:text-white"
+                  }`}
                 >
                   <span>Learn More</span>
-                  <ArrowRight className="w-3.5 h-3.5 ml-1.5 transition-transform duration-300 ease-out group-hover:translate-x-1.5" />
+                  <ArrowRight
+                    className={`w-3.5 h-3.5 ml-1.5 transition-transform duration-300 ease-out ${
+                      isActive ? "translate-x-1.5" : "group-hover:translate-x-1.5"
+                    }`}
+                  />
                 </a>
               </div>
             </div>

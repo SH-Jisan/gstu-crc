@@ -52,6 +52,7 @@ export default function SmoothScroll() {
     // Synchronize Lenis virtual scroll frames directly with AOS coordinate tracker
     lenis.on("scroll", () => {
       AOS.refresh();
+      window.dispatchEvent(new Event("scroll"));
     });
 
     let animationFrameId: number;
